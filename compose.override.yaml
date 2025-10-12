@@ -24,3 +24,11 @@ services:
     tty: true
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      # HTTP
+      - target: 5432
+        published: 55432
+###< doctrine/doctrine-bundle ###
