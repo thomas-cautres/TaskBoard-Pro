@@ -2,6 +2,8 @@
 
 namespace App\Tests;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegistrationTest extends WebTestCase
@@ -20,5 +22,13 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseRedirects('/login');
+
+        $container = static::$kernel->getContainer();
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $container->get('doctrine')->getManager();
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test@test.com']);
+
+        $this->assertInstanceOf(User::class, $user);
     }
 }
