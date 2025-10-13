@@ -3,7 +3,11 @@
 {% block body %}
 <div class="row justify-content-center">
     <div class="col-6">
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        <input type="submit" class="btn btn-primary" value="Je m'inscris">
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock body %}
