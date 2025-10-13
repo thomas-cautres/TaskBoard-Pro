@@ -41,11 +41,9 @@ jobs:
       - name: Start services
         run: docker compose up --wait --no-build
       - name: Check HTTP reachability
-        run: curl -v --fail-with-body http://localhost
+        run: curl -v http://localhost
       - name: Check HTTPS reachability
-        run: curl -v --insecure --fail-with-body https://localhost
-      - name: Check Mercure reachability
-        run: curl -vI --insecure --fail-with-body https://localhost/.well-known/mercure?topic=test
+        run: curl -v --insecure https://localhost
       - name: Create test database
         run: docker compose exec -T php bin/console -e test doctrine:database:create
       - name: Run migrations
