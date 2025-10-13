@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   qa:
-    name: Tests
+    name: QA
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
