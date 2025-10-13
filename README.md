@@ -46,20 +46,21 @@ open https://localhost
 
 ##  🧰 3. Commandes Make
 
-| Commande                     | Description                                                       |
-|-------------------------------|-------------------------------------------------------------------|
-| `make build`                  | Reconstruit les images Docker sans cache                          |
-| `make up`                     | Démarre les conteneurs                                            |
-| `make down`                   | Stoppe les conteneurs et supprime les orphelins                  |
-| `make logs`                   | Affiche les logs en temps réel                                     |
-| `make sh`                     | Ouvre un shell dans le conteneur FrankenPHP                       |
-| `make bash`                   | Shell Bash avec historique des commandes                           |
-| `make composer c="..."`       | Exécute une commande Composer (ex : `make composer c='require symfony/orm-pack'`) |
-| `make vendor`                 | Installe les dépendances (`composer install`)                     |
-| `make sf c="..."`             | Exécute une commande Symfony CLI (ex : `make sf c=about`)         |
-| `make cc`                     | Vide le cache Symfony                                              |
-| `make test`                   | Lance les tests PHPUnit (`APP_ENV=test`)                           |
-| `make phpstan`                | Lance l’analyse statique PHPStan                                    |
-| `make phpcsfixer`             | Exécute PHP CS Fixer pour corriger le code                         |
-| `make help`                   | Affiche la liste des commandes disponibles                         |           
+| Commande                | Description                                                                       |
+|-------------------------|-----------------------------------------------------------------------------------|
+| `make build`            | Reconstruit les images Docker sans cache                                          |
+| `make up`               | Démarre les conteneurs                                                            |
+| `make down`             | Stoppe les conteneurs et supprime les orphelins                                   |
+| `make logs`             | Affiche les logs en temps réel                                                    |
+| `make sh`               | Ouvre un shell dans le conteneur FrankenPHP                                       |
+| `make bash`             | Shell Bash avec historique des commandes                                          |
+| `make composer c="..."` | Exécute une commande Composer (ex : `make composer c='require symfony/orm-pack'`) |
+| `make vendor`           | Installe les dépendances (`composer install`)                                     |
+| `make sf c="..."`       | Exécute une commande Symfony CLI (ex : `make sf c=about`)                         |
+| `make cc`               | Vide le cache Symfony                                                             |
+| `make db`               | Créé la base de données et les tables                                             |
+| `make test`             | Lance les tests PHPUnit (`APP_ENV=test`)                                          |
+| `make phpstan`          | Lance l’analyse statique PHPStan                                                  |
+| `make phpcsfixer`       | Exécute PHP CS Fixer pour corriger le code                                        |
+| `make help`             | Affiche la liste des commandes disponibles                                        |           
 
