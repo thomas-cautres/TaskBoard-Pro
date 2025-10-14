@@ -18,6 +18,10 @@
                 <source>Signup</source>
                 <target>Je m'inscris</target>
             </trans-unit>
+            <trans-unit id="login">
+                <source>Login</source>
+                <target>Je me connecte</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
