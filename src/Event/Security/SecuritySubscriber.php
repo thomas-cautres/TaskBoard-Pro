@@ -2,13 +2,19 @@
 
 namespace App\Event\Security;
 
+use App\Message\RegistrationConfirmationEmail;
 use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecuritySubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher, private readonly UserRepository $userRepository)
+    public function __construct(
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly UserRepository $userRepository,
+        private readonly MessageBusInterface $bus
+    )
     {
     }
 
@@ -29,5 +35,7 @@ class SecuritySubscriber implements EventSubscriberInterface
         $user->setPassword($hashedPassword);
 
         $this->userRepository->persist($user);
+
+        $this->bus->dispatch(new RegistrationConfirmationEmail());
     }
 }
