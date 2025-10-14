@@ -38,8 +38,15 @@ sh: ## Connect to the FrankenPHP container
 bash: ## Connect to the FrankenPHP container via bash so up and down arrows go to previous commands
 	@$(PHP_CONT) bash
 
+db:
+	@$(eval env ?=)
+	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:drop --force
+	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:create
+	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:migration:migrate --no-interaction
+
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
+	make db env=test
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
 
 
