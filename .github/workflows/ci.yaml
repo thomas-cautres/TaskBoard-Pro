@@ -78,6 +78,8 @@ jobs:
         run: docker compose exec -T php bin/console -e test doctrine:database:create
       - name: Run migrations
         run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+      - name: Run fixtures
+        run: docker compose exec -T php bin/console -e test doctrine:fixtures:load --no-interaction
       - name: Run PHPUnit
         run: docker compose exec -T php bin/phpunit
       - name: Doctrine Schema Validator

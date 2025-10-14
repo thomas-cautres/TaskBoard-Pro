@@ -43,6 +43,7 @@ db:
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:drop --force
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:create
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:migration:migrate --no-interaction
+	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:fixtures:load --no-interaction
 
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
