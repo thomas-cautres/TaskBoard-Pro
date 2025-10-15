@@ -34,6 +34,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $confirmed = false;
+
+    #[ORM\Column(options: ['default' => ''])]
+    private string $confirmationCode;
+
     public function getId(): int
     {
         return $this->id;
@@ -102,5 +108,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function isConfirmed(): bool
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(bool $confirmed): static
+    {
+        $this->confirmed = $confirmed;
+
+        return $this;
+    }
+
+    public function getConfirmationCode(): string
+    {
+        return $this->confirmationCode;
+    }
+
+    public function setConfirmationCode(string $confirmationCode): static
+    {
+        $this->confirmationCode = $confirmationCode;
+
+        return $this;
     }
 }

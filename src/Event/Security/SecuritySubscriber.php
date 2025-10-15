@@ -13,9 +13,8 @@ class SecuritySubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository,
-        private readonly MessageBusInterface $bus
-    )
-    {
+        private readonly MessageBusInterface $bus,
+    ) {
     }
 
     public static function getSubscribedEvents(): array
