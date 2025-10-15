@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Entity\User;
+use CoopTilleuls\UrlSignerBundle\UrlSigner\UrlSignerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -22,8 +23,10 @@ class RegistrationTest extends WebTestCase
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest123',
         ]);
+        /** @var UrlSignerInterface $urlSigner */
+        $urlSigner = static::getContainer()->get(UrlSignerInterface::class);
 
-        $this->assertResponseRedirects('/confirm/test@test.com');
+        $this->assertResponseRedirects($urlSigner->sign('/confirm/test@test.com', 3600));
 
         $container = static::$kernel->getContainer();
 
