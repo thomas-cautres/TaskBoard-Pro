@@ -20,7 +20,7 @@ final readonly class RegistrationConfirmationEmailHandler
         private MailerInterface $mailer,
         #[Autowire(env: 'MAILER_FROM')]
         private string $from,
-        #[Autowire(env: 'CONFIRMATION_LINK_LIFETIME')]
+        #[Autowire(env: 'int:CONFIRMATION_LINK_LIFETIME')]
         private int $confirmationLinkLifetime,
         private UrlSignerInterface $urlSigner,
         private UrlGeneratorInterface $urlGenerator,

@@ -37,7 +37,7 @@ class ConfirmationTest extends WebTestCase
         $this->assertEquals(true, $user->isConfirmed());
     }
 
-    public function testWithMismatchedPasswords(): void
+    public function testWithInvalidCode(): void
     {
         $client = static::createClient();
 

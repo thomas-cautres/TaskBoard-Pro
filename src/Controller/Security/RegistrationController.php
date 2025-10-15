@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
         Request $request,
         EventDispatcherInterface $dispatcher,
         UrlSignerInterface $urlSigner,
-        #[Autowire(env: 'CONFIRMATION_LINK_LIFETIME')]
+        #[Autowire(env: 'int:CONFIRMATION_LINK_LIFETIME')]
         int $confirmationLinkLifetime,
     ): Response {
         $user = new User();
