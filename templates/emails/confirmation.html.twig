@@ -29,7 +29,7 @@
 
 {% block content %}
     <div class="text-center">
-        <h2 class="mb-4">Bonjour {{ user_name|default('') }} !</h2>
+        <h2 class="mb-4">Bonjour !</h2>
 
         <p class="lead mb-4">
             Merci de vous être inscrit. Pour finaliser la création de votre compte,
@@ -53,14 +53,6 @@
         </p>
 
         <hr class="my-4">
-
-        <div class="text-start">
-            <h5 class="mb-3">Vous n'avez pas demandé ce code ?</h5>
-            <p class="text-muted">
-                Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email en toute sécurité.
-                Votre compte reste protégé.
-            </p>
-        </div>
 
         <div class="mt-4">
             <a href="{{ absolute_url(path('confirm', {email:user_email})) }}" class="btn btn-primary btn-lg">
