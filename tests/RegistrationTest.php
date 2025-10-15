@@ -89,8 +89,10 @@ class RegistrationTest extends WebTestCase
 
         $entityManager = $container->get('doctrine')->getManager();
         $existingUser = new User();
-        $existingUser->setEmail('existing@test.com');
-        $existingUser->setPassword('hashedpassword');
+        $existingUser->setEmail('existing@test.com')
+            ->setPassword('hashedpassword')
+            ->setConfirmationCode('1234');
+
         $entityManager->persist($existingUser);
         $entityManager->flush();
 

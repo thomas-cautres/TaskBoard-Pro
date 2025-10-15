@@ -3,8 +3,9 @@
 namespace App\Controller\Security;
 
 use App\Entity\User;
+use App\Event\Security\UserConfirmedEvent;
 use App\Form\Security\ConfirmType;
-use App\Repository\UserRepository;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ConfirmationController extends AbstractController
 {
     #[Route('/confirm/{email}', name: 'confirm', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, User $user, UserRepository $userRepository): Response
+    public function __invoke(Request $request, User $user, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(ConfirmType::class);
         $form->handleRequest($request);
@@ -23,7 +24,7 @@ class ConfirmationController extends AbstractController
             $data = $form->getData();
 
             if ($data->getConfirmationCode() === $user->getConfirmationCode()) {
-                $userRepository->persist($user->setConfirmed(true));
+                $dispatcher->dispatch(new UserConfirmedEvent($user));
 
                 return $this->redirectToRoute('login');
             }

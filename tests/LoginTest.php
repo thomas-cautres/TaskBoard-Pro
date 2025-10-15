@@ -19,4 +19,19 @@ class LoginTest extends WebTestCase
 
         $this->assertResponseRedirects('/');
     }
+
+    public function testPasswordIsInvalid(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/login');
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('login-btn', [
+            '_username' => 'test@email.com',
+            '_password' => 'test',
+        ]);
+
+        $client->followRedirect();
+        $this->assertSelectorTextContains('.alert-danger', 'Identifiants invalides.');
+    }
 }
