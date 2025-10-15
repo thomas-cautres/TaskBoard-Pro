@@ -26,6 +26,8 @@ class ConfirmationController extends AbstractController
             if ($data->getConfirmationCode() === $user->getConfirmationCode()) {
                 $dispatcher->dispatch(new UserConfirmedEvent($user));
 
+                $this->addFlash('success', 'Your registration was successfully confirmed.');
+
                 return $this->redirectToRoute('login');
             }
         }

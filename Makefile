@@ -62,7 +62,7 @@ db: ## Setup database
     	echo "ERROR: Cannot run destructive db operations in production environment"; \
     	exit 1; \
     fi
-	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:drop --force
+	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:drop --force --if-exists
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:create
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:migration:migrate --no-interaction
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:fixtures:load --no-interaction

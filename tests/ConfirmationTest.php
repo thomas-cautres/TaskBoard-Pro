@@ -20,6 +20,8 @@ class ConfirmationTest extends WebTestCase
         ]);
 
         $this->assertResponseRedirects('/login');
+        $client->followRedirect();
+        $this->assertSelectorTextContains('.alert-success', "Votre inscription a bien été confirmée.");
 
         $container = static::$kernel->getContainer();
 

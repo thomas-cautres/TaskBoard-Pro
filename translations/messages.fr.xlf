@@ -62,6 +62,10 @@
                 <source>Confirmation code</source>
                 <target>Code de confirmation</target>
             </trans-unit>
+            <trans-unit id="registration_confirmed">
+                <source>Your registration was successfully confirmed.</source>
+                <target>Votre inscription a bien été confirmée.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
