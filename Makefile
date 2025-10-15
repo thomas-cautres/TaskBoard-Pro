@@ -58,6 +58,10 @@ cc: sf
 ## —— Doctrine 🎵 ———————————————————————————————————————————————————————————————
 db: ## Setup database
 	@$(eval env ?= dev)
+	@if [ "$(env)" = "prod" ]; then \
+    	echo "ERROR: Cannot run destructive db operations in production environment"; \
+    	exit 1; \
+    fi
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:drop --force
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:database:create
 	@$(DOCKER_COMP) exec -e APP_ENV=$(env) php bin/console doctrine:migration:migrate --no-interaction
