@@ -84,7 +84,7 @@ test: ## Start tests with phpunit, pass the parameter "c=" to add options to php
 
 ## —— Quality ——————————————————————————————————————————————————————————————
 phpstan: ## Phpstan
-	@$(DOCKER_COMP) exec -e APP_ENV=test php vendor/bin/phpstan
+	@$(DOCKER_COMP) exec -e APP_ENV=test php vendor/bin/phpstan --memory-limit=256M
 
 phpcsfixer: ## phpcsfixer
 	@$(DOCKER_COMP) exec -e APP_ENV=test -e PHP_CS_FIXER_IGNORE_ENV=true php vendor/bin/php-cs-fixer fix
