@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -32,7 +33,9 @@ class ConfirmType extends AbstractType
 
     public static function validateConfirmationCode(mixed $value, ExecutionContextInterface $context): void
     {
-        $confirmationCode = $context->getRoot()->getConfig()->getOption('confirmation_code');
+        /** @var FormInterface<mixed> $root */
+        $root = $context->getRoot();
+        $confirmationCode = $root->getConfig()->getOption('confirmation_code');
 
         if ($value !== $confirmationCode) {
             $context->buildViolation('Le code est incorrect')->addViolation();

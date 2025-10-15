@@ -39,7 +39,7 @@ final readonly class SecuritySubscriber implements EventSubscriberInterface
 
         $user
             ->setPassword($hashedPassword)
-            ->setConfirmationCode(random_int(1000, 9999));
+            ->setConfirmationCode((string) random_int(1000, 9999));
 
         $this->userRepository->persist($user);
 
