@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
             $user = $form->getData();
             $dispatcher->dispatch(new UserRegisteredEvent($user));
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('confirm', ['email' => $user->getEmail()]);
         }
 
         return $this->render('security/registration.html.twig', [

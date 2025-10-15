@@ -43,7 +43,7 @@ final readonly class SecuritySubscriber implements EventSubscriberInterface
 
         $this->userRepository->persist($user);
 
-        $this->bus->dispatch(new RegistrationConfirmationEmail());
+        $this->bus->dispatch(new RegistrationConfirmationEmail($user->getEmail(), $user->getConfirmationCode()));
     }
 
     public function onUserConfirmed(UserConfirmedEvent $event): void

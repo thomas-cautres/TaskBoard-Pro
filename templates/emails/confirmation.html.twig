@@ -1,0 +1,71 @@
+{# templates/emails/otp_validation.html.twig #}
+{% extends "emails/base.html.twig" %}
+
+{% block title %}Validation de votre compte{% endblock %}
+
+{% block header_title %}Validation de compte{% endblock %}
+
+{% block header_subtitle %}
+    <p class="mb-0 mt-2">Dernière étape pour activer votre compte</p>
+{% endblock %}
+
+{% block extra_styles %}
+    .otp-code {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 12px;
+    padding: 25px;
+    border-radius: 10px;
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .alert-custom {
+    border-left: 4px solid #667eea;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h2 class="mb-4">Bonjour {{ user_name|default('') }} !</h2>
+
+        <p class="lead mb-4">
+            Merci de vous être inscrit. Pour finaliser la création de votre compte,
+            veuillez utiliser le code de validation ci-dessous :
+        </p>
+
+        <div class="my-5">
+            <div class="otp-code">
+                {{ otp_code }}
+            </div>
+        </div>
+
+        <div class="alert alert-info alert-custom" role="alert">
+            <i class="bi bi-clock"></i>
+            <strong>Important :</strong> Ce code est valide pendant <strong>{{ expiration_minutes|default('15') }}
+                minutes</strong>.
+        </div>
+
+        <p class="text-muted mt-4">
+            Saisissez ce code sur la page de validation pour activer votre compte.
+        </p>
+
+        <hr class="my-4">
+
+        <div class="text-start">
+            <h5 class="mb-3">Vous n'avez pas demandé ce code ?</h5>
+            <p class="text-muted">
+                Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email en toute sécurité.
+                Votre compte reste protégé.
+            </p>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ absolute_url(path('confirm', {email:user_email})) }}" class="btn btn-primary btn-lg">
+                Valider mon compte
+            </a>
+        </div>
+    </div>
+{% endblock %}

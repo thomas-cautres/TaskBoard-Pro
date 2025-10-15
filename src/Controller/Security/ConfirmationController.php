@@ -16,7 +16,7 @@ class ConfirmationController extends AbstractController
     #[Route('/confirm/{email}', name: 'confirm', methods: ['GET', 'POST'])]
     public function __invoke(Request $request, User $user, EventDispatcherInterface $dispatcher): Response
     {
-        $form = $this->createForm(ConfirmType::class);
+        $form = $this->createForm(ConfirmType::class, options: ['confirmation_code' => $user->getConfirmationCode()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
