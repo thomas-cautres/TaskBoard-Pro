@@ -21,7 +21,7 @@ class RegistrationTest extends WebTestCase
             'registration[password][second]' => 'testtest123',
         ]);
 
-        $this->assertResponseRedirects('/login');
+        $this->assertResponseRedirects('/confirm/test@test.com');
 
         $container = static::$kernel->getContainer();
 
