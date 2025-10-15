@@ -44,6 +44,8 @@ jobs:
         run: make phpstan
       - name: PHP cs fixer
         run: make phpcsfixer
+      - name: Lint twig
+        run: docker compose exec -T php bin/console lint:twig
   tests:
     name: Tests
     runs-on: ubuntu-latest
