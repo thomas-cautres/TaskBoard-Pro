@@ -1,12 +1,12 @@
 {# templates/emails/otp_validation.html.twig #}
 {% extends "emails/base.html.twig" %}
 
-{% block title %}Validation de votre compte{% endblock %}
+{% block title %}{{ 'Account validation'|trans }}{% endblock %}
 
-{% block header_title %}Validation de compte{% endblock %}
+{% block header_title %}{{ 'Account validation'|trans }}{% endblock %}
 
 {% block header_subtitle %}
-    <p class="mb-0 mt-2">Dernière étape pour activer votre compte</p>
+    <p class="mb-0 mt-2">{{ 'Last step to activate your account'|trans }}</p>
 {% endblock %}
 
 {% block extra_styles %}
@@ -29,11 +29,10 @@
 
 {% block content %}
     <div class="text-center">
-        <h2 class="mb-4">Bonjour !</h2>
+        <h2 class="mb-4">{{ 'Hello!'|trans }}</h2>
 
         <p class="lead mb-4">
-            Merci de vous être inscrit. Pour finaliser la création de votre compte,
-            veuillez utiliser le code de validation ci-dessous :
+            {{ 'Thank you for signing up. To complete your account creation, please use the validation code below:'|trans }}
         </p>
 
         <div class="my-5">
@@ -44,19 +43,18 @@
 
         <div class="alert alert-info alert-custom" role="alert">
             <i class="bi bi-clock"></i>
-            <strong>Important :</strong> Ce code est valide pendant <strong>{{ expiration_minutes|default('15') }}
-                minutes</strong>.
+            <strong>{{ 'Important: This code is valid for %minutes% minutes.'|trans({'%minutes%': expiration_minutes|default('15')}) }}</strong>
         </div>
 
         <p class="text-muted mt-4">
-            Saisissez ce code sur la page de validation pour activer votre compte.
+            {{ 'Enter this code on the validation page to activate your account.'|trans }}
         </p>
 
         <hr class="my-4">
 
         <div class="mt-4">
             <a href="{{ absolute_url(path('confirm', {email:user_email})) }}" class="btn btn-primary btn-lg">
-                Valider mon compte
+                {{ 'Validate my account'|trans }}
             </a>
         </div>
     </div>
