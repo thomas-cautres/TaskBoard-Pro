@@ -6,6 +6,10 @@
                 <source>The password fields must match.</source>
                 <target>Les mots de passe doivent correspondre.</target>
             </trans-unit>
+            <trans-unit id="email_already_registered">
+                <source>This email is already registered.</source>
+                <target>Cet email est déjà inscrit.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

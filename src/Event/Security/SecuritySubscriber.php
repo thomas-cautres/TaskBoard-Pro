@@ -4,16 +4,17 @@ namespace App\Event\Security;
 
 use App\Message\RegistrationConfirmationEmail;
 use App\Repository\UserRepository;
+use Random\RandomException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class SecuritySubscriber implements EventSubscriberInterface
+final readonly class SecuritySubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly UserRepository $userRepository,
-        private readonly MessageBusInterface $bus,
+        private UserPasswordHasherInterface $passwordHasher,
+        private UserRepository $userRepository,
+        private MessageBusInterface $bus,
     ) {
     }
 
@@ -24,6 +25,9 @@ class SecuritySubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws RandomException
+     */
     public function onUserRegistered(UserRegisteredEvent $event): void
     {
         $user = $event->getUser();
@@ -31,7 +35,10 @@ class SecuritySubscriber implements EventSubscriberInterface
             $user,
             $user->getPassword()
         );
-        $user->setPassword($hashedPassword);
+
+        $user
+            ->setPassword($hashedPassword)
+            ->setConfirmationCode(random_int(1000, 9999));
 
         $this->userRepository->persist($user);
 

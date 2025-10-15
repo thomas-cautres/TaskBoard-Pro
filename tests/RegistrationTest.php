@@ -102,6 +102,6 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'This email is already registered.'); // adapter
+        $this->assertSelectorTextContains('.invalid-feedback', 'Cet email est déjà inscrit.');
     }
 }

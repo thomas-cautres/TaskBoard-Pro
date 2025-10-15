@@ -25,8 +25,7 @@ Il repose sur **FrankenPHP**, **Docker**, **PostgreSQL**, et une intégration co
 ## 🚀 2. Installation
 
 ### Prérequis
-- Docker ≥ 20.10
-- Docker Compose ≥ 2.0
+- Docker Compose ≥ 2.10
 - GNU Make
 - Git
 

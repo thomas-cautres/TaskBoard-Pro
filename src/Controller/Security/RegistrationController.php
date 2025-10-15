@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/registration', name: 'registration')]
+    #[Route('/registration', name: 'registration', methods: ['GET', 'POST'])]
     public function __invoke(Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $user = new User();
