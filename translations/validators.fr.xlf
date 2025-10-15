@@ -10,6 +10,10 @@
                 <source>This email is already registered.</source>
                 <target>Cet email est déjà inscrit.</target>
             </trans-unit>
+            <trans-unit id="confirmation_code_invalid">
+                <source>This code is not valid.</source>
+                <target>Ce code n'est pas valide.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

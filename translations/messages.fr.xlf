@@ -22,10 +22,6 @@
                 <source>Login</source>
                 <target>Je me connecte</target>
             </trans-unit>
-            <trans-unit id="registration_not_confirmed">
-                <source>Your registration is not confirmed.</source>
-                <target>Votre inscription n'est pas confirmée.</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

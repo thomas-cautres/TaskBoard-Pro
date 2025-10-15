@@ -38,7 +38,7 @@ class ConfirmType extends AbstractType
         $confirmationCode = $root->getConfig()->getOption('confirmation_code');
 
         if ($value !== $confirmationCode) {
-            $context->buildViolation('Le code est incorrect')->addViolation();
+            $context->buildViolation('This code is not valid.')->addViolation();
         }
     }
 }
