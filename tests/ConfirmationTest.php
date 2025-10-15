@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests;
 
 use App\Entity\User;
@@ -21,7 +23,7 @@ class ConfirmationTest extends WebTestCase
 
         $this->assertResponseRedirects('/login');
         $client->followRedirect();
-        $this->assertSelectorTextContains('.alert-success', "Votre inscription a bien été confirmée.");
+        $this->assertSelectorTextContains('.alert-success', 'Votre inscription a bien été confirmée.');
 
         $container = static::$kernel->getContainer();
 

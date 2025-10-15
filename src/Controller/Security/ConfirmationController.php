@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Security;
 
 use App\Entity\User;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ConfirmationController extends AbstractController
 {
-    #[Route('/confirm/{email}', name: 'confirm', methods: ['GET', 'POST'])]
+    #[Route('/confirm/{email}', name: 'confirm', defaults: ['_signed' => true], methods: ['GET', 'POST'])]
     public function __invoke(Request $request, User $user, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(ConfirmType::class, options: ['confirmation_code' => $user->getConfirmationCode()]);
