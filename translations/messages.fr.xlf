@@ -134,6 +134,10 @@
                 <source>© %year% TaskBoard Pro. All rights reserved.</source>
                 <target>© %year% TaskBoard Pro. Tous droits réservés.</target>
             </trans-unit>
+            <trans-unit id="home.title" resname="home.title">
+                <source>Homepage</source>
+                <target>Accueil</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
