@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="email_address">
                 <source>Email address</source>
@@ -21,6 +21,50 @@
             <trans-unit id="login">
                 <source>Login</source>
                 <target>Je me connecte</target>
+            </trans-unit>
+            <trans-unit id="account_validation_title">
+                <source>Account validation</source>
+                <target>Validation de votre compte</target>
+            </trans-unit>
+            <trans-unit id="account_validation_header">
+                <source>Account validation</source>
+                <target>Validation de compte</target>
+            </trans-unit>
+            <trans-unit id="last_step_to_activate_account">
+                <source>Last step to activate your account</source>
+                <target>Dernière étape pour activer votre compte</target>
+            </trans-unit>
+            <trans-unit id="hello">
+                <source>Hello!</source>
+                <target>Bonjour !</target>
+            </trans-unit>
+            <trans-unit id="thanks_for_registering">
+                <source>Thank you for signing up. To complete your account creation, please use the validation code below:</source>
+                <target>Merci de vous être inscrit. Pour finaliser la création de votre compte, veuillez utiliser le code de validation ci-dessous :</target>
+            </trans-unit>
+            <trans-unit id="important_code_validity">
+                <source>Important: This code is valid for %minutes% minutes.</source>
+                <target>Important : Ce code est valide pendant %minutes% minutes.</target>
+            </trans-unit>
+            <trans-unit id="enter_code_to_activate">
+                <source>Enter this code on the validation page to activate your account.</source>
+                <target>Saisissez ce code sur la page de validation pour activer votre compte.</target>
+            </trans-unit>
+            <trans-unit id="validate_my_account">
+                <source>Validate my account</source>
+                <target>Valider mon compte</target>
+            </trans-unit>
+            <trans-unit id="confirm_your_registration">
+                <source>Confirm your registration</source>
+                <target>Je confirme mon inscription</target>
+            </trans-unit>
+            <trans-unit id="confirmation_code">
+                <source>Confirmation code</source>
+                <target>Code de confirmation</target>
+            </trans-unit>
+            <trans-unit id="registration_confirmed">
+                <source>Your registration was successfully confirmed.</source>
+                <target>Votre inscription a bien été confirmée.</target>
             </trans-unit>
         </body>
     </file>

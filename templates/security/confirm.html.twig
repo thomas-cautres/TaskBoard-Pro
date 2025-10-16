@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+        <div class="card shadow-lg border-0" style="width: 26rem;">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">{{ 'Confirm your registration'|trans }}</h2>
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_row(form.confirmationCode) }}
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg" id="confirm-btn">
+                        {{ 'Confirm your registration'|trans }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock body %}

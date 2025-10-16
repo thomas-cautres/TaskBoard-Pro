@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -16,10 +18,20 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user = new User();
-
         $user
-            ->setEmail('test@email.com')
-            ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'));
+            ->setEmail('user-confirmed@domain.com')
+            ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
+            ->setConfirmed(true)
+            ->setConfirmationCode('1234');
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user
+            ->setEmail('user-unconfirmed@domain.com')
+            ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
+            ->setConfirmed(false)
+            ->setConfirmationCode('1234');
 
         $manager->persist($user);
         $manager->flush();

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests;
 
 use App\Entity\User;
+use CoopTilleuls\UrlSignerBundle\UrlSigner\UrlSignerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,8 +23,10 @@ class RegistrationTest extends WebTestCase
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest123',
         ]);
+        /** @var UrlSignerInterface $urlSigner */
+        $urlSigner = static::getContainer()->get(UrlSignerInterface::class);
 
-        $this->assertResponseRedirects('/login');
+        $this->assertResponseRedirects($urlSigner->sign('/confirm/test@test.com', 3600));
 
         $container = static::$kernel->getContainer();
 
@@ -89,8 +94,10 @@ class RegistrationTest extends WebTestCase
 
         $entityManager = $container->get('doctrine')->getManager();
         $existingUser = new User();
-        $existingUser->setEmail('existing@test.com');
-        $existingUser->setPassword('hashedpassword');
+        $existingUser->setEmail('existing@test.com')
+            ->setPassword('hashedpassword')
+            ->setConfirmationCode('1234');
+
         $entityManager->persist($existingUser);
         $entityManager->flush();
 
@@ -102,6 +109,6 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'This email is already registered.'); // adapter
+        $this->assertSelectorTextContains('.invalid-feedback', 'Cet email est déjà inscrit.');
     }
 }

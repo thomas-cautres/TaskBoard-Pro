@@ -20,6 +20,7 @@ security:
             logout:
                 path: /logout
                 target: /login
+            user_checker: App\Security\UserChecker
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -27,6 +28,7 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/registration, roles: PUBLIC_ACCESS }
+        - { path: ^/confirm, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
