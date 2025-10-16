@@ -1,5 +1,87 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+    {% block importmap %}
+        {{ importmap('app') }}
+        {{ importmap('home') }}
+    {% endblock %}
+{% endblock %}
+{% block title %}{{ parent() }} - {{ 'home.title'|trans }}{% endblock %}
 {% block body %}
-    Home
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('home') }}"><i class="bi bi-diagram-3"></i> TaskBoard Pro</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('home') }}">{{ 'home.nav.home'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">{{ 'home.nav.login'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="{{ path('registration') }}">{{ 'home.nav.register'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">{{ 'home.hero.title'|trans }}</h1>
+                    <p class="lead mb-4">{{ 'home.hero.description'|trans }}</p>
+                    <a href="{{ path('registration') }}" class="btn btn-light btn-lg me-3">{{ 'home.hero.start_free'|trans }}</a>
+                    <a href="{{ path('login') }}" class="btn btn-outline-light btn-lg">{{ 'home.hero.login'|trans }}</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <i class="bi bi-kanban hero-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5 py-5">
+        <h2 class="text-center mb-5">{{ 'home.features.title'|trans }}</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-folder text-primary feature-icon"></i>
+                        <h5 class="card-title mt-3">{{ 'home.features.projects.title'|trans }}</h5>
+                        <p class="card-text">{{ 'home.features.projects.description'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-check-circle text-success feature-icon"></i>
+                        <h5 class="card-title mt-3">{{ 'home.features.tasks.title'|trans }}</h5>
+                        <p class="card-text">{{ 'home.features.tasks.description'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-people text-info feature-icon"></i>
+                        <h5 class="card-title mt-3">{{ 'home.features.collaboration.title'|trans }}</h5>
+                        <p class="card-text">{{ 'home.features.collaboration.description'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">{{ 'home.footer.copyright'|trans({'%year%': '2025'}) }}</p>
+        </div>
+    </footer>
+
 {% endblock body %}
