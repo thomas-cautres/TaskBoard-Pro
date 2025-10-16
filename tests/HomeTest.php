@@ -16,27 +16,28 @@ class HomeTest extends WebTestCase
         $content = $client->getResponse()->getContent();
 
         // Navigation translations
-        $this->assertStringContainsString('Accueil', $content);
-        $this->assertStringContainsString('Connexion', $content);
-        $this->assertStringContainsString('S&#039;inscrire', $content);
+        $this->assertStringContainsString('Home', $content);
+        $this->assertStringContainsString('Login', $content);
+        $this->assertStringContainsString('Register', $content);
 
         // Hero section translations
-        $this->assertStringContainsString('Gérez vos projets avec efficacité', $content);
-        $this->assertStringContainsString('TaskBoard Pro vous aide à organiser vos projets et tâches en toute simplicité', $content);
-        $this->assertStringContainsString('Commencer gratuitement', $content);
-        $this->assertStringContainsString('Se connecter', $content);
+        $this->assertStringContainsString('Manage your projects efficiently', $content);
+        $this->assertStringContainsString('TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.', $content);
+        $this->assertStringContainsString('Collaborate, plan and succeed together.', $content);
+        $this->assertStringContainsString('Start for free', $content);
+        $this->assertStringContainsString('Log in', $content);
 
         // Features section translations
-        $this->assertStringContainsString('Fonctionnalités principales', $content);
-        $this->assertStringContainsString('Gestion de projets', $content);
-        $this->assertStringContainsString('Créez et organisez vos projets facilement avec une interface intuitive.', $content);
-        $this->assertStringContainsString('Suivi des tâches', $content);
-        $this->assertStringContainsString('Assignez et suivez l&#039;avancement de chaque tâche en temps réel.', $content);
+        $this->assertStringContainsString('Key features', $content);
+        $this->assertStringContainsString('Project management', $content);
+        $this->assertStringContainsString('Create and organize your projects easily with an intuitive interface.', $content);
+        $this->assertStringContainsString('Task tracking', $content);
+        $this->assertStringContainsString('Assign and track the progress of each task in real time.', $content);
         $this->assertStringContainsString('Collaboration', $content);
-        $this->assertStringContainsString('Travaillez en équipe et partagez vos projets avec vos collaborateurs.', $content);
+        $this->assertStringContainsString('Work as a team and share your projects with your collaborators.', $content);
 
         // Footer translation
-        $this->assertStringContainsString('© 2025 TaskBoard Pro. Tous droits réservés.', $content);
+        $this->assertStringContainsString('© 2025 TaskBoard Pro. All rights reserved.', $content);
     }
 
     public function testHomePageLinksWork(): void

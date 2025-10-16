@@ -26,7 +26,7 @@ class ConfirmationTest extends WebTestCase
 
         $this->assertResponseRedirects('/login');
         $client->followRedirect();
-        $this->assertSelectorTextContains('.alert-success', 'Votre inscription a bien été confirmée.');
+        $this->assertSelectorTextContains('.alert-success', 'Your registration was successfully confirmed.');
 
         $container = static::$kernel->getContainer();
 
@@ -51,7 +51,7 @@ class ConfirmationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', "Ce code n'est pas valide.");
+        $this->assertSelectorTextContains('.invalid-feedback', "This code is not valid.");
     }
 
     public function testWithInvalidSignature(): void

@@ -19,8 +19,11 @@ security:
                 enable_csrf: true
             logout:
                 path: /logout
-                target: /login
+                target: /
             user_checker: App\Security\UserChecker
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER

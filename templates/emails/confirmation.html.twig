@@ -1,11 +1,11 @@
 {% extends "emails/base.html.twig" %}
 
-{% block title %}{{ 'Account validation'|trans }}{% endblock %}
+{% block title %}{{ 'confirmation.email.account.validation.title'|trans }}{% endblock %}
 
-{% block header_title %}{{ 'Account validation'|trans }}{% endblock %}
+{% block header_title %}{{ 'confirmation.email.account.validation.title'|trans }}{% endblock %}
 
 {% block header_subtitle %}
-    <p class="mb-0 mt-2">{{ 'Last step to activate your account'|trans }}</p>
+    <p class="mb-0 mt-2">{{ 'confirmation.email.last.step.to.activate.account'|trans }}</p>
 {% endblock %}
 
 {% block extra_styles %}
@@ -28,31 +28,26 @@
 
 {% block content %}
     <div class="text-center">
-        <h2 class="mb-4">{{ 'Hello!'|trans }}</h2>
+        <h2 class="mb-4">{{ 'confirmation.email.hello'|trans }}</h2>
         <p class="lead mb-4">
-            {{ 'Thank you for signing up. To complete your account creation, please use the validation code below:'|trans }}
+            {{ 'confirmation.email.thanks.for.registering'|trans }}
         </p>
-
         <div class="my-5">
             <div class="otp-code">
                 {{ otp_code }}
             </div>
         </div>
-
         <div class="alert alert-info alert-custom" role="alert">
             <i class="bi bi-clock"></i>
-            <strong>{{ 'Important: This code is valid for %minutes% minutes.'|trans({'%minutes%': expiration_minutes|default('15')}) }}</strong>
+            <strong>{{ 'confirmation.email.important.code.validity'|trans({'%minutes%': expiration_minutes|default('15')}) }}</strong>
         </div>
-
         <p class="text-muted mt-4">
-            {{ 'Enter this code on the validation page to activate your account.'|trans }}
+            {{ 'confirmation.email.enter.code'|trans }}
         </p>
-
         <hr class="my-4">
-
         <div class="mt-4">
             <a href="{{ confirmation_url }}" class="btn btn-primary btn-lg">
-                {{ 'Validate my account'|trans }}
+                {{ 'confirmation.email.validate.my.account'|trans }}
             </a>
         </div>
     </div>

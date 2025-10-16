@@ -28,14 +28,14 @@ class RegistrationType extends AbstractType
                     new NotBlank(),
                     new Email(),
                 ],
-                'label' => 'Email address',
+                'label' => 'email.address',
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'validator.passwords.mismatch',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options' => ['label' => 'password'],
+                'second_options' => ['label' => 'repeat.password'],
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 8]),

@@ -12,6 +12,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
 final readonly class RegistrationConfirmationEmailHandler
@@ -24,6 +25,7 @@ final readonly class RegistrationConfirmationEmailHandler
         private int $confirmationLinkLifetime,
         private UrlSignerInterface $urlSigner,
         private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -37,7 +39,7 @@ final readonly class RegistrationConfirmationEmailHandler
         $email = new TemplatedEmail()
             ->from($this->from)
             ->to($message->getTo())
-            ->subject('Account confirmation - TaskBoard Pro')
+            ->subject($this->translator->trans('confirmation.email.subject'))
             ->htmlTemplate('emails/confirmation.html.twig')
             ->context(['otp_code' => $message->getConfirmationCode(), 'confirmation_url' => $confirmUrl]);
 
