@@ -89,7 +89,7 @@ phpstan: ## Phpstan
 phpcsfixer: ## phpcsfixer
 	@$(DOCKER_COMP) exec -e APP_ENV=test -e PHP_CS_FIXER_IGNORE_ENV=true php vendor/bin/php-cs-fixer fix
 
-## —— Asets ——————————————————————————————————————————————————————————————
+## —— Assets ——————————————————————————————————————————————————————————————
 im-require: ## importmap:require, example: make im-require c='bootstrap'
 	@$(eval c ?=)
 	@$(DOCKER_COMP) exec  php bin/console importmap:require $(c)

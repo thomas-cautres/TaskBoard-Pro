@@ -71,65 +71,67 @@
                 <target>Votre inscription a bien été confirmée.</target>
             </trans-unit>
             <trans-unit id="home.nav.home" resname="home.nav.home">
-                <source>home.nav.home</source>
+                <source>Home</source>
                 <target>Accueil</target>
             </trans-unit>
             <trans-unit id="home.nav.login" resname="home.nav.login">
-                <source>home.nav.login</source>
+                <source>Login</source>
                 <target>Connexion</target>
             </trans-unit>
             <trans-unit id="home.nav.register" resname="home.nav.register">
-                <source>home.nav.register</source>
+                <source>Register</source>
                 <target>S'inscrire</target>
             </trans-unit>
             <trans-unit id="home.hero.title" resname="home.hero.title">
-                <source>home.hero.title</source>
+                <source>Manage your projects efficiently</source>
                 <target>Gérez vos projets avec efficacité</target>
             </trans-unit>
             <trans-unit id="home.hero.description" resname="home.hero.description">
-                <source>home.hero.description</source>
+                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate,
+                    plan and succeed together.
+                </source>
                 <target>TaskBoard Pro vous aide à organiser vos projets et tâches en toute simplicité. Collaborez,
                     planifiez et réussissez ensemble.
                 </target>
             </trans-unit>
             <trans-unit id="home.hero.start_free" resname="home.hero.start_free">
-                <source>home.hero.start_free</source>
+                <source>Start for free</source>
                 <target>Commencer gratuitement</target>
             </trans-unit>
             <trans-unit id="home.hero.login" resname="home.hero.login">
-                <source>home.hero.login</source>
+                <source>Log in</source>
                 <target>Se connecter</target>
             </trans-unit>
             <trans-unit id="home.features.title" resname="home.features.title">
-                <source>home.features.title</source>
+                <source>Key features</source>
                 <target>Fonctionnalités principales</target>
             </trans-unit>
             <trans-unit id="home.features.projects.title" resname="home.features.projects.title">
-                <source>home.features.projects.title</source>
+                <source>Project management</source>
                 <target>Gestion de projets</target>
             </trans-unit>
             <trans-unit id="home.features.projects.description" resname="home.features.projects.description">
-                <source>home.features.projects.description</source>
+                <source>Create and organize your projects easily with an intuitive interface.</source>
                 <target>Créez et organisez vos projets facilement avec une interface intuitive.</target>
             </trans-unit>
             <trans-unit id="home.features.tasks.title" resname="home.features.tasks.title">
-                <source>home.features.tasks.title</source>
+                <source>Task tracking</source>
                 <target>Suivi des tâches</target>
             </trans-unit>
             <trans-unit id="home.features.tasks.description" resname="home.features.tasks.description">
-                <source>home.features.tasks.description</source>
+                <source>Assign and track the progress of each task in real time.</source>
                 <target>Assignez et suivez l'avancement de chaque tâche en temps réel.</target>
             </trans-unit>
             <trans-unit id="home.features.collaboration.title" resname="home.features.collaboration.title">
-                <source>home.features.collaboration.title</source>
+                <source>Collaboration</source>
                 <target>Collaboration</target>
             </trans-unit>
             <trans-unit id="home.features.collaboration.description" resname="home.features.collaboration.description">
-                <source>home.features.collaboration.description</source>
+                <source>Work as a team and share your projects with your collaborators.</source>
                 <target>Travaillez en équipe et partagez vos projets avec vos collaborateurs.</target>
             </trans-unit>
             <trans-unit id="home.footer.copyright" resname="home.footer.copyright">
-                <source>home.footer.copyright</source>
+                <source>© %year% TaskBoard Pro. All rights reserved.</source>
                 <target>© %year% TaskBoard Pro. Tous droits réservés.</target>
             </trans-unit>
         </body>
