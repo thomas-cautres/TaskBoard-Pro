@@ -21,7 +21,7 @@ class ConfirmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('confirmationCode', TextType::class, [
-            'label' => 'Confirmation code',
+            'label' => 'confirmation.code',
             'constraints' => new Callback([$this, 'validateConfirmationCode']),
         ]);
     }
@@ -41,7 +41,7 @@ class ConfirmType extends AbstractType
         $confirmationCode = $root->getConfig()->getOption('confirmation_code');
 
         if ($value !== $confirmationCode) {
-            $context->buildViolation('This code is not valid.')->addViolation();
+            $context->buildViolation('validator.confirmation.code.invalid')->addViolation();
         }
     }
 }

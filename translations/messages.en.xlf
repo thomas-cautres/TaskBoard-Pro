@@ -42,21 +42,17 @@
                 <source>Back to home</source>
                 <target>Back to home</target>
             </trans-unit>
-            <trans-unit id="email_address">
+            <trans-unit id="email.address" resname="email.address">
                 <source>Email address</source>
                 <target>Email address</target>
             </trans-unit>
-            <trans-unit id="password">
+            <trans-unit id="password" resname="password">
                 <source>Password</source>
                 <target>Password</target>
             </trans-unit>
-            <trans-unit id="repeat_password">
+            <trans-unit id="repeat.password" resname="repeat.password">
                 <source>Repeat Password</source>
                 <target>Repeat Password</target>
-            </trans-unit>
-            <trans-unit id="signup">
-                <source>Signup</source>
-                <target>Signup</target>
             </trans-unit>
             <trans-unit id="confirmation.email.account.validation.title" resname="confirmation.email.account.validation.title">
                 <source>Account validation</source>
@@ -90,7 +86,7 @@
                 <source>Confirm your registration</source>
                 <target>Confirm your registration</target>
             </trans-unit>
-            <trans-unit id="confirmation_code">
+            <trans-unit id="confirmation.code" resname="confirmation.code">
                 <source>Confirmation code</source>
                 <target>Confirmation code</target>
             </trans-unit>
@@ -161,6 +157,10 @@
             <trans-unit id="home.title" resname="home.title">
                 <source>Homepage</source>
                 <target>Homepage</target>
+            </trans-unit>
+            <trans-unit id="confirmation.email.subject" resname="confirmation.email.subject">
+                <source>Account confirmation - TaskBoard Pro</source>
+                <target>Account confirmation - TaskBoard Pro</target>
             </trans-unit>
         </body>
     </file>
