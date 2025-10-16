@@ -19,7 +19,7 @@
                 <target>Je m'inscris</target>
             </trans-unit>
             <trans-unit id="login">
-                <source>Login</source>
+                <source>I log in</source>
                 <target>Je me connecte</target>
             </trans-unit>
             <trans-unit id="account_validation_title">
@@ -39,8 +39,12 @@
                 <target>Bonjour !</target>
             </trans-unit>
             <trans-unit id="thanks_for_registering">
-                <source>Thank you for signing up. To complete your account creation, please use the validation code below:</source>
-                <target>Merci de vous être inscrit. Pour finaliser la création de votre compte, veuillez utiliser le code de validation ci-dessous :</target>
+                <source>Thank you for signing up. To complete your account creation, please use the validation code
+                    below:
+                </source>
+                <target>Merci de vous être inscrit. Pour finaliser la création de votre compte, veuillez utiliser le
+                    code de validation ci-dessous :
+                </target>
             </trans-unit>
             <trans-unit id="important_code_validity">
                 <source>Important: This code is valid for %minutes% minutes.</source>
@@ -65,6 +69,68 @@
             <trans-unit id="registration_confirmed">
                 <source>Your registration was successfully confirmed.</source>
                 <target>Votre inscription a bien été confirmée.</target>
+            </trans-unit>
+            <trans-unit id="home.nav.home" resname="home.nav.home">
+                <source>home.nav.home</source>
+                <target>Accueil</target>
+            </trans-unit>
+            <trans-unit id="home.nav.login" resname="home.nav.login">
+                <source>home.nav.login</source>
+                <target>Connexion</target>
+            </trans-unit>
+            <trans-unit id="home.nav.register" resname="home.nav.register">
+                <source>home.nav.register</source>
+                <target>S'inscrire</target>
+            </trans-unit>
+            <trans-unit id="home.hero.title" resname="home.hero.title">
+                <source>home.hero.title</source>
+                <target>Gérez vos projets avec efficacité</target>
+            </trans-unit>
+            <trans-unit id="home.hero.description" resname="home.hero.description">
+                <source>home.hero.description</source>
+                <target>TaskBoard Pro vous aide à organiser vos projets et tâches en toute simplicité. Collaborez,
+                    planifiez et réussissez ensemble.
+                </target>
+            </trans-unit>
+            <trans-unit id="home.hero.start_free" resname="home.hero.start_free">
+                <source>home.hero.start_free</source>
+                <target>Commencer gratuitement</target>
+            </trans-unit>
+            <trans-unit id="home.hero.login" resname="home.hero.login">
+                <source>home.hero.login</source>
+                <target>Se connecter</target>
+            </trans-unit>
+            <trans-unit id="home.features.title" resname="home.features.title">
+                <source>home.features.title</source>
+                <target>Fonctionnalités principales</target>
+            </trans-unit>
+            <trans-unit id="home.features.projects.title" resname="home.features.projects.title">
+                <source>home.features.projects.title</source>
+                <target>Gestion de projets</target>
+            </trans-unit>
+            <trans-unit id="home.features.projects.description" resname="home.features.projects.description">
+                <source>home.features.projects.description</source>
+                <target>Créez et organisez vos projets facilement avec une interface intuitive.</target>
+            </trans-unit>
+            <trans-unit id="home.features.tasks.title" resname="home.features.tasks.title">
+                <source>home.features.tasks.title</source>
+                <target>Suivi des tâches</target>
+            </trans-unit>
+            <trans-unit id="home.features.tasks.description" resname="home.features.tasks.description">
+                <source>home.features.tasks.description</source>
+                <target>Assignez et suivez l'avancement de chaque tâche en temps réel.</target>
+            </trans-unit>
+            <trans-unit id="home.features.collaboration.title" resname="home.features.collaboration.title">
+                <source>home.features.collaboration.title</source>
+                <target>Collaboration</target>
+            </trans-unit>
+            <trans-unit id="home.features.collaboration.description" resname="home.features.collaboration.description">
+                <source>home.features.collaboration.description</source>
+                <target>Travaillez en équipe et partagez vos projets avec vos collaborateurs.</target>
+            </trans-unit>
+            <trans-unit id="home.footer.copyright" resname="home.footer.copyright">
+                <source>home.footer.copyright</source>
+                <target>© %year% TaskBoard Pro. Tous droits réservés.</target>
             </trans-unit>
         </body>
     </file>

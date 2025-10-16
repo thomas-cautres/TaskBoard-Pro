@@ -26,10 +26,7 @@ security:
         ROLE_ADMIN:       ROLE_USER
 
     access_control:
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/registration, roles: PUBLIC_ACCESS }
-        - { path: ^/confirm, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/app, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
