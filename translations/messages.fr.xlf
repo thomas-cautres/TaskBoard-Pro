@@ -2,6 +2,54 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="login.title" resname="login.title">
+                <source>Login</source>
+                <target>Connexion</target>
+            </trans-unit>
+            <trans-unit id="login.access_space" resname="login.access_space">
+                <source>Access your space</source>
+                <target>Accédez à votre espace</target>
+            </trans-unit>
+            <trans-unit id="login.email" resname="login.email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="login.email_placeholder" resname="login.email_placeholder">
+                <source>example@email.com</source>
+                <target>exemple@email.com</target>
+            </trans-unit>
+            <trans-unit id="login.password" resname="login.password">
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit id="login.password_placeholder" resname="login.password_placeholder">
+                <source>••••••••</source>
+                <target>••••••••</target>
+            </trans-unit>
+            <trans-unit id="login.remember_me" resname="login.remember_me">
+                <source>Remember me</source>
+                <target>Se souvenir de moi</target>
+            </trans-unit>
+            <trans-unit id="login.submit" resname="login.submit">
+                <source>Sign in</source>
+                <target>Se connecter</target>
+            </trans-unit>
+            <trans-unit id="login.forgot_password" resname="login.forgot_password">
+                <source>Forgot password?</source>
+                <target>Mot de passe oublié ?</target>
+            </trans-unit>
+            <trans-unit id="login.no_account" resname="login.no_account">
+                <source>Don't have an account yet?</source>
+                <target>Pas encore de compte ?</target>
+            </trans-unit>
+            <trans-unit id="login.signup_link" resname="login.signup_link">
+                <source>Sign up</source>
+                <target>S'inscrire</target>
+            </trans-unit>
+            <trans-unit id="login.back_to_home" resname="login.back_to_home">
+                <source>Back to home</source>
+                <target>Retour à l'accueil</target>
+            </trans-unit>
             <trans-unit id="email_address">
                 <source>Email address</source>
                 <target>Adresse email</target>
@@ -17,10 +65,6 @@
             <trans-unit id="signup">
                 <source>Signup</source>
                 <target>Je m'inscris</target>
-            </trans-unit>
-            <trans-unit id="login">
-                <source>I log in</source>
-                <target>Je me connecte</target>
             </trans-unit>
             <trans-unit id="account_validation_title">
                 <source>Account validation</source>
