@@ -23,7 +23,11 @@
                                     {{ error.messageKey|trans(error.messageData, 'security') }}
                                 </div>
                             {% endif %}
-
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message|trans }}
+                                </div>
+                            {% endfor %}
                             <form action="{{ path('login') }}" method="post">
                                 <div class="mb-3">
                                     <label class="form-label">{{ 'login.email'|trans }}</label>

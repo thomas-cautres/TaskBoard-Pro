@@ -67,7 +67,7 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'Les mots de passe doivent correspondre.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'The password fields must match.');
     }
 
     public function testWithWeakPassword(): void
@@ -84,7 +84,7 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'Cette chaîne est trop courte. Elle doit avoir au minimum 8 caractères.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value is too short. It should have 8 characters or more.');
     }
 
     public function testRegistrationWithExistingEmail(): void
@@ -109,6 +109,6 @@ class RegistrationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'Cet email est déjà inscrit.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This email is already registered.');
     }
 }

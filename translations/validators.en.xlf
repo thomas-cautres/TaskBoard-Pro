@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="password_fields_error">
                 <source>The password fields must match.</source>
-                <target>Les mots de passe doivent correspondre.</target>
+                <target>The password fields must match.</target>
             </trans-unit>
             <trans-unit id="email_already_registered">
                 <source>This email is already registered.</source>
-                <target>Cet email est déjà inscrit.</target>
+                <target>This email is already registered.</target>
             </trans-unit>
             <trans-unit id="confirmation_code_invalid">
                 <source>This code is not valid.</source>
-                <target>Ce code n'est pas valide.</target>
+                <target>This code is not valid.</target>
             </trans-unit>
         </body>
     </file>

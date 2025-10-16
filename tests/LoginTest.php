@@ -16,15 +16,15 @@ class LoginTest extends WebTestCase
         $content = $client->getResponse()->getContent();
 
         $this->assertStringContainsString('TaskBoard Pro', $content);
-        $this->assertStringContainsString('Accédez à votre espace', $content);
+        $this->assertStringContainsString('Access your space', $content);
         $this->assertStringContainsString('Email', $content);
-        $this->assertStringContainsString('Mot de passe', $content);
-        $this->assertStringContainsString('Se souvenir de moi', $content);
-        $this->assertStringContainsString('Se connecter', $content);
-        $this->assertStringContainsString('Mot de passe oublié ?', $content);
-        $this->assertStringContainsString('Pas encore de compte ?', $content);
-        $this->assertStringContainsString('S&#039;inscrire', $content);
-        $this->assertStringContainsString('Retour à l&#039;accueil', $content);
+        $this->assertStringContainsString('Password', $content);
+        $this->assertStringContainsString('Remember me', $content);
+        $this->assertStringContainsString('Sign in', $content);
+        $this->assertStringContainsString('Forgot password?', $content);
+        $this->assertStringContainsString("Don&#039;t have an account yet?", $content);
+        $this->assertStringContainsString('Sign up', $content);
+        $this->assertStringContainsString('Back to home', $content);
 
         $client->submitForm('login-btn', [
             '_username' => 'user-confirmed@domain.com',
@@ -46,7 +46,7 @@ class LoginTest extends WebTestCase
         ]);
 
         $client->followRedirect();
-        $this->assertSelectorTextContains('.alert-danger', 'Identifiants invalides.');
+        $this->assertSelectorTextContains('.alert-danger', 'Invalid credentials.');
     }
 
     public function testUserIsNotConfirmed(): void
@@ -61,7 +61,7 @@ class LoginTest extends WebTestCase
         ]);
 
         $client->followRedirect();
-        $this->assertSelectorTextContains('.alert-danger', "Votre inscription n'est pas confirmée.");
+        $this->assertSelectorTextContains('.alert-danger', "Your registration is not confirmed.");
     }
 
     public function testPageLinksWork(): void
