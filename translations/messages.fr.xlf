@@ -14,17 +14,9 @@
                 <source>Email</source>
                 <target>Email</target>
             </trans-unit>
-            <trans-unit id="login.email_placeholder" resname="login.email_placeholder">
-                <source>example@email.com</source>
-                <target>exemple@email.com</target>
-            </trans-unit>
             <trans-unit id="login.password" resname="login.password">
                 <source>Password</source>
                 <target>Mot de passe</target>
-            </trans-unit>
-            <trans-unit id="login.password_placeholder" resname="login.password_placeholder">
-                <source>••••••••</source>
-                <target>••••••••</target>
             </trans-unit>
             <trans-unit id="login.remember_me" resname="login.remember_me">
                 <source>Remember me</source>
