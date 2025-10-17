@@ -1,23 +1,48 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ 'register.title'|trans }}{% endblock %}
+
+{% block javascripts %}
+    {% block importmap %}
+        {{ importmap('app') }}
+        {{ importmap('login') }}
+    {% endblock %}
+{% endblock %}
+
 {% block body %}
-    <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div class="card shadow-lg border-0" style="width: 26rem;">
-            <div class="card-body p-4">
-                <h2 class="text-center mb-4">{{ 'login.signup_link'|trans }}</h2>
-                {{ form_start(form) }}
-                <div class="mb-3">
-                    {{ form_row(form.email) }}
+    <div class="auth-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card auth-card">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold"><i class="bi bi-diagram-3"></i> TaskBoard Pro</h2>
+                                <p class="text-muted mt-3">{{ 'register.heading'|trans }}</p>
+                            </div>
+                            {{ form_start(form) }}
+                            <div class="mb-3">
+                                {{ form_row(form.email) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_row(form.password) }}
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100"
+                                    id="signup-btn">{{ 'register.submit'|trans }}</button>
+                            {{ form_end(form) }}
+                            <hr class="my-4">
+                            <div class="text-center">
+                                <p class="mb-0">{{ 'register.already_account'|trans }} <a href="{{ path('login') }}"
+                                                                                          class="text-decoration-none fw-bold">{{ 'register.login_link'|trans }}</a></p>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="{{ path('home') }}" class="text-decoration-none"><i
+                                        class="bi bi-arrow-left"></i>
+                                    {{ 'register.back_to_home'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    {{ form_row(form.password) }}
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg" id="signup-btn">
-                        {{ 'login.signup_link'|trans }}
-                    </button>
-                </div>
-                {{ form_end(form) }}
             </div>
         </div>
     </div>
