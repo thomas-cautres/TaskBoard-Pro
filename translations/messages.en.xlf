@@ -67,8 +67,10 @@
                 <target>Hello!</target>
             </trans-unit>
             <trans-unit id="confirmation.email.thanks.for.registering" resname="confirmation.email.thanks.for.registering">
-                <source>Thank you for signing up. To complete your account creation, please use the validation code below:</source>
-                <target>Thank you for signing up. To complete your account creation, please use the validation code below:</target>
+                <source>Thank you for signing up. To complete your account creation, please use the validation code below:
+                </source>
+                <target>Thank you for signing up. To complete your account creation, please use the validation code below:
+                </target>
             </trans-unit>
             <trans-unit id="confirmation.email.important.code.validity" resname="confirmation.email.important.code.validity">
                 <source>Important: This code is valid for %minutes% minutes.</source>
@@ -111,8 +113,10 @@
                 <target>Manage your projects efficiently</target>
             </trans-unit>
             <trans-unit id="home.hero.description" resname="home.hero.description">
-                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.</source>
-                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.</target>
+                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                </source>
+                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                </target>
             </trans-unit>
             <trans-unit id="home.hero.start_free" resname="home.hero.start_free">
                 <source>Start for free</source>
@@ -161,34 +165,6 @@
             <trans-unit id="confirmation.email.subject" resname="confirmation.email.subject">
                 <source>Account confirmation - TaskBoard Pro</source>
                 <target>Account confirmation - TaskBoard Pro</target>
-            </trans-unit>
-            <trans-unit id="otp.title" resname="otp.title">
-                <source>Verify your account</source>
-                <target>Verify your account</target>
-            </trans-unit>
-            <trans-unit id="otp.heading" resname="otp.heading">
-                <source>Enter verification code</source>
-                <target>Enter verification code</target>
-            </trans-unit>
-            <trans-unit id="otp.description" resname="otp.description">
-                <source>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</source>
-                <target>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</target>
-            </trans-unit>
-            <trans-unit id="otp.code_label" resname="otp.code_label">
-                <source>Verification code</source>
-                <target>Verification code</target>
-            </trans-unit>
-            <trans-unit id="otp.code_help" resname="otp.code_help">
-                <source>Enter the 6-digit code sent to your email</source>
-                <target>Enter the 6-digit code sent to your email</target>
-            </trans-unit>
-            <trans-unit id="otp.verify_button" resname="otp.verify_button">
-                <source>Verify account</source>
-                <target>Verify account</target>
-            </trans-unit>
-            <trans-unit id="otp.back_to_login" resname="otp.back_to_login">
-                <source>Back to login</source>
-                <target>Back to login</target>
             </trans-unit>
             <trans-unit id="register.title" resname="register.title">
                 <source>Register</source>
