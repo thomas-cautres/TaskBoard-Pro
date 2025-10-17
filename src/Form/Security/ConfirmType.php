@@ -21,8 +21,10 @@ class ConfirmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('confirmationCode', TextType::class, [
-            'label' => 'confirmation.code',
+            'label' => 'otp.code_label',
             'constraints' => new Callback([$this, 'validateConfirmationCode']),
+            'attr' => ['class' => 'form-control-lg text-center'],
+            'label_attr' => ['class' => 'fw-semibold'],
         ]);
     }
 

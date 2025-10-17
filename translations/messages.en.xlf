@@ -202,6 +202,34 @@
                 <source>Back to home</source>
                 <target>Back to home</target>
             </trans-unit>
+            <trans-unit id="otp.title" resname="otp.title">
+                <source>Verify your account</source>
+                <target>Verify your account</target>
+            </trans-unit>
+            <trans-unit id="otp.heading" resname="otp.heading">
+                <source>Enter verification code</source>
+                <target>Enter verification code</target>
+            </trans-unit>
+            <trans-unit id="otp.description" resname="otp.description">
+                <source>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</source>
+                <target>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</target>
+            </trans-unit>
+            <trans-unit id="otp.code_label" resname="otp.code_label">
+                <source>Verification code</source>
+                <target>Verification code</target>
+            </trans-unit>
+            <trans-unit id="otp.code_help" resname="otp.code_help">
+                <source>Enter the 6-digit code sent to your email</source>
+                <target>Enter the 6-digit code sent to your email</target>
+            </trans-unit>
+            <trans-unit id="otp.verify_button" resname="otp.verify_button">
+                <source>Verify account</source>
+                <target>Verify account</target>
+            </trans-unit>
+            <trans-unit id="otp.back_to_login" resname="otp.back_to_login">
+                <source>Back to login</source>
+                <target>Back to login</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
