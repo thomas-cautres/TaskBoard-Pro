@@ -190,6 +190,42 @@
                 <source>Back to login</source>
                 <target>Back to login</target>
             </trans-unit>
+            <trans-unit id="register.title" resname="register.title">
+                <source>Register</source>
+                <target>Register</target>
+            </trans-unit>
+            <trans-unit id="register.heading" resname="register.heading">
+                <source>Join TaskBoard Pro for free</source>
+                <target>Join TaskBoard Pro for free</target>
+            </trans-unit>
+            <trans-unit id="register.email" resname="register.email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="register.password" resname="register.password">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="register.confirm_password" resname="register.confirm_password">
+                <source>Confirm password</source>
+                <target>Confirm password</target>
+            </trans-unit>
+            <trans-unit id="register.submit" resname="register.submit">
+                <source>Sign up</source>
+                <target>Sign up</target>
+            </trans-unit>
+            <trans-unit id="register.already_account" resname="register.already_account">
+                <source>Already have an account?</source>
+                <target>Already have an account?</target>
+            </trans-unit>
+            <trans-unit id="register.login_link" resname="register.login_link">
+                <source>Log in</source>
+                <target>Log in</target>
+            </trans-unit>
+            <trans-unit id="register.back_to_home" resname="register.back_to_home">
+                <source>Back to home</source>
+                <target>Back to home</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
