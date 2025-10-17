@@ -67,8 +67,10 @@
                 <target>Hello!</target>
             </trans-unit>
             <trans-unit id="confirmation.email.thanks.for.registering" resname="confirmation.email.thanks.for.registering">
-                <source>Thank you for signing up. To complete your account creation, please use the validation code below:</source>
-                <target>Thank you for signing up. To complete your account creation, please use the validation code below:</target>
+                <source>Thank you for signing up. To complete your account creation, please use the validation code below:
+                </source>
+                <target>Thank you for signing up. To complete your account creation, please use the validation code below:
+                </target>
             </trans-unit>
             <trans-unit id="confirmation.email.important.code.validity" resname="confirmation.email.important.code.validity">
                 <source>Important: This code is valid for %minutes% minutes.</source>
@@ -111,8 +113,10 @@
                 <target>Manage your projects efficiently</target>
             </trans-unit>
             <trans-unit id="home.hero.description" resname="home.hero.description">
-                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.</source>
-                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.</target>
+                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                </source>
+                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                </target>
             </trans-unit>
             <trans-unit id="home.hero.start_free" resname="home.hero.start_free">
                 <source>Start for free</source>
@@ -161,6 +165,42 @@
             <trans-unit id="confirmation.email.subject" resname="confirmation.email.subject">
                 <source>Account confirmation - TaskBoard Pro</source>
                 <target>Account confirmation - TaskBoard Pro</target>
+            </trans-unit>
+            <trans-unit id="register.title" resname="register.title">
+                <source>Register</source>
+                <target>Register</target>
+            </trans-unit>
+            <trans-unit id="register.heading" resname="register.heading">
+                <source>Join TaskBoard Pro for free</source>
+                <target>Join TaskBoard Pro for free</target>
+            </trans-unit>
+            <trans-unit id="register.email" resname="register.email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="register.password" resname="register.password">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="register.confirm_password" resname="register.confirm_password">
+                <source>Confirm password</source>
+                <target>Confirm password</target>
+            </trans-unit>
+            <trans-unit id="register.submit" resname="register.submit">
+                <source>Sign up</source>
+                <target>Sign up</target>
+            </trans-unit>
+            <trans-unit id="register.already_account" resname="register.already_account">
+                <source>Already have an account?</source>
+                <target>Already have an account?</target>
+            </trans-unit>
+            <trans-unit id="register.login_link" resname="register.login_link">
+                <source>Log in</source>
+                <target>Log in</target>
+            </trans-unit>
+            <trans-unit id="register.back_to_home" resname="register.back_to_home">
+                <source>Back to home</source>
+                <target>Back to home</target>
             </trans-unit>
         </body>
     </file>

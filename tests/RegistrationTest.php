@@ -17,6 +17,17 @@ class RegistrationTest extends WebTestCase
 
         $client->request('GET', '/registration');
         $this->assertResponseIsSuccessful();
+        $content = $client->getResponse()->getContent();
+
+        $this->assertStringContainsString('Register', $content);
+        $this->assertStringContainsString('Join TaskBoard Pro for free', $content);
+        $this->assertStringContainsString('Email', $content);
+        $this->assertStringContainsString('Password', $content);
+        $this->assertStringContainsString('Confirm password', $content);
+        $this->assertStringContainsString('Sign up', $content);
+        $this->assertStringContainsString('Already have an account?', $content);
+        $this->assertStringContainsString('Log in', $content);
+        $this->assertStringContainsString('Back to home', $content);
 
         $client->submitForm('signup-btn', [
             'registration[email]' => 'test@test.com',
