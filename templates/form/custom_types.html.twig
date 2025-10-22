@@ -1,0 +1,19 @@
+{% block project_type_row %}
+    {% for type in form.children %}
+        {% set attrs = type.vars.attr %}
+        <div class="col-md-4">
+            <label class="project-type-card card h-100 p-3">
+                <input type="radio" name="{{ type.vars.full_name }}" value="scrum" required id="{{ type.vars.id }}">
+                <div class="d-flex align-items-start">
+                    <i class="bi {{ attrs['data-icon'] }} fs-2 {{ attrs['data-icon-color'] }} me-2"></i>
+                    <div>
+                        <h6 class="mb-1">{{ attrs['data-emoji'] }} {{ type.vars.value|upper }}</h6>
+                        <small class="text-muted">
+                            {{ attrs['data-description'] }}
+                        </small>
+                    </div>
+                </div>
+            </label>
+        </div>
+    {% endfor %}
+{% endblock %}

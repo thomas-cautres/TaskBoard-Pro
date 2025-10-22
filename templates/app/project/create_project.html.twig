@@ -7,15 +7,12 @@
 {% block body %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="project_index_complete.html">Projets</a></li>
                     <li class="breadcrumb-item active">Créer un projet</li>
                 </ol>
             </nav>
-
-            <!-- Page Header -->
             <div class="mb-4">
                 <h1 class="h2 mb-2">
                     <i class="bi bi-plus-circle text-primary"></i>
@@ -23,121 +20,64 @@
                 </h1>
                 <p class="text-muted mb-0">Organisez votre travail avec la méthodologie qui vous convient</p>
             </div>
-
-            <!-- Formulaire -->
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <form id="projectForm">
-                        <!-- Nom du projet -->
-                        <div class="mb-4">
-                            <label for="projectName" class="form-label fw-semibold">Nom du projet *</label>
-                            <input type="text" class="form-control" id="projectName" name="projectName"
-                                   placeholder="Ex: Refonte Site Web E-commerce" required>
-                            <div class="form-text">
-                                <i class="bi bi-info-circle"></i>
-                                Choisissez un nom unique et descriptif
-                            </div>
+                    {{ form_start(form) }}
+                    <div class="mb-4">
+                        {{ form_row(form.name) }}
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i>
+                            Choisissez un nom unique et descriptif
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        {{ form_row(form.description) }}
+                        <div class="form-text">Optionnel - Vous pourrez la modifier plus tard</div>
+                    </div>
+
+                    <!-- Type de projet -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Type de projet *</label>
+
+                        <div class="row g-3">
+                            {{ form_row(form.type) }}
                         </div>
 
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="projectDescription" class="form-label fw-semibold">Description</label>
-                            <textarea class="form-control" id="projectDescription" name="projectDescription" rows="4"
-                                      placeholder="Décrivez les objectifs et le contexte du projet..."></textarea>
-                            <div class="form-text">Optionnel - Vous pourrez la modifier plus tard</div>
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-lightbulb"></i>
+                            <strong>À savoir :</strong> Des colonnes seront automatiquement créées selon le type
+                            choisi. Vous pourrez les personnaliser après la création.
+                        </div>
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            {{ form_row(form.startDate) }}
+                            <div class="form-text">Optionnel</div>
                         </div>
 
-                        <!-- Type de projet -->
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Type de projet *</label>
-
-                            <div class="row g-3">
-                                <!-- SCRUM -->
-                                <div class="col-md-4">
-                                    <label class="project-type-card card h-100 p-3">
-                                        <input type="radio" name="projectType" value="scrum" required>
-                                        <div class="d-flex align-items-start">
-                                            <i class="bi bi-calendar-week fs-2 text-success me-2"></i>
-                                            <div>
-                                                <h6 class="mb-1">🏃 SCRUM</h6>
-                                                <small class="text-muted">
-                                                    Sprints, backlog, planning poker, burndown charts
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <!-- KANBAN -->
-                                <div class="col-md-4">
-                                    <label class="project-type-card card h-100 p-3">
-                                        <input type="radio" name="projectType" value="kanban" required>
-                                        <div class="d-flex align-items-start">
-                                            <i class="bi bi-kanban fs-2 text-warning me-2"></i>
-                                            <div>
-                                                <h6 class="mb-1">📋 KANBAN</h6>
-                                                <small class="text-muted">
-                                                    Flux continu, WIP limits, visualisation claire
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <!-- BASIC -->
-                                <div class="col-md-4">
-                                    <label class="project-type-card card h-100 p-3">
-                                        <input type="radio" name="projectType" value="basic" required>
-                                        <div class="d-flex align-items-start">
-                                            <i class="bi bi-list-check fs-2 text-secondary me-2"></i>
-                                            <div>
-                                                <h6 class="mb-1">📝 BASIC</h6>
-                                                <small class="text-muted">
-                                                    Simple liste ouvert/fermé, idéal pour débuter
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="alert alert-info mt-3">
-                                <i class="bi bi-lightbulb"></i>
-                                <strong>À savoir :</strong> Des colonnes seront automatiquement créées selon le type
-                                choisi. Vous pourrez les personnaliser après la création.
-                            </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.endDate) }}
+                            <div class="form-text">Optionnel</div>
                         </div>
+                    </div>
 
-                        <!-- Dates -->
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <label for="startDate" class="form-label fw-semibold">Date de début</label>
-                                <input type="date" class="form-control" id="startDate" name="startDate">
-                                <div class="form-text">Optionnel</div>
-                            </div>
+                    <!-- Actions -->
+                    <hr class="my-4">
 
-                            <div class="col-md-6">
-                                <label for="endDate" class="form-label fw-semibold">Date de fin</label>
-                                <input type="date" class="form-control" id="endDate" name="endDate">
-                                <div class="form-text">Optionnel</div>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="project_index_complete.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i>
+                            Annuler
+                        </a>
 
-                        <!-- Actions -->
-                        <hr class="my-4">
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="project_index_complete.html" class="btn btn-outline-secondary">
-                                <i class="bi bi-x-circle"></i>
-                                Annuler
-                            </a>
-
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-check-circle"></i>
-                                Créer le projet
-                            </button>
-                        </div>
-                    </form>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle"></i>
+                            Créer le projet
+                        </button>
+                    </div>
+                    {{ form_end(form, {'render_rest':false}) }}
                 </div>
             </div>
 
