@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/app/project/create', methods: ['GET', 'POST'])]
+#[Route('/app/project/create', name: 'app_project_create', methods: ['GET', 'POST'])]
 class CreateProjectController extends AbstractController
 {
     public function __invoke(Request $request): Response
