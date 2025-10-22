@@ -1,12 +1,4 @@
-.btn-primary {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.text-primary {
-    color: var(--primary) !important;
-}
-
+/* Stats cards */
 .stat-card {
     border-left: 4px solid;
     transition: all 0.2s;
@@ -14,7 +6,7 @@
 
 .stat-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .stat-card.primary {
@@ -33,6 +25,7 @@
     border-color: var(--info);
 }
 
+/* Activity timeline */
 .activity-item {
     padding-left: 2rem;
     position: relative;
@@ -63,6 +56,7 @@
     box-shadow: 0 0 0 2px #E5E7EB;
 }
 
+/* Quick actions */
 .quick-action-card {
     cursor: pointer;
     transition: all 0.2s;
@@ -74,12 +68,10 @@
     transform: translateY(-2px);
 }
 
-.chart-placeholder {
-    height: 200px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
+.card {
+    transition: all 0.2s;
+}
+
+.progress {
+    height: 8px;
 }

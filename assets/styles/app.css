@@ -10,3 +10,82 @@ body {
     background-color: #F9FAFB;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: #4338CA;
+    border-color: #4338CA;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid #E5E7EB;
+    padding-top: 1.5rem;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar .nav-link {
+    color: #6B7280;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin: 0.25rem 0.75rem;
+    transition: all 0.2s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #F3F4F6;
+    color: var(--primary);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    margin-right: 0.75rem;
+}
+
+/* Main content avec offset pour sidebar */
+.main-content {
+    margin-left: 250px;
+    margin-top: 56px;
+    padding: 2rem;
+}
+
+/* Responsive - cacher sidebar sur mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}

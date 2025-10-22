@@ -19,6 +19,8 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user
+            ->setFirstName('John')
+            ->setLastName('Doe')
             ->setEmail('user-confirmed@domain.com')
             ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
             ->setConfirmed(true)
@@ -28,6 +30,8 @@ class UserFixtures extends Fixture
 
         $user = new User();
         $user
+            ->setFirstName('Jane')
+            ->setLastName('Doe')
             ->setEmail('user-unconfirmed@domain.com')
             ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
             ->setConfirmed(false)
