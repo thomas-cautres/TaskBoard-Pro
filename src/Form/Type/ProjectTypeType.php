@@ -9,6 +9,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @extends AbstractType<ProjectType>
+ */
 class ProjectTypeType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
@@ -17,7 +20,7 @@ class ProjectTypeType extends AbstractType
             'class' => ProjectType::class,
             'multiple' => false,
             'expanded' => true,
-            'choice_attr' => function ($choice, $key, $value) {
+            'choice_attr' => function (ProjectType $choice, $key, $value) {
                 return [
                     'data-icon' => match ($choice) {
                         ProjectType::Scrum => 'bi-calendar-week',

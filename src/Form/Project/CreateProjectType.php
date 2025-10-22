@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<Project>
+ */
 class CreateProjectType extends AbstractType
 {
     public function __construct(

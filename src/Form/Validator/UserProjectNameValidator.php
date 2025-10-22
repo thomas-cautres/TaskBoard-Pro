@@ -15,6 +15,9 @@ readonly class UserProjectNameValidator
     {
     }
 
+    /**
+     * @param string $value
+     */
     public function validate(mixed $value, ExecutionContextInterface $context, mixed $payload): void
     {
         $user = $this->security->getUser();

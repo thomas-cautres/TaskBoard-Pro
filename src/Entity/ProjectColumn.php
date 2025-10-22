@@ -23,7 +23,7 @@ class ProjectColumn
     private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'columns')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private Project $project;
 
     public function __construct()

@@ -46,6 +46,9 @@ class Project
     #[ORM\JoinColumn(nullable: false)]
     private User $createdBy;
 
+    /**
+     * @var Collection<int, ProjectColumn>
+     */
     #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $columns;
 
@@ -164,6 +167,9 @@ class Project
         return $this;
     }
 
+    /**
+     * @return Collection<int, ProjectColumn>
+     */
     public function getColumns(): Collection
     {
         return $this->columns;
