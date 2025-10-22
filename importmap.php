@@ -5,12 +5,8 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'home' => [
-        'path' => './assets/home.js',
-        'entrypoint' => true,
-    ],
-    'login' => [
-        'path' => './assets/login.js',
+    'front' => [
+        'path' => './assets/front.js',
         'entrypoint' => true,
     ],
     'bootstrap' => [

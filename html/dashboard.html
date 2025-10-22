@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TaskBoard Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+        }
+        
+        body {
+            background-color: #F9FAFB;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        .stat-card {
+            border-left: 4px solid !important;
+            transition: all 0.2s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.primary {
+            border-color: var(--primary);
+        }
+        
+        .stat-card.success {
+            border-color: var(--success);
+        }
+        
+        .stat-card.warning {
+            border-color: var(--warning);
+        }
+        
+        .stat-card.info {
+            border-color: var(--info);
+        }
+        
+        .activity-item {
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: -1rem;
+            width: 2px;
+            background: #E5E7EB;
+        }
+        
+        .activity-item:last-child::before {
+            display: none;
+        }
+        
+        .activity-dot {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #E5E7EB;
+        }
+        
+        .quick-action-card {
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .quick-action-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="h2 mb-1">
+                    <i class="bi bi-speedometer2 text-primary"></i>
+                    Bonjour, Alice 👋
+                </h1>
+                <p class="text-muted mb-0">Voici un aperçu de votre activité aujourd'hui</p>
+            </div>
+        </div>
+        
+        <!-- Stats principales -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card stat-card primary h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <p class="text-muted mb-1 small">Projets actifs</p>
+                                <h2 class="mb-0">12</h2>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 rounded p-2">
+                                <i class="bi bi-folder text-primary fs-4"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-arrow-up text-success me-1"></i>
+                            <small class="text-success">+2 ce mois</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card stat-card success h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <p class="text-muted mb-1 small">Tâches terminées</p>
+                                <h2 class="mb-0">156</h2>
+                            </div>
+                            <div class="bg-success bg-opacity-10 rounded p-2">
+                                <i class="bi bi-check-circle text-success fs-4"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-arrow-up text-success me-1"></i>
+                            <small class="text-success">+18 cette semaine</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card stat-card warning h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <p class="text-muted mb-1 small">En cours</p>
+                                <h2 class="mb-0">42</h2>
+                            </div>
+                            <div class="bg-warning bg-opacity-10 rounded p-2">
+                                <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-dash text-muted me-1"></i>
+                            <small class="text-muted">Stable</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card stat-card info h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <p class="text-muted mb-1 small">Collaborateurs</p>
+                                <h2 class="mb-0">24</h2>
+                            </div>
+                            <div class="bg-info bg-opacity-10 rounded p-2">
+                                <i class="bi bi-people text-info fs-4"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-arrow-up text-success me-1"></i>
+                            <small class="text-success">+3 nouveaux</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions rapides -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h5 class="mb-3">Actions rapides</h5>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <a href="project_create.html" class="text-decoration-none">
+                            <div class="card quick-action-card">
+                                <div class="card-body text-center py-4">
+                                    <i class="bi bi-plus-circle text-primary fs-1 mb-2"></i>
+                                    <h6 class="mb-0">Nouveau projet</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card quick-action-card">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-list-check text-success fs-1 mb-2"></i>
+                                <h6 class="mb-0">Nouvelle tâche</h6>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card quick-action-card">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-people text-info fs-1 mb-2"></i>
+                                <h6 class="mb-0">Inviter un membre</h6>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card quick-action-card">
+                            <div class="card-body text-center py-4">
+                                <i class="bi bi-file-earmark-text text-warning fs-1 mb-2"></i>
+                                <h6 class="mb-0">Rapport</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Mes tâches aujourd'hui -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-calendar-check text-primary"></i>
+                            Mes tâches aujourd'hui
+                        </h5>
+                        <span class="badge bg-primary">5</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Tâche 1 -->
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="task1">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-check-label fw-semibold" for="task1">
+                                    Revoir la maquette de la page d'accueil
+                                </label>
+                                <div class="small text-muted mt-1">
+                                    <span class="badge bg-success me-1">SCRUM</span>
+                                    Site Web E-commerce
+                                </div>
+                            </div>
+                            <span class="badge bg-danger">Urgent</span>
+                        </div>
+                        
+                        <!-- Tâche 2 -->
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="task2">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-check-label fw-semibold" for="task2">
+                                    Corriger les bugs API catalogue
+                                </label>
+                                <div class="small text-muted mt-1">
+                                    <span class="badge bg-success me-1">SCRUM</span>
+                                    Site Web E-commerce
+                                </div>
+                            </div>
+                            <span class="badge bg-warning">Moyenne</span>
+                        </div>
+                        
+                        <!-- Tâche 3 -->
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="task3" checked>
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-check-label text-decoration-line-through" for="task3">
+                                    Setup environnement de dev
+                                </label>
+                                <div class="small text-muted mt-1">
+                                    <span class="badge bg-warning me-1">KANBAN</span>
+                                    Application Mobile
+                                </div>
+                            </div>
+                            <span class="badge bg-success">Terminé</span>
+                        </div>
+                        
+                        <!-- Tâche 4 -->
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="task4">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-check-label fw-semibold" for="task4">
+                                    Préparer la démo client
+                                </label>
+                                <div class="small text-muted mt-1">
+                                    <span class="badge bg-success me-1">SCRUM</span>
+                                    Site Web E-commerce
+                                </div>
+                            </div>
+                            <span class="badge bg-info">Basse</span>
+                        </div>
+                        
+                        <!-- Tâche 5 -->
+                        <div class="d-flex">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="task5">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-check-label fw-semibold" for="task5">
+                                    Mettre à jour la documentation
+                                </label>
+                                <div class="small text-muted mt-1">
+                                    <span class="badge bg-secondary me-1">BASIC</span>
+                                    Migration BDD
+                                </div>
+                            </div>
+                            <span class="badge bg-info">Basse</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="#" class="text-decoration-none">
+                            Voir toutes mes tâches
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activité récente -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white border-0">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clock-history text-primary"></i>
+                            Activité récente
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Item 1 -->
+                        <div class="activity-item mb-4">
+                            <span class="activity-dot bg-success"></span>
+                            <div>
+                                <p class="mb-1">
+                                    <strong>Bob Dupont</strong> a terminé la tâche
+                                    <span class="text-primary">"Page produit responsive"</span>
+                                </p>
+                                <small class="text-muted">Il y a 15 minutes</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 2 -->
+                        <div class="activity-item mb-4">
+                            <span class="activity-dot bg-primary"></span>
+                            <div>
+                                <p class="mb-1">
+                                    <strong>Vous</strong> avez créé une nouvelle tâche
+                                    <span class="text-primary">"Intégrer Stripe"</span>
+                                </p>
+                                <small class="text-muted">Il y a 1 heure</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 3 -->
+                        <div class="activity-item mb-4">
+                            <span class="activity-dot bg-warning"></span>
+                            <div>
+                                <p class="mb-1">
+                                    <strong>Charlie Durand</strong> a commenté sur
+                                    <span class="text-primary">"API catalogue"</span>
+                                </p>
+                                <small class="text-muted">Il y a 2 heures</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 4 -->
+                        <div class="activity-item mb-4">
+                            <span class="activity-dot bg-info"></span>
+                            <div>
+                                <p class="mb-1">
+                                    <strong>David Bernard</strong> vous a assigné
+                                    <span class="text-primary">"Corriger les bugs"</span>
+                                </p>
+                                <small class="text-muted">Il y a 3 heures</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 5 -->
+                        <div class="activity-item">
+                            <span class="activity-dot bg-secondary"></span>
+                            <div>
+                                <p class="mb-1">
+                                    <strong>Vous</strong> avez rejoint le projet
+                                    <span class="text-primary">"Migration BDD"</span>
+                                </p>
+                                <small class="text-muted">Il y a 1 jour</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="#" class="text-decoration-none">
+                            Voir toute l'activité
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projets récents -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Projets récents</h5>
+                    <a href="project_index.html" class="text-decoration-none">
+                        Voir tous les projets
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="row g-3">
+                    <!-- Projet 1 -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-calendar-week text-success"></i>
+                                        Site Web E-commerce
+                                    </h6>
+                                    <span class="badge bg-primary">Manager</span>
+                                </div>
+                                <div class="progress mb-2" style="height: 6px;">
+                                    <div class="progress-bar bg-success" style="width: 62%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">45 tâches</small>
+                                    <small class="fw-semibold">62%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projet 2 -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-kanban text-warning"></i>
+                                        Application Mobile
+                                    </h6>
+                                    <span class="badge bg-info">Developer</span>
+                                </div>
+                                <div class="progress mb-2" style="height: 6px;">
+                                    <div class="progress-bar bg-success" style="width: 55%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">78 tâches</small>
+                                    <small class="fw-semibold">55%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projet 3 -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-list-check text-secondary"></i>
+                                        Migration BDD
+                                    </h6>
+                                    <span class="badge bg-secondary">Viewer</span>
+                                </div>
+                                <div class="progress mb-2" style="height: 6px;">
+                                    <div class="progress-bar bg-success" style="width: 100%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">12 tâches</small>
+                                    <small class="fw-semibold">100%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
