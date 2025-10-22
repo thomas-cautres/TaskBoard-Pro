@@ -8,6 +8,8 @@ use App\AppEnum\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -16,6 +18,9 @@ class Project
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
+
+    #[ORM\Column(type: UuidType::NAME)]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 255)]
     private string $name;
@@ -32,7 +37,7 @@ class Project
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $endDate = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
@@ -124,6 +129,18 @@ class Project
     public function setCreatedBy(User $createdBy): Project
     {
         $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): Project
+    {
+        $this->uuid = $uuid;
+        
         return $this;
     }
 }

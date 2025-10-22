@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Project;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,6 +27,17 @@ class ProjectRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function countByUserAndName(User $user, string $name): int
+    {
+        return
+            count($this->createQueryBuilder('p')
+                ->andWhere('p.createdBy = :createdBy')
+                ->andWhere('p.name = :name')
+                ->setParameters(new ArrayCollection(['createdBy' => $user, 'name' => $name]))
+                ->getQuery()
+                ->getArrayResult());
     }
 
     //    /**

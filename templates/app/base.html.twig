@@ -15,6 +15,11 @@
     {% include 'app/components/navbar.html.twig' %}
     {% include 'app/components/sidebar.html.twig' %}
     <main class="main-content">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
         {% block body %}{% endblock %}
     </main>
 </body>
