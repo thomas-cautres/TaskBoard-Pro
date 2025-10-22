@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\App\Project;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Form\Project\CreateProjectType;
+use App\Repository\ProjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/app/project/create', name: 'app_project_create', methods: ['GET', 'POST'])]
 class CreateProjectController extends AbstractController
 {
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, ProjectRepository $projectRepository): Response
     {
         $project = new Project();
         $form = $this->createForm(CreateProjectType::class, $project);
@@ -22,6 +24,9 @@ class CreateProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $projectRepository->persist($project->setCreatedBy($user)->setCreatedAt(new \DateTimeImmutable('now')));
         }
 
         return $this->render('app/project/create_project.html.twig', [

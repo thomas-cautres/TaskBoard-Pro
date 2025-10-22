@@ -18,6 +18,15 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+    public function persist(Project $project, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($project);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return Project[] Returns an array of Project objects
     //     */
