@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\AppEnum\ProjectType;
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -43,6 +45,16 @@ class Project
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
     private User $createdBy;
+
+    #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', orphanRemoval: true)]
+    private Collection $columns;
+
+    public function __construct()
+    {
+        $this->uuid = Uuid::v7();
+        $this->createdAt = new \DateTimeImmutable('now');
+        $this->columns = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -148,6 +160,28 @@ class Project
     public function setUuid(Uuid $uuid): Project
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getColumns(): Collection
+    {
+        return $this->columns;
+    }
+
+    public function addColumn(ProjectColumn $projectColumn): static
+    {
+        if (!$this->columns->contains($projectColumn)) {
+            $this->columns->add($projectColumn);
+            $projectColumn->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeColumn(ProjectColumn $projectColumn): static
+    {
+        $this->columns->removeElement($projectColumn);
 
         return $this;
     }
