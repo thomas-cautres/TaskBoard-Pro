@@ -22,6 +22,9 @@ class ProjectColumn
     #[ORM\Column]
     private string $name;
 
+    #[ORM\Column]
+    private int $position;
+
     #[ORM\ManyToOne(inversedBy: 'columns')]
     #[ORM\JoinColumn(nullable: false)]
     private Project $project;
@@ -76,6 +79,17 @@ class ProjectColumn
     {
         $this->project = $project;
 
+        return $this;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): static
+    {
+        $this->position = $position;
         return $this;
     }
 }

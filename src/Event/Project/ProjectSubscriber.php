@@ -15,10 +15,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 readonly class ProjectSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Security $security,
-        private UserRepository $userRepository,
+        private Security          $security,
+        private UserRepository    $userRepository,
         private ProjectRepository $projectRepository,
-    ) {
+    )
+    {
     }
 
     public static function getSubscribedEvents(): array
@@ -34,30 +35,34 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $project = $event->getProject();
 
-        $user->setRoles(['ROLE_PROJECT_MANAGER']);
-        $this->userRepository->persist($user);
+        if (!in_array('ROLE_PROJECT_MANAGER', $user->getRoles(), true)) {
+            $currentRoles = $user->getRoles();
+            $currentRoles[] = 'ROLE_PROJECT_MANAGER';
+            $user->setRoles(array_unique($currentRoles));
+            $this->userRepository->persist($user, flush: false);
+        }
 
         $project->setCreatedBy($user);
 
         switch ($project->getType()) {
             case ProjectType::Scrum:
                 $project
-                    ->addColumn(new ProjectColumn()->setName('Backlog'))
-                    ->addColumn(new ProjectColumn()->setName('To Do'))
-                    ->addColumn(new ProjectColumn()->setName('In Progress'))
-                    ->addColumn(new ProjectColumn()->setName('Review'))
-                    ->addColumn(new ProjectColumn()->setName('Done'));
+                    ->addColumn(new ProjectColumn()->setName('Backlog')->setPosition(1))
+                    ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(2))
+                    ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(3))
+                    ->addColumn(new ProjectColumn()->setName('Review')->setPosition(4))
+                    ->addColumn(new ProjectColumn()->setName('Done')->setPosition(5));
                 break;
             case ProjectType::Kanban:
                 $project
-                    ->addColumn(new ProjectColumn()->setName('To Do'))
-                    ->addColumn(new ProjectColumn()->setName('In Progress'))
-                    ->addColumn(new ProjectColumn()->setName('Done'));
+                    ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(1))
+                    ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(2))
+                    ->addColumn(new ProjectColumn()->setName('Done')->setPosition(3));
                 break;
             case ProjectType::Basic:
                 $project
-                    ->addColumn(new ProjectColumn()->setName('Open'))
-                    ->addColumn(new ProjectColumn()->setName('Closed'));
+                    ->addColumn(new ProjectColumn()->setName('Open')->setPosition(1))
+                    ->addColumn(new ProjectColumn()->setName('Closed')->setPosition(2));
                 break;
         }
 
