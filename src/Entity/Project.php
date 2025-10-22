@@ -49,7 +49,7 @@ class Project
     /**
      * @var Collection<int, ProjectColumn>
      */
-    #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $columns;
 
     public function __construct()
