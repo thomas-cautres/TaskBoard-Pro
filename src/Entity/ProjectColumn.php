@@ -90,6 +90,7 @@ class ProjectColumn
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
         return $this;
     }
 }

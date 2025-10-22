@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Event\Project;
 
 use App\AppEnum\ProjectType;
+use App\Entity\Project;
 use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
@@ -15,11 +16,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 readonly class ProjectSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Security          $security,
-        private UserRepository    $userRepository,
+        private Security $security,
+        private UserRepository $userRepository,
         private ProjectRepository $projectRepository,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -44,28 +44,37 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
         $project->setCreatedBy($user);
 
-        switch ($project->getType()) {
-            case ProjectType::Scrum:
-                $project
-                    ->addColumn(new ProjectColumn()->setName('Backlog')->setPosition(1))
-                    ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(2))
-                    ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(3))
-                    ->addColumn(new ProjectColumn()->setName('Review')->setPosition(4))
-                    ->addColumn(new ProjectColumn()->setName('Done')->setPosition(5));
-                break;
-            case ProjectType::Kanban:
-                $project
-                    ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(1))
-                    ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(2))
-                    ->addColumn(new ProjectColumn()->setName('Done')->setPosition(3));
-                break;
-            case ProjectType::Basic:
-                $project
-                    ->addColumn(new ProjectColumn()->setName('Open')->setPosition(1))
-                    ->addColumn(new ProjectColumn()->setName('Closed')->setPosition(2));
-                break;
-        }
+        match ($project->getType()) {
+            ProjectType::Scrum => $this->addColumnsScrum($project),
+            ProjectType::Kanban => $this->addColumnsKanban($project),
+            ProjectType::Basic => $this->addColumnsBasic($project),
+        };
 
         $this->projectRepository->persist($project);
+    }
+
+    private function addColumnsScrum(Project $project): void
+    {
+        $project
+            ->addColumn(new ProjectColumn()->setName('Backlog')->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(2))
+            ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(3))
+            ->addColumn(new ProjectColumn()->setName('Review')->setPosition(4))
+            ->addColumn(new ProjectColumn()->setName('Done')->setPosition(5));
+    }
+
+    private function addColumnsKanban(Project $project): void
+    {
+        $project
+            ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(2))
+            ->addColumn(new ProjectColumn()->setName('Done')->setPosition(3));
+    }
+
+    private function addColumnsBasic(Project $project): void
+    {
+        $project
+            ->addColumn(new ProjectColumn()->setName('Open')->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName('Closed')->setPosition(2));
     }
 }
