@@ -25,10 +25,10 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'label' => 'register.firstname'
+                'label' => 'register.firstname',
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'register.lastname'
+                'label' => 'register.lastname',
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [

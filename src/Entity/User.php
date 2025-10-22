@@ -24,10 +24,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column]
-    private ?string $firstName = null;
+    private string $firstName;
 
     #[ORM\Column]
-    private ?string $lastName = null;
+    private string $lastName;
 
     #[ORM\Column(length: 180)]
     private string $email;
@@ -175,34 +175,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeProject(Project $project): static
     {
-        if ($this->projects->removeElement($project)) {
-            // set the owning side to null (unless already changed)
-            if ($project->getCreatedBy() === $this) {
-                $project->setCreatedBy(null);
-            }
-        }
+        $this->projects->removeElement($project);
 
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(?string $firstName): User
+    public function setFirstName(string $firstName): User
     {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function setLastName(?string $lastName): User
+    public function setLastName(string $lastName): User
     {
         $this->lastName = $lastName;
 
