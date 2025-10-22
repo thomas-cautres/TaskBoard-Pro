@@ -52,6 +52,7 @@ class Project
     public function setId(int $id): Project
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -63,6 +64,7 @@ class Project
     public function setName(string $name): Project
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -74,6 +76,7 @@ class Project
     public function setDescription(?string $description): Project
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -85,6 +88,7 @@ class Project
     public function setType(ProjectType $type): Project
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -96,6 +100,7 @@ class Project
     public function setStartDate(?\DateTimeImmutable $startDate): Project
     {
         $this->startDate = $startDate;
+
         return $this;
     }
 
@@ -107,6 +112,7 @@ class Project
     public function setEndDate(?\DateTimeImmutable $endDate): Project
     {
         $this->endDate = $endDate;
+
         return $this;
     }
 
@@ -118,6 +124,7 @@ class Project
     public function setCreatedAt(\DateTimeImmutable $createdAt): Project
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -129,6 +136,7 @@ class Project
     public function setCreatedBy(User $createdBy): Project
     {
         $this->createdBy = $createdBy;
+
         return $this;
     }
 
@@ -140,7 +148,7 @@ class Project
     public function setUuid(Uuid $uuid): Project
     {
         $this->uuid = $uuid;
-        
+
         return $this;
     }
 }

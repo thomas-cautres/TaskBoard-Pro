@@ -19,11 +19,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CreateProjectType extends AbstractType
 {
     public function __construct(
-        private readonly UserProjectNameValidator $nameValidator
-    )
-    {
-
+        private readonly UserProjectNameValidator $nameValidator,
+    ) {
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -39,8 +38,8 @@ class CreateProjectType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 3, max: 100),
-                    new Callback([$this->nameValidator, 'validate'])
-                ]
+                    new Callback([$this->nameValidator, 'validate']),
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
@@ -56,7 +55,7 @@ class CreateProjectType extends AbstractType
             ->add('type', ProjectTypeType::class, [
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('startDate', null, [
                 'widget' => 'single_text',

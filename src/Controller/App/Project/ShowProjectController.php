@@ -15,7 +15,7 @@ class ShowProjectController extends AbstractController
     public function __invoke(Project $project): Response
     {
         return $this->render('app/project/show_project.html.twig', [
-            'project' => $project
+            'project' => $project,
         ]);
     }
 }
