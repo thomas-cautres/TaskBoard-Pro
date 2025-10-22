@@ -25,7 +25,7 @@ final readonly class RegistrationConfirmationEmailHandler
         private int $confirmationLinkLifetime,
         private UrlSignerInterface $urlSigner,
         private UrlGeneratorInterface $urlGenerator,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

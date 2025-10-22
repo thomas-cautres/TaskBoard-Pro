@@ -55,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->projects = new ArrayCollection();
     }
 
-
     public function getId(): int
     {
         return $this->id;
