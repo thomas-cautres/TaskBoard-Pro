@@ -24,11 +24,17 @@ class UserExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getNotifications(User $user): array
     {
         return $this->notificationRepository->findByUser($user);
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getUnreadNotifications(User $user): array
     {
         return $this->notificationRepository->findByUser($user, true);

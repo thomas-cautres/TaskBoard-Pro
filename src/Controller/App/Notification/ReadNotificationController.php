@@ -18,6 +18,6 @@ class ReadNotificationController extends AbstractController
     {
         $dispatcher->dispatch(new NotificationReadEvent($notification));
 
-        return $this->redirect($notification->getRedirectUrl());
+        return $this->redirect((string) $notification->getRedirectUrl());
     }
 }

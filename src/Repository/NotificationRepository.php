@@ -28,6 +28,9 @@ class NotificationRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function findByUser(User $user, bool $unread = false, int $limit = 5): array
     {
         $qb = $this->createQueryBuilder('n')
