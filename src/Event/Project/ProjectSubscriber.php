@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Event\Project;
 
 use App\AppEnum\ProjectType;
+use App\Entity\Notification;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
 use App\Entity\User;
@@ -35,13 +36,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $project = $event->getProject();
 
-        if (!in_array('ROLE_PROJECT_MANAGER', $user->getRoles(), true)) {
-            $currentRoles = $user->getRoles();
-            $currentRoles[] = 'ROLE_PROJECT_MANAGER';
-            $user->setRoles(array_unique($currentRoles));
-            $this->userRepository->persist($user, flush: false);
-        }
-
+        $this->updateUserRoles($user);
         $project->setCreatedBy($user);
 
         match ($project->getType()) {
@@ -50,7 +45,24 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
             ProjectType::Basic => $this->addColumnsBasic($project),
         };
 
+        $user->addNotification(
+            new Notification()->setContent(sprintf('Nouveau projet créé : %s', $project->getName()))
+        );
+
+        $this->userRepository->persist($user, flush: false);
+
         $this->projectRepository->persist($project);
+    }
+
+    private function updateUserRoles(User $user): void
+    {
+        if (in_array('ROLE_PROJECT_MANAGER', $user->getRoles(), true)) {
+            return;
+        }
+
+        $currentRoles = $user->getRoles();
+        $currentRoles[] = 'ROLE_PROJECT_MANAGER';
+        $user->setRoles(array_unique($currentRoles));
     }
 
     private function addColumnsScrum(Project $project): void

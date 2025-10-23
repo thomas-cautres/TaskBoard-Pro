@@ -36,6 +36,12 @@ class Notification
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
+    public function __construct()
+    {
+        $this->uuid = Uuid::v7();
+        $this->createdAt = new \DateTimeImmutable('now');
+    }
+
     public function getId(): int
     {
         return $this->id;
