@@ -56,9 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'createdBy', orphanRemoval: true)]
     private Collection $projects;
 
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): int
@@ -185,7 +189,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): User
+    public function setFirstName(string $firstName): static
     {
         $this->firstName = $firstName;
 
@@ -197,9 +201,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): User
+    public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+        }
 
         return $this;
     }
