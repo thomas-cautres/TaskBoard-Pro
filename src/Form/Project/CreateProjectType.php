@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -59,7 +60,7 @@ class CreateProjectType extends AbstractType
             ])
             ->add('type', ProjectTypeType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank(message: 'validator.project.type.empty'),
                 ],
             ])
             ->add('startDate', null, [
@@ -100,10 +101,5 @@ class CreateProjectType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Project::class,
         ]);
-    }
-
-    public function validateEndDate()
-    {
-
     }
 }

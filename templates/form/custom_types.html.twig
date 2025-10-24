@@ -3,7 +3,7 @@
         {% set attrs = type.vars.attr %}
         <div class="col-md-4">
             <label class="project-type-card card h-100 p-3">
-                <input type="radio" name="{{ type.vars.full_name }}" value="scrum" required id="{{ type.vars.id }}">
+                <input type="radio" name="{{ type.vars.full_name }}" value="scrum"  id="{{ type.vars.id }}">
                 <div class="d-flex align-items-start">
                     <i class="bi {{ attrs['data-icon'] }} fs-2 {{ attrs['data-icon-color'] }} me-2"></i>
                     <div>
@@ -16,4 +16,5 @@
             </label>
         </div>
     {% endfor %}
+    {{ form_errors(form) }}
 {% endblock %}
