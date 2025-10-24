@@ -1,6 +1,6 @@
 {% extends 'app/base.html.twig' %}
 
-{% block title %}Créer un projet - TaskBoard Pro{% endblock %}
+{% block title %}{{ 'project.create.title'|trans }} - TaskBoard Pro{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/create-project.css') }}">
 {% endblock %}
@@ -9,16 +9,16 @@
         <div class="col-lg-8 mx-auto">
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="project_index_complete.html">Projets</a></li>
-                    <li class="breadcrumb-item active">Créer un projet</li>
+                    <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.projects'|trans }}</a></li>
+                    <li class="breadcrumb-item active">{{ 'project.breadcrumb.create'|trans }}</li>
                 </ol>
             </nav>
             <div class="mb-4">
                 <h1 class="h2 mb-2">
                     <i class="bi bi-plus-circle text-primary"></i>
-                    Créer un nouveau projet
+                    {{ 'project.create.heading'|trans }}
                 </h1>
-                <p class="text-muted mb-0">Organisez votre travail avec la méthodologie qui vous convient</p>
+                <p class="text-muted mb-0">{{ 'project.create.description'|trans }}</p>
             </div>
             <div class="card shadow-sm">
                 <div class="card-body p-4">
@@ -27,17 +27,17 @@
                         {{ form_row(form.name) }}
                         <div class="form-text">
                             <i class="bi bi-info-circle"></i>
-                            Choisissez un nom unique et descriptif
+                            {{ 'project.create.name_help'|trans }}
                         </div>
                     </div>
                     <div class="mb-4">
                         {{ form_row(form.description) }}
-                        <div class="form-text">Optionnel - Vous pourrez la modifier plus tard</div>
+                        <div class="form-text">{{ 'project.create.description_help'|trans }}</div>
                     </div>
 
                     <!-- Type de projet -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Type de projet *</label>
+                        <label class="form-label fw-semibold">{{ 'project.create.type_label'|trans }} *</label>
 
                         <div class="row g-3">
                             {{ form_row(form.type) }}
@@ -45,8 +45,7 @@
 
                         <div class="alert alert-info mt-3">
                             <i class="bi bi-lightbulb"></i>
-                            <strong>À savoir :</strong> Des colonnes seront automatiquement créées selon le type
-                            choisi. Vous pourrez les personnaliser après la création.
+                            <strong>{{ 'project.create.type_info_title'|trans }}</strong> {{ 'project.create.type_info_text'|trans }}
                         </div>
                     </div>
 
@@ -54,12 +53,12 @@
                     <div class="row mb-4">
                         <div class="col-md-6">
                             {{ form_row(form.startDate) }}
-                            <div class="form-text">Optionnel</div>
+                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>
                         </div>
 
                         <div class="col-md-6">
                             {{ form_row(form.endDate) }}
-                            <div class="form-text">Optionnel</div>
+                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>
                         </div>
                     </div>
 
@@ -69,12 +68,12 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="project_index_complete.html" class="btn btn-outline-secondary">
                             <i class="bi bi-x-circle"></i>
-                            Annuler
+                            {{ 'project.create.cancel'|trans }}
                         </a>
 
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="bi bi-check-circle"></i>
-                            Créer le projet
+                            {{ 'project.create.submit'|trans }}
                         </button>
                     </div>
                     {{ form_end(form) }}
@@ -86,13 +85,13 @@
                 <div class="card-body">
                     <h6 class="card-title">
                         <i class="bi bi-info-circle text-primary"></i>
-                        Ce qui se passera après la création
+                        {{ 'project.create.after_creation_title'|trans }}
                     </h6>
                     <ul class="mb-0 small text-muted">
-                        <li>Vous deviendrez automatiquement <strong>Project Manager</strong> du projet</li>
-                        <li>Des colonnes par défaut seront créées selon le type choisi</li>
-                        <li>Vous pourrez inviter des membres et créer des tâches immédiatement</li>
-                        <li>Le type de projet ne pourra plus être modifié par la suite</li>
+                        <li>{{ 'project.create.after_creation.manager'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.columns'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.members'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.type_locked'|trans }}</li>
                     </ul>
                 </div>
             </div>

@@ -238,6 +238,102 @@
                 <source>Back to login</source>
                 <target>Back to login</target>
             </trans-unit>
+            <trans-unit id="project.create.title" resname="project.create.title">
+                <source>Create a project</source>
+                <target>Create a project</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.projects" resname="project.breadcrumb.projects">
+                <source>Projects</source>
+                <target>Projects</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.create" resname="project.breadcrumb.create">
+                <source>Create a project</source>
+                <target>Create a project</target>
+            </trans-unit>
+            <trans-unit id="project.create.heading" resname="project.create.heading">
+                <source>Create a new project</source>
+                <target>Create a new project</target>
+            </trans-unit>
+            <trans-unit id="project.create.description" resname="project.create.description">
+                <source>Organize your work with the methodology that suits you</source>
+                <target>Organize your work with the methodology that suits you</target>
+            </trans-unit>
+            <trans-unit id="project.create.name_help" resname="project.create.name_help">
+                <source>Choose a unique and descriptive name</source>
+                <target>Choose a unique and descriptive name</target>
+            </trans-unit>
+            <trans-unit id="project.create.description_help" resname="project.create.description_help">
+                <source>Optional - You can modify it later</source>
+                <target>Optional - You can modify it later</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_label" resname="project.create.type_label">
+                <source>Project type</source>
+                <target>Project type</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_info_title" resname="project.create.type_info_title">
+                <source>Good to know:</source>
+                <target>Good to know:</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_info_text" resname="project.create.type_info_text">
+                <source>Columns will be automatically created according to the chosen type. You can customize them after creation.</source>
+                <target>Columns will be automatically created according to the chosen type. You can customize them after creation.</target>
+            </trans-unit>
+            <trans-unit id="project.create.optional" resname="project.create.optional">
+                <source>Optional</source>
+                <target>Optional</target>
+            </trans-unit>
+            <trans-unit id="project.create.cancel" resname="project.create.cancel">
+                <source>Cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="project.create.submit" resname="project.create.submit">
+                <source>Create the project</source>
+                <target>Create the project</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation_title" resname="project.create.after_creation_title">
+                <source>What will happen after creation</source>
+                <target>What will happen after creation</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.manager" resname="project.create.after_creation.manager">
+                <source>You will automatically become Project Manager of the project</source>
+                <target>You will automatically become Project Manager of the project</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.columns" resname="project.create.after_creation.columns">
+                <source>Default columns will be created according to the chosen type</source>
+                <target>Default columns will be created according to the chosen type</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.members" resname="project.create.after_creation.members">
+                <source>You will be able to invite members and create tasks immediately</source>
+                <target>You will be able to invite members and create tasks immediately</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.type_locked" resname="project.create.after_creation.type_locked">
+                <source>The project type cannot be modified afterwards</source>
+                <target>The project type cannot be modified afterwards</target>
+            </trans-unit>
+            <trans-unit id="project.form.name.label" resname="project.form.name.label">
+                <source>Project name *</source>
+                <target>Project name *</target>
+            </trans-unit>
+            <trans-unit id="project.form.name.placeholder" resname="project.form.name.placeholder">
+                <source>Ex: E-commerce Website Redesign</source>
+                <target>Ex: E-commerce Website Redesign</target>
+            </trans-unit>
+            <trans-unit id="project.form.description.label" resname="project.form.description.label">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="project.form.description.placeholder" resname="project.form.description.placeholder">
+                <source>Describe the objectives and context of the project...</source>
+                <target>Describe the objectives and context of the project...</target>
+            </trans-unit>
+            <trans-unit id="project.form.start_date.label" resname="project.form.start_date.label">
+                <source>Start date</source>
+                <target>Start date</target>
+            </trans-unit>
+            <trans-unit id="project.form.end_date.label" resname="project.form.end_date.label">
+                <source>End date</source>
+                <target>End date</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -34,9 +34,9 @@ class CreateProjectType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'required' => true,
-                'label' => 'Nom du projet *',
+                'label' => 'project.form.name.label',
                 'attr' => [
-                    'placeholder' => 'Ex: Refonte Site Web E-commerce',
+                    'placeholder' => 'project.form.name.placeholder',
                 ],
                 'label_attr' => [
                     'class' => 'fw-semibold',
@@ -49,9 +49,9 @@ class CreateProjectType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
-                'label' => 'Description',
+                'label' => 'project.form.description.label',
                 'attr' => [
-                    'placeholder' => 'Décrivez les objectifs et le contexte du projet...',
+                    'placeholder' => 'project.form.description.placeholder',
                     'rows' => 4,
                 ],
                 'label_attr' => [
@@ -65,14 +65,14 @@ class CreateProjectType extends AbstractType
             ])
             ->add('startDate', null, [
                 'widget' => 'single_text',
-                'label' => 'Date de début',
+                'label' => 'project.form.start_date.label',
                 'label_attr' => [
                     'class' => 'fw-semibold',
                 ],
             ])
             ->add('endDate', null, [
                 'widget' => 'single_text',
-                'label' => 'Date de fin',
+                'label' => 'project.form.end_date.label',
                 'label_attr' => [
                     'class' => 'fw-semibold',
                 ],
