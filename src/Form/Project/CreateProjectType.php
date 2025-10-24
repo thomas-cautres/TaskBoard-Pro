@@ -11,10 +11,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @extends AbstractType<Project>
@@ -73,6 +75,23 @@ class CreateProjectType extends AbstractType
                 'label_attr' => [
                     'class' => 'fw-semibold',
                 ],
+                'constraints' => [
+                    new Callback([
+                        'callback' => function (?\DateTimeImmutable $value, ExecutionContextInterface $context) {
+                            if (null === $value) {
+                                return;
+                            }
+                            /** @var FormInterface $projectRoot */
+                            $projectRoot = $context->getRoot();
+                            /** @var Project $project */
+                            $project = $projectRoot->getData();
+
+                            if ($value < $project->getStartDate()) {
+                                $context->addViolation('validator.project.end.date');
+                            }
+                        },
+                    ]),
+                ]
             ]);
     }
 
@@ -81,5 +100,10 @@ class CreateProjectType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Project::class,
         ]);
+    }
+
+    public function validateEndDate()
+    {
+
     }
 }
