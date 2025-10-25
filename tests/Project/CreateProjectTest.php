@@ -20,7 +20,6 @@ class CreateProjectTest extends WebTestCase
         $this->userRepository = static::getContainer()->get(UserRepository::class);
         $this->projectRepository = static::getContainer()->get(ProjectRepository::class);
         $loggedUser = $this->userRepository->findOneBy(['email' => 'user-confirmed@domain.com']);
-
         $this->client->loginUser($loggedUser);
     }
 
@@ -57,6 +56,25 @@ class CreateProjectTest extends WebTestCase
         $project = $this->projectRepository->findOneBy(['name' => 'Project name']);
 
         $this->assertInstanceOf(Project::class, $project);
+        $this->assertEquals('Project name', $project->getName());
+        $this->assertEquals('Project description', $project->getDescription());
+        $this->assertEquals('scrum', $project->getType()->value);
+        $this->assertEquals('2025-01-01', $project->getStartDate()->format('Y-m-d'));
+        $this->assertEquals('2025-02-01', $project->getEndDate()->format('Y-m-d'));
+        $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
+
+        $this->assertCount(5, $project->getColumns());
+        $this->assertEquals('Backlog', $project->getColumns()->get(0)->getName());
+        $this->assertEquals('To Do', $project->getColumns()->get(1)->getName());
+        $this->assertEquals('In Progress', $project->getColumns()->get(2)->getName());
+        $this->assertEquals('Review', $project->getColumns()->get(3)->getName());
+        $this->assertEquals('Done', $project->getColumns()->get(4)->getName());
+
+
         $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
+        $this->client->followRedirect();
+        $content = $this->client->getResponse()->getContent();
+
+        $this->assertStringContainsString('Project successfully created', $content);
     }
 }

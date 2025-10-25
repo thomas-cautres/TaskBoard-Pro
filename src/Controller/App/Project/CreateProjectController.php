@@ -26,7 +26,7 @@ class CreateProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $dispatcher->dispatch(new ProjectCreatedEvent($project));
 
-            $this->addFlash('success', 'Projet créé avec succès');
+            $this->addFlash('success', 'project.create.flash.message.success');
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
         }

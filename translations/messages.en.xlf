@@ -416,6 +416,10 @@
                 <source>Users</source>
                 <target>Users</target>
             </trans-unit>
+            <trans-unit id="project.create.flash.message.success" resname="project.create.flash.message.success">
+                <source>Project successfully created</source>
+                <target>Project successfully created</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
