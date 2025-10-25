@@ -17,27 +17,25 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $user = new User();
-        $user
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setEmail('user-confirmed@domain.com')
-            ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
-            ->setConfirmed(true)
-            ->setConfirmationCode('1234');
+        foreach ($this->getUsers() as $userArray) {
+            $user = new User();
+            $user
+                ->setFirstName($userArray[0])
+                ->setLastName($userArray[1])
+                ->setEmail($userArray[2])
+                ->setPassword($this->passwordHasher->hashPassword($user, $userArray[3]))
+                ->setConfirmed($userArray[4])
+                ->setConfirmationCode($userArray[5]);
 
-        $manager->persist($user);
+            $manager->persist($user);
+        }
 
-        $user = new User();
-        $user
-            ->setFirstName('Jane')
-            ->setLastName('Doe')
-            ->setEmail('user-unconfirmed@domain.com')
-            ->setPassword($this->passwordHasher->hashPassword($user, 'test1234'))
-            ->setConfirmed(false)
-            ->setConfirmationCode('1234');
-
-        $manager->persist($user);
         $manager->flush();
+    }
+
+    private function getUsers(): \Iterator
+    {
+        yield ['John', 'Doe', 'user-confirmed@domain.com', 'test1234', true, '1234'];
+        yield ['Jane', 'Doe', 'user-unconfirmed@domain.com', 'test1234', false, '1234'];
     }
 }
