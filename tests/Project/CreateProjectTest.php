@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Project;
 
+use App\AppEnum\ProjectColumnName;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
@@ -66,11 +67,11 @@ class CreateProjectTest extends WebTestCase
         $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
 
         $this->assertCount(5, $project->getColumns());
-        $this->assertEquals('Backlog', $project->getColumns()->get(0)->getName());
-        $this->assertEquals('To Do', $project->getColumns()->get(1)->getName());
-        $this->assertEquals('In Progress', $project->getColumns()->get(2)->getName());
-        $this->assertEquals('Review', $project->getColumns()->get(3)->getName());
-        $this->assertEquals('Done', $project->getColumns()->get(4)->getName());
+        $this->assertEquals(ProjectColumnName::BackLog->value, $project->getColumns()->get(0)->getName());
+        $this->assertEquals(ProjectColumnName::ToDo->value, $project->getColumns()->get(1)->getName());
+        $this->assertEquals(ProjectColumnName::InProgress->value, $project->getColumns()->get(2)->getName());
+        $this->assertEquals(ProjectColumnName::Review->value, $project->getColumns()->get(3)->getName());
+        $this->assertEquals(ProjectColumnName::Done->value, $project->getColumns()->get(4)->getName());
 
         $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
     }
@@ -97,9 +98,9 @@ class CreateProjectTest extends WebTestCase
         $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
 
         $this->assertCount(3, $project->getColumns());
-        $this->assertEquals('To Do', $project->getColumns()->get(0)->getName());
-        $this->assertEquals('In Progress', $project->getColumns()->get(1)->getName());
-        $this->assertEquals('Done', $project->getColumns()->get(2)->getName());
+        $this->assertEquals(ProjectColumnName::ToDo->value, $project->getColumns()->get(0)->getName());
+        $this->assertEquals(ProjectColumnName::InProgress->value, $project->getColumns()->get(1)->getName());
+        $this->assertEquals(ProjectColumnName::Done->value, $project->getColumns()->get(2)->getName());
 
         $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
     }
@@ -126,8 +127,8 @@ class CreateProjectTest extends WebTestCase
         $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
 
         $this->assertCount(2, $project->getColumns());
-        $this->assertEquals('Open', $project->getColumns()->get(0)->getName());
-        $this->assertEquals('Closed', $project->getColumns()->get(1)->getName());
+        $this->assertEquals(ProjectColumnName::Open->value, $project->getColumns()->get(0)->getName());
+        $this->assertEquals(ProjectColumnName::Closed->value, $project->getColumns()->get(1)->getName());
 
         $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
     }

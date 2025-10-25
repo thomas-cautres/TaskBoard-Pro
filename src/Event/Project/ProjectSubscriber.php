@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Event\Project;
 
+use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectType;
 use App\Entity\Notification;
 use App\Entity\Project;
@@ -77,26 +78,26 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     private function addColumnsScrum(Project $project): void
     {
         $project
-            ->addColumn(new ProjectColumn()->setName('Backlog')->setPosition(1))
-            ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(2))
-            ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(3))
-            ->addColumn(new ProjectColumn()->setName('Review')->setPosition(4))
-            ->addColumn(new ProjectColumn()->setName('Done')->setPosition(5));
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::BackLog->value)->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::ToDo->value)->setPosition(2))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::InProgress->value)->setPosition(3))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Review->value)->setPosition(4))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Done->value)->setPosition(5));
     }
 
     private function addColumnsKanban(Project $project): void
     {
         $project
-            ->addColumn(new ProjectColumn()->setName('To Do')->setPosition(1))
-            ->addColumn(new ProjectColumn()->setName('In Progress')->setPosition(2))
-            ->addColumn(new ProjectColumn()->setName('Done')->setPosition(3));
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::ToDo->value)->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::InProgress->value)->setPosition(2))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Done->value)->setPosition(3));
     }
 
     private function addColumnsBasic(Project $project): void
     {
         $project
-            ->addColumn(new ProjectColumn()->setName('Open')->setPosition(1))
-            ->addColumn(new ProjectColumn()->setName('Closed')->setPosition(2));
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Open->value)->setPosition(1))
+            ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Closed->value)->setPosition(2));
     }
 
     private function log(Project $project): void

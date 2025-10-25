@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectType;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
@@ -57,8 +58,8 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
     private function getProjects(): \Iterator
     {
         yield [
-            'name' => 'Project name 1',
-            'description' => 'Project description 1',
+            'name' => 'Project Scrum',
+            'description' => 'Project description',
             'type' => ProjectType::Scrum,
             'startDate' => new \DateTimeImmutable('2025-01-01'),
             'endDate' => new \DateTimeImmutable('2025-02-01'),
@@ -67,23 +68,47 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 [
                     [
                         'position' => 1,
-                        'name' => 'Backlog',
+                        'name' => ProjectColumnName::BackLog->value,
                     ],
                     [
                         'position' => 2,
-                        'name' => 'To do',
+                        'name' => ProjectColumnName::ToDo->value,
                     ],
                     [
                         'position' => 3,
-                        'name' => 'In progress',
+                        'name' => ProjectColumnName::InProgress->value,
                     ],
                     [
                         'position' => 4,
-                        'name' => 'In review',
+                        'name' => ProjectColumnName::Review->value,
                     ],
                     [
                         'position' => 5,
-                        'name' => 'Done',
+                        'name' => ProjectColumnName::Done->value,
+                    ],
+                ]
+        ];
+
+        yield [
+            'name' => 'Project Kanban',
+            'description' => 'Project description',
+            'type' => ProjectType::Kanban,
+            'startDate' => new \DateTimeImmutable('2025-01-01'),
+            'endDate' => new \DateTimeImmutable('2025-02-01'),
+            'createdByEmail' => 'user-confirmed@domain.com',
+            'columns' =>
+                [
+                    [
+                        'position' => 1,
+                        'name' => ProjectColumnName::ToDo->value,
+                    ],
+                    [
+                        'position' => 2,
+                        'name' => ProjectColumnName::InProgress->value,
+                    ],
+                    [
+                        'position' => 3,
+                        'name' => ProjectColumnName::Done->value,
                     ],
                 ]
         ];
