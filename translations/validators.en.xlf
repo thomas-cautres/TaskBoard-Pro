@@ -14,6 +14,14 @@
                 <source>This code is not valid.</source>
                 <target>This code is not valid.</target>
             </trans-unit>
+            <trans-unit id="validator.project.type.empty" resname="validator.project.type.empty">
+                <source>The type is required.</source>
+                <target>The type is required.</target>
+            </trans-unit>
+            <trans-unit id="validator.project.end.date" resname="validator.project.end.date">
+                <source>End date should not be before start date.</source>
+                <target>End date should not be before start date.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

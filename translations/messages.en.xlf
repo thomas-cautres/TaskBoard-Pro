@@ -334,6 +334,88 @@
                 <source>End date</source>
                 <target>End date</target>
             </trans-unit>
+            <!-- Navbar translations -->
+            <trans-unit id="navbar.search.placeholder" resname="navbar.search.placeholder">
+                <source>Search...</source>
+                <target>Search...</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.unread" resname="navbar.notifications.unread">
+                <source>unread notifications</source>
+                <target>unread notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.title" resname="navbar.notifications.title">
+                <source>Notifications</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.view_all" resname="navbar.notifications.view_all">
+                <source>View all notifications</source>
+                <target>View all notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.profile" resname="navbar.user.profile">
+                <source>My profile</source>
+                <target>My profile</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.settings" resname="navbar.user.settings">
+                <source>Settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.logout" resname="navbar.user.logout">
+                <source>Logout</source>
+                <target>Logout</target>
+            </trans-unit>
+            <!-- Sidebar translations -->
+            <trans-unit id="sidebar.home" resname="sidebar.home">
+                <source>Home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="sidebar.my_projects" resname="sidebar.my_projects">
+                <source>My Projects</source>
+                <target>My Projects</target>
+            </trans-unit>
+            <trans-unit id="sidebar.my_tasks" resname="sidebar.my_tasks">
+                <source>My Tasks</source>
+                <target>My Tasks</target>
+            </trans-unit>
+            <trans-unit id="sidebar.calendar" resname="sidebar.calendar">
+                <source>Calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="sidebar.recent_projects" resname="sidebar.recent_projects">
+                <source>Recent projects</source>
+                <target>Recent projects</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.ecommerce" resname="sidebar.project.ecommerce">
+                <source>E-commerce Website</source>
+                <target>E-commerce Website</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.mobile_app" resname="sidebar.project.mobile_app">
+                <source>Mobile Application</source>
+                <target>Mobile Application</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.db_migration" resname="sidebar.project.db_migration">
+                <source>Database Migration</source>
+                <target>Database Migration</target>
+            </trans-unit>
+            <trans-unit id="sidebar.teams" resname="sidebar.teams">
+                <source>Teams</source>
+                <target>Teams</target>
+            </trans-unit>
+            <trans-unit id="sidebar.reports" resname="sidebar.reports">
+                <source>Reports</source>
+                <target>Reports</target>
+            </trans-unit>
+            <trans-unit id="sidebar.administration" resname="sidebar.administration">
+                <source>Administration</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="sidebar.settings" resname="sidebar.settings">
+                <source>Settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="sidebar.users" resname="sidebar.users">
+                <source>Users</source>
+                <target>Users</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

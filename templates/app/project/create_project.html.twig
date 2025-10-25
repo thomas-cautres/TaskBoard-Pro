@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/create-project.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="row">
+    <div class="row" data-controller="project">
         <div class="col-lg-8 mx-auto">
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
@@ -97,22 +97,4 @@
             </div>
         </div>
     </div>
-    <script>
-        // Toggle sidebar sur mobile
-        document.querySelector('.navbar-toggler')?.addEventListener('click', function () {
-            document.querySelector('.sidebar')?.classList.toggle('show');
-        });
-
-        // Gestion de la sélection visuelle du type de projet
-        document.querySelectorAll('.project-type-card').forEach(card => {
-            card.addEventListener('click', function () {
-                // Retirer la classe selected de tous
-                document.querySelectorAll('.project-type-card').forEach(c => c.classList.remove('selected'));
-                // Ajouter à celui cliqué
-                this.classList.add('selected');
-                // Cocher le radio
-                this.querySelector('input[type="radio"]').checked = true;
-            });
-        });
-    </script>
 {% endblock %}

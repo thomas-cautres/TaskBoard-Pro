@@ -1,72 +1,72 @@
-<aside class="sidebar">
+<aside class="sidebar" data-app-target="sidebar">
     <nav class="nav flex-column">
         <a class="nav-link active" href="{{ path('app_dashboard') }}">
             <i class="bi bi-house-door"></i>
-            Accueil
+            {{ 'sidebar.home'|trans }}
         </a>
 
         <a class="nav-link" href="project_index.html">
             <i class="bi bi-folder"></i>
-            Mes Projets
+            {{ 'sidebar.my_projects'|trans }}
         </a>
 
         <a class="nav-link" href="#">
             <i class="bi bi-check-square"></i>
-            Mes Tâches
+            {{ 'sidebar.my_tasks'|trans }}
         </a>
 
         <a class="nav-link" href="#">
             <i class="bi bi-calendar-event"></i>
-            Calendrier
+            {{ 'sidebar.calendar'|trans }}
         </a>
 
         <hr class="my-3 mx-3">
 
         <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">
-            <span class="small">Projets récents</span>
+            <span class="small">{{ 'sidebar.recent_projects'|trans }}</span>
         </h6>
 
         <a class="nav-link small" href="project_show.html">
             <i class="bi bi-kanban text-success"></i>
-            Site Web E-commerce
+            {{ 'sidebar.project.ecommerce'|trans }}
         </a>
 
         <a class="nav-link small" href="#">
             <i class="bi bi-kanban text-warning"></i>
-            Application Mobile
+            {{ 'sidebar.project.mobile_app'|trans }}
         </a>
 
         <a class="nav-link small" href="#">
             <i class="bi bi-kanban text-secondary"></i>
-            Migration BDD
+            {{ 'sidebar.project.db_migration'|trans }}
         </a>
 
         <hr class="my-3 mx-3">
 
         <a class="nav-link" href="#">
             <i class="bi bi-people"></i>
-            Équipes
+            {{ 'sidebar.teams'|trans }}
         </a>
 
         <a class="nav-link" href="#">
             <i class="bi bi-bar-chart"></i>
-            Rapports
+            {{ 'sidebar.reports'|trans }}
         </a>
 
         <hr class="my-3 mx-3">
 
         <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">
-            <span class="small">Administration</span>
+            <span class="small">{{ 'sidebar.administration'|trans }}</span>
         </h6>
 
         <a class="nav-link" href="#">
             <i class="bi bi-gear"></i>
-            Paramètres
+            {{ 'sidebar.settings'|trans }}
         </a>
 
         <a class="nav-link" href="#">
             <i class="bi bi-people-fill"></i>
-            Utilisateurs
+            {{ 'sidebar.users'|trans }}
         </a>
     </nav>
 </aside>

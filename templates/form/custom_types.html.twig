@@ -2,8 +2,8 @@
     {% for type in form.children %}
         {% set attrs = type.vars.attr %}
         <div class="col-md-4">
-            <label class="project-type-card card h-100 p-3">
-                <input type="radio" name="{{ type.vars.full_name }}" value="scrum"  id="{{ type.vars.id }}">
+            <label data-action="click->project#selectType" data-project-target="projectCard" class="project-type-card card h-100 p-3 {% if type.vars.data is same as(true) %}selected{% endif %}">
+                <input type="radio" name="{{ type.vars.full_name }}" value="{{ type.vars.value }}" id="{{ type.vars.id }}" {% if type.vars.data is same as(true) %}checked{% endif %}>
                 <div class="d-flex align-items-start">
                     <i class="bi {{ attrs['data-icon'] }} fs-2 {{ attrs['data-icon-color'] }} me-2"></i>
                     <div>
