@@ -17,8 +17,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-    )
-    {
+    ) {
     }
 
     public function load(ObjectManager $manager): void
@@ -64,29 +63,28 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
             'startDate' => new \DateTimeImmutable('2025-01-01'),
             'endDate' => new \DateTimeImmutable('2025-02-01'),
             'createdByEmail' => 'user-confirmed@domain.com',
-            'columns' =>
+            'columns' => [
                 [
-                    [
-                        'position' => 1,
-                        'name' => ProjectColumnName::BackLog->value,
-                    ],
-                    [
-                        'position' => 2,
-                        'name' => ProjectColumnName::ToDo->value,
-                    ],
-                    [
-                        'position' => 3,
-                        'name' => ProjectColumnName::InProgress->value,
-                    ],
-                    [
-                        'position' => 4,
-                        'name' => ProjectColumnName::Review->value,
-                    ],
-                    [
-                        'position' => 5,
-                        'name' => ProjectColumnName::Done->value,
-                    ],
-                ]
+                    'position' => 1,
+                    'name' => ProjectColumnName::BackLog->value,
+                ],
+                [
+                    'position' => 2,
+                    'name' => ProjectColumnName::ToDo->value,
+                ],
+                [
+                    'position' => 3,
+                    'name' => ProjectColumnName::InProgress->value,
+                ],
+                [
+                    'position' => 4,
+                    'name' => ProjectColumnName::Review->value,
+                ],
+                [
+                    'position' => 5,
+                    'name' => ProjectColumnName::Done->value,
+                ],
+            ],
         ];
 
         yield [
@@ -96,21 +94,20 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
             'startDate' => new \DateTimeImmutable('2025-01-01'),
             'endDate' => new \DateTimeImmutable('2025-02-01'),
             'createdByEmail' => 'user-confirmed@domain.com',
-            'columns' =>
+            'columns' => [
                 [
-                    [
-                        'position' => 1,
-                        'name' => ProjectColumnName::ToDo->value,
-                    ],
-                    [
-                        'position' => 2,
-                        'name' => ProjectColumnName::InProgress->value,
-                    ],
-                    [
-                        'position' => 3,
-                        'name' => ProjectColumnName::Done->value,
-                    ],
-                ]
+                    'position' => 1,
+                    'name' => ProjectColumnName::ToDo->value,
+                ],
+                [
+                    'position' => 2,
+                    'name' => ProjectColumnName::InProgress->value,
+                ],
+                [
+                    'position' => 3,
+                    'name' => ProjectColumnName::Done->value,
+                ],
+            ],
         ];
     }
 }
