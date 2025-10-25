@@ -38,9 +38,9 @@ class ProjectTypeType extends AbstractType
                         ProjectType::Basic => '📝',
                     },
                     'data-description' => match ($choice) {
-                        ProjectType::Scrum => 'Sprints, backlog, planning poker, burndown charts',
-                        ProjectType::Kanban => 'Flux continu, WIP limits, visualisation claire',
-                        ProjectType::Basic => 'Simple liste ouvert/fermé, idéal pour débuter',
+                        ProjectType::Scrum => 'project.form.type.scrum.description',
+                        ProjectType::Kanban => 'project.form.type.kanban.description',
+                        ProjectType::Basic => 'project.form.type.basic.description',
                     },
                 ];
             },

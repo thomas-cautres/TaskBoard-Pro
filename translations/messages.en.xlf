@@ -420,6 +420,18 @@
                 <source>Project successfully created</source>
                 <target>Project successfully created</target>
             </trans-unit>
+            <trans-unit id="project.form.type.scrum.description" resname="project.form.type.scrum.description">
+                <source>Sprints, backlog, planning poker, burndown charts</source>
+                <target>Sprints, backlog, planning poker, burndown charts</target>
+            </trans-unit>
+            <trans-unit id="project.form.type.kanban.description" resname="project.form.type.kanban.description">
+                <source>Continuous flow, WIP limits, clear visualization</source>
+                <target>Continuous flow, WIP limits, clear visualization</target>
+            </trans-unit>
+            <trans-unit id="project.form.type.basic.description" resname="project.form.type.basic.description">
+                <source>Simple open/closed list, ideal for beginners</source>
+                <target>Simple open/closed list, ideal for beginners</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

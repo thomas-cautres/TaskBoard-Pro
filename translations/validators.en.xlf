@@ -22,6 +22,10 @@
                 <source>End date should not be before start date.</source>
                 <target>End date should not be before start date.</target>
             </trans-unit>
+            <trans-unit id="validator.project.name" resname="validator.project.name">
+                <source>You have already created a project with that name</source>
+                <target>You have already created a project with that name</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

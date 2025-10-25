@@ -27,7 +27,7 @@ readonly class UserProjectNameValidator
         }
 
         if (0 !== $this->projectRepository->countByUserAndName($user, $value)) {
-            $context->buildViolation('You have already created a project with that name')
+            $context->buildViolation('validator.project.name')
                 ->atPath('name')
                 ->addViolation();
         }
