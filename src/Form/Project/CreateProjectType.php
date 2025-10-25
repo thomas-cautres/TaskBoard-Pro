@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -82,7 +81,7 @@ class CreateProjectType extends AbstractType
                             if (null === $value) {
                                 return;
                             }
-                            /** @var FormInterface $projectRoot */
+                            /** @var FormInterface<Project> $projectRoot */
                             $projectRoot = $context->getRoot();
                             /** @var Project $project */
                             $project = $projectRoot->getData();
@@ -92,7 +91,7 @@ class CreateProjectType extends AbstractType
                             }
                         },
                     ]),
-                ]
+                ],
             ]);
     }
 

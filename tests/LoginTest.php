@@ -31,7 +31,7 @@ class LoginTest extends WebTestCase
             '_password' => 'test1234',
         ]);
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/app');
     }
 
     public function testPasswordIsInvalid(): void

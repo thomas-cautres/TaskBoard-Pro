@@ -25,7 +25,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private ProjectRepository $projectRepository,
         private LoggerInterface $projectLogger,
         private RequestStack $requestStack,
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
