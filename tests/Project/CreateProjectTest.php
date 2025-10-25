@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Project;
 
 use App\Entity\Project;
@@ -32,7 +34,7 @@ class CreateProjectTest extends WebTestCase
         $assertions = [
             'Projects',
             'Create a project',
-            'Create a new project'
+            'Create a new project',
         ];
 
         foreach ($assertions as $assertion) {
@@ -70,11 +72,63 @@ class CreateProjectTest extends WebTestCase
         $this->assertEquals('Review', $project->getColumns()->get(3)->getName());
         $this->assertEquals('Done', $project->getColumns()->get(4)->getName());
 
+        $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
+    }
+
+    public function testSubmitKanbanProject()
+    {
+        $this->client->request('GET', '/app/project/create');
+        $this->client->submitForm('submit-btn', [
+            'create_project[name]' => 'Project name',
+            'create_project[description]' => 'Project description',
+            'create_project[type]' => 'kanban',
+            'create_project[startDate]' => '2025-01-01',
+            'create_project[endDate]' => '2025-02-01',
+        ]);
+
+        $project = $this->projectRepository->findOneBy(['name' => 'Project name']);
+
+        $this->assertInstanceOf(Project::class, $project);
+        $this->assertEquals('Project name', $project->getName());
+        $this->assertEquals('Project description', $project->getDescription());
+        $this->assertEquals('kanban', $project->getType()->value);
+        $this->assertEquals('2025-01-01', $project->getStartDate()->format('Y-m-d'));
+        $this->assertEquals('2025-02-01', $project->getEndDate()->format('Y-m-d'));
+        $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
+
+        $this->assertCount(3, $project->getColumns());
+        $this->assertEquals('To Do', $project->getColumns()->get(0)->getName());
+        $this->assertEquals('In Progress', $project->getColumns()->get(1)->getName());
+        $this->assertEquals('Done', $project->getColumns()->get(2)->getName());
 
         $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
-        $this->client->followRedirect();
-        $content = $this->client->getResponse()->getContent();
+    }
 
-        $this->assertStringContainsString('Project successfully created', $content);
+    public function testSubmitBasicProject()
+    {
+        $this->client->request('GET', '/app/project/create');
+        $this->client->submitForm('submit-btn', [
+            'create_project[name]' => 'Project name',
+            'create_project[description]' => 'Project description',
+            'create_project[type]' => 'basic',
+            'create_project[startDate]' => '2025-01-01',
+            'create_project[endDate]' => '2025-02-01',
+        ]);
+
+        $project = $this->projectRepository->findOneBy(['name' => 'Project name']);
+
+        $this->assertInstanceOf(Project::class, $project);
+        $this->assertEquals('Project name', $project->getName());
+        $this->assertEquals('Project description', $project->getDescription());
+        $this->assertEquals('basic', $project->getType()->value);
+        $this->assertEquals('2025-01-01', $project->getStartDate()->format('Y-m-d'));
+        $this->assertEquals('2025-02-01', $project->getEndDate()->format('Y-m-d'));
+        $this->assertEquals('user-confirmed@domain.com', $project->getCreatedBy()->getEmail());
+
+        $this->assertCount(2, $project->getColumns());
+        $this->assertEquals('Open', $project->getColumns()->get(0)->getName());
+        $this->assertEquals('Closed', $project->getColumns()->get(1)->getName());
+
+        $this->assertResponseRedirects(sprintf('/app/project/%s', $project->getUuid()));
     }
 }
