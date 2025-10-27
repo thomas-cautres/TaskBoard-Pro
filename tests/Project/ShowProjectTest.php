@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Project;
 
-use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -12,14 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class ShowProjectTest extends WebTestCase
 {
     private UserRepository $userRepository;
-    private ProjectRepository $projectRepository;
     private KernelBrowser $client;
 
     public function setUp(): void
     {
         $this->client = self::createClient();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
-        $this->projectRepository = static::getContainer()->get(ProjectRepository::class);
         $loggedUser = $this->userRepository->findOneBy(['email' => 'user-confirmed@domain.com']);
         $this->client->loginUser($loggedUser);
     }
@@ -64,5 +61,20 @@ class ShowProjectTest extends WebTestCase
         // Action buttons
         $this->assertSelectorExists('a.btn.btn-outline-primary');
         $this->assertSelectorTextContains('a.btn.btn-outline-primary', 'Edit');
+    }
+
+    public function testProjectDoesNotExists(): void
+    {
+        $this->client->request('GET', '/app/project/undefined');
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    public function testUserNotAllowed(): void
+    {
+        $loggedUser = $this->userRepository->findOneBy(['email' => 'user2-confirmed@domain.com']);
+        $this->client->loginUser($loggedUser);
+
+        $this->client->request('GET', '/app/project/019a2646-0166-70fc-80c2-0ddbc097a592');
+        $this->assertResponseStatusCodeSame(403);
     }
 }

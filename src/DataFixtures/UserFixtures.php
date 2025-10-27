@@ -40,5 +40,6 @@ class UserFixtures extends Fixture
     {
         yield ['John', 'Doe', 'user-confirmed@domain.com', 'test1234', true, '1234'];
         yield ['Jane', 'Doe', 'user-unconfirmed@domain.com', 'test1234', false, '1234'];
+        yield ['Michael', 'Doe', 'user2-confirmed@domain.com', 'test1234', true, '1234'];
     }
 }
