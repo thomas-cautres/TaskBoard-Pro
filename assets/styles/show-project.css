@@ -1,0 +1,279 @@
+/* Project Header */
+.project-header {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.project-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.project-icon.scrum {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.project-icon.kanban {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+}
+
+.project-icon.basic {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: var(--secondary);
+}
+
+/* Badges */
+.badge-role {
+    background-color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-type {
+    background-color: var(--success);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-status {
+    background-color: var(--info);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Stats Cards */
+.stat-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    border-left: 4px solid;
+    transition: all 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.primary {
+    border-color: var(--primary);
+}
+
+.stat-card.success {
+    border-color: var(--success);
+}
+
+.stat-card.warning {
+    border-color: var(--warning);
+}
+
+.stat-card.info {
+    border-color: var(--info);
+}
+
+/* Tabs */
+.nav-tabs {
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #6B7280;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary);
+    border-bottom-color: #E5E7EB;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background: transparent;
+}
+
+.nav-tabs .nav-link.disabled {
+    color: #D1D5DB;
+    cursor: not-allowed;
+}
+
+/* Kanban Board */
+.kanban-board {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    min-height: 400px;
+}
+
+.kanban-column {
+    min-width: 280px;
+    max-width: 280px;
+    background: #F9FAFB;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.kanban-column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.kanban-column-title {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.kanban-column-count {
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    color: #6B7280;
+    font-weight: 600;
+}
+
+.kanban-column-body {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.kanban-empty {
+    text-align: center;
+    color: #9CA3AF;
+    padding: 2rem 1rem;
+}
+
+.kanban-empty i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.btn-add-task {
+    width: 100%;
+    border: 2px dashed #D1D5DB;
+    color: #9CA3AF;
+    background: transparent;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+}
+
+.btn-add-task:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+}
+
+.btn-add-task:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Activity Timeline */
+.activity-item {
+    padding-left: 2.5rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 2rem;
+    bottom: 0;
+    width: 2px;
+    background: #E5E7EB;
+}
+
+.activity-item:last-child::before {
+    display: none;
+}
+
+.activity-dot {
+    position: absolute;
+    left: 0.25rem;
+    top: 0.5rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #E5E7EB;
+}
+
+.activity-dot.primary {
+    background: var(--primary);
+}
+
+.activity-dot.success {
+    background: var(--success);
+}
+
+.activity-dot.warning {
+    background: var(--warning);
+}
+
+/* Avatar Stack */
+.avatar-stack {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-left: -8px;
+}
+
+.avatar:first-child {
+    margin-left: 0;
+}
+
+.avatar-more {
+    background: #6B7280;
+}
+
+/* Progress bar */
+.progress {
+    height: 8px;
+}
