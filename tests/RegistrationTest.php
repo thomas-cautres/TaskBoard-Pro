@@ -30,6 +30,8 @@ class RegistrationTest extends WebTestCase
         $this->assertStringContainsString('Back to home', $content);
 
         $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => 'Smith',
             'registration[email]' => 'test@test.com',
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest123',
@@ -56,6 +58,44 @@ class RegistrationTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => 'Smith',
+            'registration[email]' => 'test',
+            'registration[password][first]' => 'testtest123',
+            'registration[password][second]' => 'testtest123',
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+    }
+
+    public function testWithEmptyFirstName(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/registration');
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('signup-btn', [
+            'registration[firstName]' => '',
+            'registration[lastName]' => 'Smith',
+            'registration[email]' => 'test',
+            'registration[password][first]' => 'testtest123',
+            'registration[password][second]' => 'testtest123',
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+    }
+
+    public function testWithEmptyLastName(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/registration');
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => '',
             'registration[email]' => 'test',
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest123',
@@ -72,6 +112,8 @@ class RegistrationTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => 'Smith',
             'registration[email]' => 'test@test.com',
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest',
@@ -89,6 +131,8 @@ class RegistrationTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => 'Smith',
             'registration[email]' => 'test@test.com',
             'registration[password][first]' => 'test',
             'registration[password][second]' => 'test',
@@ -105,7 +149,10 @@ class RegistrationTest extends WebTestCase
 
         $entityManager = $container->get('doctrine')->getManager();
         $existingUser = new User();
-        $existingUser->setEmail('existing@test.com')
+        $existingUser
+            ->setFirstName('Bob')
+            ->setLastName('Smith')
+            ->setEmail('existing@test.com')
             ->setPassword('hashedpassword')
             ->setConfirmationCode('1234');
 
@@ -114,6 +161,8 @@ class RegistrationTest extends WebTestCase
 
         $client->request('GET', '/registration');
         $client->submitForm('signup-btn', [
+            'registration[firstName]' => 'Bob',
+            'registration[lastName]' => 'Smith',
             'registration[email]' => 'existing@test.com',
             'registration[password][first]' => 'testtest123',
             'registration[password][second]' => 'testtest123',

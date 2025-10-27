@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\App;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/app', name: 'app_dashboard', methods: ['GET'])]
 class DashboardController extends AbstractController
 {
-    #[Route('/dashboard', name: 'dashboard', methods: ['GET'])]
     public function __invoke(): Response
     {
-        return $this->render('dashboard.html.twig');
+        return $this->render('app/dashboard.html.twig');
     }
 }

@@ -16,7 +16,7 @@ class LoginController extends AbstractController
     public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser() instanceof User) {
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('security/login.html.twig', [

@@ -2,11 +2,8 @@
 
 {% block title %}{{ parent() }} - {{ 'otp.title'|trans }}{% endblock %}
 
-{% block javascripts %}
-    {% block importmap %}
-        {{ importmap('app') }}
-        {{ importmap('login') }}
-    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/login.css') }}">
 {% endblock %}
 
 {% block body %}

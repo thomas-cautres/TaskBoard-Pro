@@ -25,7 +25,7 @@ class ConfirmationTest extends WebTestCase
 
         $this->assertStringContainsString('Verify your account', $content);
         $this->assertStringContainsString('Enter verification code', $content);
-        $this->assertStringContainsString("We&#039;ve sent a 6-digit verification code to your email address. Please enter it below to verify your account.", $content);
+        $this->assertStringContainsString('We&#039;ve sent a 6-digit verification code to your email address. Please enter it below to verify your account.', $content);
         $this->assertStringContainsString('Verify account', $content);
         $this->assertStringContainsString('Back to login', $content);
 
@@ -60,7 +60,7 @@ class ConfirmationTest extends WebTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', "This code is not valid.");
+        $this->assertSelectorTextContains('.invalid-feedback', 'This code is not valid.');
     }
 
     public function testWithInvalidSignature(): void

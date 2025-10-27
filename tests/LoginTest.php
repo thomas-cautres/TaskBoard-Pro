@@ -22,7 +22,7 @@ class LoginTest extends WebTestCase
         $this->assertStringContainsString('Remember me', $content);
         $this->assertStringContainsString('Sign in', $content);
         $this->assertStringContainsString('Forgot password?', $content);
-        $this->assertStringContainsString("Don&#039;t have an account yet?", $content);
+        $this->assertStringContainsString('Don&#039;t have an account yet?', $content);
         $this->assertStringContainsString('Sign up', $content);
         $this->assertStringContainsString('Back to home', $content);
 
@@ -31,7 +31,7 @@ class LoginTest extends WebTestCase
             '_password' => 'test1234',
         ]);
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/app');
     }
 
     public function testPasswordIsInvalid(): void
@@ -61,7 +61,7 @@ class LoginTest extends WebTestCase
         ]);
 
         $client->followRedirect();
-        $this->assertSelectorTextContains('.alert-danger', "Your registration is not confirmed.");
+        $this->assertSelectorTextContains('.alert-danger', 'Your registration is not confirmed.');
     }
 
     public function testPageLinksWork(): void

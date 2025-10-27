@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block javascripts %}
-    {% block importmap %}
-        {{ importmap('app') }}
-        {{ importmap('home') }}
-    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 {% block title %}{{ parent() }} - {{ 'home.title'|trans }}{% endblock %}
 {% block body %}

@@ -174,6 +174,14 @@
                 <source>Join TaskBoard Pro for free</source>
                 <target>Join TaskBoard Pro for free</target>
             </trans-unit>
+            <trans-unit id="register.firstname" resname="register.firstname">
+                <source>First name</source>
+                <target>First name</target>
+            </trans-unit>
+            <trans-unit id="register.lastname" resname="register.lastname">
+                <source>Last name</source>
+                <target>Last name</target>
+            </trans-unit>
             <trans-unit id="register.email" resname="register.email">
                 <source>Email</source>
                 <target>Email</target>
@@ -229,6 +237,200 @@
             <trans-unit id="otp.back_to_login" resname="otp.back_to_login">
                 <source>Back to login</source>
                 <target>Back to login</target>
+            </trans-unit>
+            <trans-unit id="project.create.title" resname="project.create.title">
+                <source>Create a project</source>
+                <target>Create a project</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.projects" resname="project.breadcrumb.projects">
+                <source>Projects</source>
+                <target>Projects</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.create" resname="project.breadcrumb.create">
+                <source>Create a project</source>
+                <target>Create a project</target>
+            </trans-unit>
+            <trans-unit id="project.create.heading" resname="project.create.heading">
+                <source>Create a new project</source>
+                <target>Create a new project</target>
+            </trans-unit>
+            <trans-unit id="project.create.description" resname="project.create.description">
+                <source>Organize your work with the methodology that suits you</source>
+                <target>Organize your work with the methodology that suits you</target>
+            </trans-unit>
+            <trans-unit id="project.create.name_help" resname="project.create.name_help">
+                <source>Choose a unique and descriptive name</source>
+                <target>Choose a unique and descriptive name</target>
+            </trans-unit>
+            <trans-unit id="project.create.description_help" resname="project.create.description_help">
+                <source>Optional - You can modify it later</source>
+                <target>Optional - You can modify it later</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_label" resname="project.create.type_label">
+                <source>Project type</source>
+                <target>Project type</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_info_title" resname="project.create.type_info_title">
+                <source>Good to know:</source>
+                <target>Good to know:</target>
+            </trans-unit>
+            <trans-unit id="project.create.type_info_text" resname="project.create.type_info_text">
+                <source>Columns will be automatically created according to the chosen type. You can customize them after creation.</source>
+                <target>Columns will be automatically created according to the chosen type. You can customize them after creation.</target>
+            </trans-unit>
+            <trans-unit id="project.create.optional" resname="project.create.optional">
+                <source>Optional</source>
+                <target>Optional</target>
+            </trans-unit>
+            <trans-unit id="project.create.cancel" resname="project.create.cancel">
+                <source>Cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="project.create.submit" resname="project.create.submit">
+                <source>Create the project</source>
+                <target>Create the project</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation_title" resname="project.create.after_creation_title">
+                <source>What will happen after creation</source>
+                <target>What will happen after creation</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.manager" resname="project.create.after_creation.manager">
+                <source>You will automatically become Project Manager of the project</source>
+                <target>You will automatically become Project Manager of the project</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.columns" resname="project.create.after_creation.columns">
+                <source>Default columns will be created according to the chosen type</source>
+                <target>Default columns will be created according to the chosen type</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.members" resname="project.create.after_creation.members">
+                <source>You will be able to invite members and create tasks immediately</source>
+                <target>You will be able to invite members and create tasks immediately</target>
+            </trans-unit>
+            <trans-unit id="project.create.after_creation.type_locked" resname="project.create.after_creation.type_locked">
+                <source>The project type cannot be modified afterwards</source>
+                <target>The project type cannot be modified afterwards</target>
+            </trans-unit>
+            <trans-unit id="project.form.name.label" resname="project.form.name.label">
+                <source>Project name *</source>
+                <target>Project name *</target>
+            </trans-unit>
+            <trans-unit id="project.form.name.placeholder" resname="project.form.name.placeholder">
+                <source>Ex: E-commerce Website Redesign</source>
+                <target>Ex: E-commerce Website Redesign</target>
+            </trans-unit>
+            <trans-unit id="project.form.description.label" resname="project.form.description.label">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="project.form.description.placeholder" resname="project.form.description.placeholder">
+                <source>Describe the objectives and context of the project...</source>
+                <target>Describe the objectives and context of the project...</target>
+            </trans-unit>
+            <trans-unit id="project.form.start_date.label" resname="project.form.start_date.label">
+                <source>Start date</source>
+                <target>Start date</target>
+            </trans-unit>
+            <trans-unit id="project.form.end_date.label" resname="project.form.end_date.label">
+                <source>End date</source>
+                <target>End date</target>
+            </trans-unit>
+            <!-- Navbar translations -->
+            <trans-unit id="navbar.search.placeholder" resname="navbar.search.placeholder">
+                <source>Search...</source>
+                <target>Search...</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.unread" resname="navbar.notifications.unread">
+                <source>unread notifications</source>
+                <target>unread notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.title" resname="navbar.notifications.title">
+                <source>Notifications</source>
+                <target>Notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.notifications.view_all" resname="navbar.notifications.view_all">
+                <source>View all notifications</source>
+                <target>View all notifications</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.profile" resname="navbar.user.profile">
+                <source>My profile</source>
+                <target>My profile</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.settings" resname="navbar.user.settings">
+                <source>Settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="navbar.user.logout" resname="navbar.user.logout">
+                <source>Logout</source>
+                <target>Logout</target>
+            </trans-unit>
+            <!-- Sidebar translations -->
+            <trans-unit id="sidebar.home" resname="sidebar.home">
+                <source>Home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="sidebar.my_projects" resname="sidebar.my_projects">
+                <source>My Projects</source>
+                <target>My Projects</target>
+            </trans-unit>
+            <trans-unit id="sidebar.my_tasks" resname="sidebar.my_tasks">
+                <source>My Tasks</source>
+                <target>My Tasks</target>
+            </trans-unit>
+            <trans-unit id="sidebar.calendar" resname="sidebar.calendar">
+                <source>Calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="sidebar.recent_projects" resname="sidebar.recent_projects">
+                <source>Recent projects</source>
+                <target>Recent projects</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.ecommerce" resname="sidebar.project.ecommerce">
+                <source>E-commerce Website</source>
+                <target>E-commerce Website</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.mobile_app" resname="sidebar.project.mobile_app">
+                <source>Mobile Application</source>
+                <target>Mobile Application</target>
+            </trans-unit>
+            <trans-unit id="sidebar.project.db_migration" resname="sidebar.project.db_migration">
+                <source>Database Migration</source>
+                <target>Database Migration</target>
+            </trans-unit>
+            <trans-unit id="sidebar.teams" resname="sidebar.teams">
+                <source>Teams</source>
+                <target>Teams</target>
+            </trans-unit>
+            <trans-unit id="sidebar.reports" resname="sidebar.reports">
+                <source>Reports</source>
+                <target>Reports</target>
+            </trans-unit>
+            <trans-unit id="sidebar.administration" resname="sidebar.administration">
+                <source>Administration</source>
+                <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="sidebar.settings" resname="sidebar.settings">
+                <source>Settings</source>
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="sidebar.users" resname="sidebar.users">
+                <source>Users</source>
+                <target>Users</target>
+            </trans-unit>
+            <trans-unit id="project.create.flash.message.success" resname="project.create.flash.message.success">
+                <source>Project successfully created</source>
+                <target>Project successfully created</target>
+            </trans-unit>
+            <trans-unit id="project.form.type.scrum.description" resname="project.form.type.scrum.description">
+                <source>Sprints, backlog, planning poker, burndown charts</source>
+                <target>Sprints, backlog, planning poker, burndown charts</target>
+            </trans-unit>
+            <trans-unit id="project.form.type.kanban.description" resname="project.form.type.kanban.description">
+                <source>Continuous flow, WIP limits, clear visualization</source>
+                <target>Continuous flow, WIP limits, clear visualization</target>
+            </trans-unit>
+            <trans-unit id="project.form.type.basic.description" resname="project.form.type.basic.description">
+                <source>Simple open/closed list, ideal for beginners</source>
+                <target>Simple open/closed list, ideal for beginners</target>
             </trans-unit>
         </body>
     </file>

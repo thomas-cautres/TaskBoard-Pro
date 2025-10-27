@@ -1,0 +1,100 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ 'project.create.title'|trans }} - TaskBoard Pro{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/create-project.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="row" data-controller="project">
+        <div class="col-lg-8 mx-auto">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.projects'|trans }}</a></li>
+                    <li class="breadcrumb-item active">{{ 'project.breadcrumb.create'|trans }}</li>
+                </ol>
+            </nav>
+            <div class="mb-4">
+                <h1 class="h2 mb-2">
+                    <i class="bi bi-plus-circle text-primary"></i>
+                    {{ 'project.create.heading'|trans }}
+                </h1>
+                <p class="text-muted mb-0">{{ 'project.create.description'|trans }}</p>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    {{ form_start(form) }}
+                    <div class="mb-4">
+                        {{ form_row(form.name) }}
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i>
+                            {{ 'project.create.name_help'|trans }}
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        {{ form_row(form.description) }}
+                        <div class="form-text">{{ 'project.create.description_help'|trans }}</div>
+                    </div>
+
+                    <!-- Type de projet -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">{{ 'project.create.type_label'|trans }} *</label>
+
+                        <div class="row g-3">
+                            {{ form_row(form.type) }}
+                        </div>
+
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-lightbulb"></i>
+                            <strong>{{ 'project.create.type_info_title'|trans }}</strong> {{ 'project.create.type_info_text'|trans }}
+                        </div>
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            {{ form_row(form.startDate) }}
+                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form_row(form.endDate) }}
+                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="project_index_complete.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i>
+                            {{ 'project.create.cancel'|trans }}
+                        </a>
+
+                        <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+                            <i class="bi bi-check-circle"></i>
+                            {{ 'project.create.submit'|trans }}
+                        </button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <!-- Informations complémentaires -->
+            <div class="card mt-4 border-0 bg-light">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi bi-info-circle text-primary"></i>
+                        {{ 'project.create.after_creation_title'|trans }}
+                    </h6>
+                    <ul class="mb-0 small text-muted">
+                        <li>{{ 'project.create.after_creation.manager'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.columns'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.members'|trans }}</li>
+                        <li>{{ 'project.create.after_creation.type_locked'|trans }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

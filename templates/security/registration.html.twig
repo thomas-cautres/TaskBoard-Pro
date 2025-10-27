@@ -2,11 +2,8 @@
 
 {% block title %}{{ parent() }} - {{ 'register.title'|trans }}{% endblock %}
 
-{% block javascripts %}
-    {% block importmap %}
-        {{ importmap('app') }}
-        {{ importmap('login') }}
-    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/login.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -21,6 +18,12 @@
                                 <p class="text-muted mt-3">{{ 'register.heading'|trans }}</p>
                             </div>
                             {{ form_start(form) }}
+                            <div class="mb-3">
+                                {{ form_row(form.firstName) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_row(form.lastName) }}
+                            </div>
                             <div class="mb-3">
                                 {{ form_row(form.email) }}
                             </div>
