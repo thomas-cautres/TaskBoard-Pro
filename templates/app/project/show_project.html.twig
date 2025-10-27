@@ -34,10 +34,8 @@
                             </span>
                         <span class="badge-status">
                                 <i class="bi bi-check-circle me-1"></i>
-                                {% if project.active %}
-                                    ACTIVE
-                                {% endif %}
-                            </span>
+                                {{ project.active ? 'ACTIVE': 'INACTIVE' }}
+                         </span>
                     </div>
                 </div>
             </div>

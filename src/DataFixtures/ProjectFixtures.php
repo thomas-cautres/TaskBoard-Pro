@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Uuid;
 
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -32,6 +33,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 
             $project = new Project();
             $project
+                ->setUuid($projectArray['uuid'])
                 ->setName($projectArray['name'])
                 ->setDescription($projectArray['description'])
                 ->setType($projectArray['type'])
@@ -62,6 +64,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @return \Iterator<array{
+     *     uuid: Uuid,
      *     name: string,
      *     description: string|null,
      *     type: ProjectType,
@@ -74,6 +77,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
     private function getProjects(): \Iterator
     {
         yield [
+            'uuid' => Uuid::fromString('019a2646-0166-70fc-80c2-0ddbc097a592'),
             'name' => 'Project Scrum',
             'description' => 'Project description',
             'type' => ProjectType::Scrum,
@@ -105,6 +109,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         ];
 
         yield [
+            'uuid' => Uuid::fromString('019a2646-48d0-7260-afc3-9851e6487a1f'),
             'name' => 'Project Kanban',
             'description' => 'Project description',
             'type' => ProjectType::Kanban,
