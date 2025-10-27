@@ -8,8 +8,8 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="project_index_complete.html">My Projects</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
             <li class="breadcrumb-item active">{{ project.name }}</li>
         </ol>
     </nav>
@@ -26,7 +26,7 @@
                     <div class="d-flex flex-wrap gap-2 mb-3">
                             <span class="badge-role">
                                 <i class="bi bi-person-fill-gear me-1"></i>
-                                {% if app.user.email == project.createdByEmail %}PROJECT MANAGER{% endif %}
+                                {% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}
                             </span>
                         <span class="badge-type">
                                 <i class="bi bi-calendar-week me-1"></i>
@@ -34,7 +34,7 @@
                             </span>
                         <span class="badge-status">
                                 <i class="bi bi-check-circle me-1"></i>
-                                {{ project.active ? 'ACTIVE': 'INACTIVE' }}
+                                {{ project.active ? 'project.status.active'|trans : 'project.status.inactive'|trans }}
                          </span>
                     </div>
                 </div>
@@ -43,20 +43,20 @@
             <div class="d-flex gap-2">
                 <a href="project_edit_complete.html" class="btn btn-outline-primary">
                     <i class="bi bi-pencil"></i>
-                    Edit
+                    {{ 'project.action.edit'|trans }}
                 </a>
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>Favorites</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>View Members</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>Export</a></li>
-                        <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>Archive</a>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
+                        <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>{{ 'project.menu.archive'|trans }}</a>
                         </li>
                     </ul>
                 </div>
@@ -70,21 +70,21 @@
         <div class="row g-3 text-muted small">
             <div class="col-auto">
                 <i class="bi bi-calendar3 me-1"></i>
-                <strong>Start:</strong> {{ project.formattedStartDate ?? 'Undefined' }}
+                <strong>{{ 'project.date.start'|trans }}:</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-calendar-check me-1"></i>
-                <strong>End:</strong> {{ project.formattedEndDate ?? 'Undefined' }}
+                <strong>{{ 'project.date.end'|trans }}:</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-clock-history me-1"></i>
-                <strong>Created on:</strong> {{ project.formattedCreatedAt }}
+                <strong>{{ 'project.date.created_on'|trans }}:</strong> {{ project.formattedCreatedAt }}
             </div>
             <div class="col-auto ms-auto">
                 <i class="bi bi-people me-1"></i>
                 <div class="avatar-stack d-inline-flex">
                     <div class="avatar" style="background: #4F46E5;">AM</div>
-                    <span class="ms-2"><strong>1 member</strong></span>
+                    <span class="ms-2"><strong>{{ 'project.members.count'|trans({'%count%': 1}) }}</strong></span>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
             <div class="stat-card primary">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                        <p class="text-muted mb-1 small">Total Tasks</p>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.total_tasks'|trans }}</p>
                         <h3 class="mb-0">0</h3>
                     </div>
                     <div class="bg-primary bg-opacity-10 rounded p-2">
@@ -110,7 +110,7 @@
             <div class="stat-card warning">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                        <p class="text-muted mb-1 small">In Progress</p>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.in_progress'|trans }}</p>
                         <h3 class="mb-0">0</h3>
                     </div>
                     <div class="bg-warning bg-opacity-10 rounded p-2">
@@ -124,7 +124,7 @@
             <div class="stat-card success">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                        <p class="text-muted mb-1 small">Completed</p>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.completed'|trans }}</p>
                         <h3 class="mb-0">0</h3>
                     </div>
                     <div class="bg-success bg-opacity-10 rounded p-2">
@@ -138,7 +138,7 @@
             <div class="stat-card info">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                        <p class="text-muted mb-1 small">Progress</p>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.progress'|trans }}</p>
                         <h3 class="mb-0">0%</h3>
                     </div>
                     <div class="bg-info bg-opacity-10 rounded p-2">
@@ -159,33 +159,31 @@
                 <li class="nav-item">
                     <a class="nav-link active" data-bs-toggle="tab" href="#board" role="tab">
                         <i class="bi bi-kanban me-1"></i>
-                        Board
+                        {{ 'project.tabs.board'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" role="tab">
                         <i class="bi bi-list-ul me-1"></i>
-                        Task List
+                        {{ 'project.tabs.task_list'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" data-bs-toggle="tab" href="#activity" role="tab">
                         <i class="bi bi-clock-history me-1"></i>
-                        Activity
+                        {{ 'project.tabs.activity'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" role="tab">
                         <i class="bi bi-speedometer2 me-1"></i>
-                        Sprints
+                        {{ 'project.tabs.sprints'|trans }}
                     </a>
                 </li>
             </ul>
         </div>
-
         <div class="card-body" style="min-height: 500px;">
             <div class="tab-content">
-                <!-- Board Tab -->
                 <div class="tab-pane fade show active" id="board" role="tabpanel">
                     <div class="kanban-board">
                         {% for column in project.columns %}
@@ -197,12 +195,12 @@
                                 <div class="kanban-column-body">
                                     <div class="kanban-empty">
                                         <i class="bi bi-inbox"></i>
-                                        <p class="small mb-0">No tasks</p>
+                                        <p class="small mb-0">{{ 'project.board.no_tasks'|trans }}</p>
                                     </div>
                                 </div>
                                 <button class="btn btn-add-task mt-2" disabled>
                                     <i class="bi bi-plus-circle me-1"></i>
-                                    Add a task
+                                    {{ 'project.board.add_task'|trans }}
                                 </button>
                             </div>
                         {% endfor %}
@@ -210,40 +208,7 @@
 
                     <div class="alert alert-info mt-4">
                         <i class="bi bi-info-circle me-2"></i>
-                        <strong>Next step:</strong> Start creating tasks to organize your work. Tasks can be moved
-                        between columns by drag and drop.
-                    </div>
-                </div>
-
-                <!-- Activity Tab -->
-                <div class="tab-pane fade" id="activity" role="tabpanel">
-                    <h5 class="mb-4">
-                        <i class="bi bi-clock-history text-primary me-2"></i>
-                        Action History
-                    </h5>
-
-                    <div class="activity-item">
-                        <span class="activity-dot primary"></span>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <strong>You</strong> created the project
-                                        <span class="badge bg-success ms-1">SCRUM</span>
-                                    </div>
-                                    <small class="text-muted">2 hours ago</small>
-                                </div>
-                                <small class="text-muted">
-                                    <i class="bi bi-calendar3 me-1"></i>
-                                    January 24, 2025 at 2:30 PM
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert alert-light">
-                        <i class="bi bi-info-circle me-2"></i>
-                        Future actions on this project will appear here: task creation, modifications, comments, etc.
+                        <strong>{{ 'project.board.next_step'|trans }}:</strong> {{ 'project.board.next_step_description'|trans }}
                     </div>
                 </div>
             </div>
