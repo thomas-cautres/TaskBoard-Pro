@@ -334,7 +334,6 @@
                 <source>End date</source>
                 <target>End date</target>
             </trans-unit>
-            <!-- Navbar translations -->
             <trans-unit id="navbar.search.placeholder" resname="navbar.search.placeholder">
                 <source>Search...</source>
                 <target>Search...</target>
@@ -363,7 +362,6 @@
                 <source>Logout</source>
                 <target>Logout</target>
             </trans-unit>
-            <!-- Sidebar translations -->
             <trans-unit id="sidebar.home" resname="sidebar.home">
                 <source>Home</source>
                 <target>Home</target>
@@ -431,6 +429,114 @@
             <trans-unit id="project.form.type.basic.description" resname="project.form.type.basic.description">
                 <source>Simple open/closed list, ideal for beginners</source>
                 <target>Simple open/closed list, ideal for beginners</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.home">
+                <source>project.breadcrumb.home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.my_projects">
+                <source>project.breadcrumb.my_projects</source>
+                <target>My Projects</target>
+            </trans-unit>
+            <trans-unit id="project.role.project_manager">
+                <source>project.role.project_manager</source>
+                <target>PROJECT MANAGER</target>
+            </trans-unit>
+            <trans-unit id="project.status.active">
+                <source>project.status.active</source>
+                <target>ACTIVE</target>
+            </trans-unit>
+            <trans-unit id="project.status.inactive">
+                <source>project.status.inactive</source>
+                <target>INACTIVE</target>
+            </trans-unit>
+            <trans-unit id="project.action.edit">
+                <source>project.action.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="project.menu.favorites">
+                <source>project.menu.favorites</source>
+                <target>Favorites</target>
+            </trans-unit>
+            <trans-unit id="project.menu.view_members">
+                <source>project.menu.view_members</source>
+                <target>View Members</target>
+            </trans-unit>
+            <trans-unit id="project.menu.export">
+                <source>project.menu.export</source>
+                <target>Export</target>
+            </trans-unit>
+            <trans-unit id="project.menu.archive">
+                <source>project.menu.archive</source>
+                <target>Archive</target>
+            </trans-unit>
+            <trans-unit id="project.date.start">
+                <source>project.date.start</source>
+                <target>Start</target>
+            </trans-unit>
+            <trans-unit id="project.date.end">
+                <source>project.date.end</source>
+                <target>End</target>
+            </trans-unit>
+            <trans-unit id="project.date.created_on">
+                <source>project.date.created_on</source>
+                <target>Created on</target>
+            </trans-unit>
+            <trans-unit id="project.date.undefined">
+                <source>project.date.undefined</source>
+                <target>Undefined</target>
+            </trans-unit>
+            <trans-unit id="project.members.count">
+                <source>project.members.count</source>
+                <target>%count% member|%count% members</target>
+            </trans-unit>
+            <trans-unit id="project.stats.total_tasks">
+                <source>project.stats.total_tasks</source>
+                <target>Total Tasks</target>
+            </trans-unit>
+            <trans-unit id="project.stats.in_progress">
+                <source>project.stats.in_progress</source>
+                <target>In Progress</target>
+            </trans-unit>
+            <trans-unit id="project.stats.completed">
+                <source>project.stats.completed</source>
+                <target>Completed</target>
+            </trans-unit>
+            <trans-unit id="project.stats.progress">
+                <source>project.stats.progress</source>
+                <target>Progress</target>
+            </trans-unit>
+            <trans-unit id="project.tabs.board">
+                <source>project.tabs.board</source>
+                <target>Board</target>
+            </trans-unit>
+            <trans-unit id="project.tabs.task_list">
+                <source>project.tabs.task_list</source>
+                <target>Task List</target>
+            </trans-unit>
+            <trans-unit id="project.tabs.activity">
+                <source>project.tabs.activity</source>
+                <target>Activity</target>
+            </trans-unit>
+            <trans-unit id="project.tabs.sprints">
+                <source>project.tabs.sprints</source>
+                <target>Sprints</target>
+            </trans-unit>
+            <trans-unit id="project.board.no_tasks">
+                <source>project.board.no_tasks</source>
+                <target>No tasks</target>
+            </trans-unit>
+            <trans-unit id="project.board.add_task">
+                <source>project.board.add_task</source>
+                <target>Add a task</target>
+            </trans-unit>
+            <trans-unit id="project.board.next_step">
+                <source>project.board.next_step</source>
+                <target>Next step</target>
+            </trans-unit>
+            <trans-unit id="project.board.next_step_description">
+                <source>project.board.next_step_description</source>
+                <target>Start creating tasks to organize your work. Tasks can be moved between columns by drag and drop.</target>
             </trans-unit>
         </body>
     </file>

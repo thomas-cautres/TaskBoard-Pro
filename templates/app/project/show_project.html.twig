@@ -1,9 +1,217 @@
 {% extends 'app/base.html.twig' %}
 
-{% block title %}Voir un projet - TaskBoard Pro{% endblock %}
+{% block title %}{{ project.name }} - TaskBoard Pro{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('styles/create-project.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/show-project.css') }}">
 {% endblock %}
 {% block body %}
-    SHOW PROJECT
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ project.name }}</li>
+        </ol>
+    </nav>
+
+    <!-- Project Header -->
+    <div class="project-header">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex align-items-start">
+                <div class="project-icon scrum me-3">
+                    <i class="bi bi-calendar-week"></i>
+                </div>
+                <div>
+                    <h1 class="h2 mb-2">{{ project.name }}</h1>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge-role">
+                                <i class="bi bi-person-fill-gear me-1"></i>
+                                {% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}
+                            </span>
+                        <span class="badge-type">
+                                <i class="bi bi-calendar-week me-1"></i>
+                                {{ project.type.value|upper }}
+                            </span>
+                        <span class="badge-status">
+                                <i class="bi bi-check-circle me-1"></i>
+                                {{ project.active ? 'project.status.active'|trans : 'project.status.inactive'|trans }}
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="project_edit_complete.html" class="btn btn-outline-primary">
+                    <i class="bi bi-pencil"></i>
+                    {{ 'project.action.edit'|trans }}
+                </a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
+                        <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>{{ 'project.menu.archive'|trans }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-muted mb-3">
+            {{ project.description }}
+        </p>
+
+        <div class="row g-3 text-muted small">
+            <div class="col-auto">
+                <i class="bi bi-calendar3 me-1"></i>
+                <strong>{{ 'project.date.start'|trans }}:</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
+            </div>
+            <div class="col-auto">
+                <i class="bi bi-calendar-check me-1"></i>
+                <strong>{{ 'project.date.end'|trans }}:</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
+            </div>
+            <div class="col-auto">
+                <i class="bi bi-clock-history me-1"></i>
+                <strong>{{ 'project.date.created_on'|trans }}:</strong> {{ project.formattedCreatedAt }}
+            </div>
+            <div class="col-auto ms-auto">
+                <i class="bi bi-people me-1"></i>
+                <div class="avatar-stack d-inline-flex">
+                    <div class="avatar" style="background: #4F46E5;">AM</div>
+                    <span class="ms-2"><strong>{{ 'project.members.count'|trans({'%count%': 1}) }}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card primary">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.total_tasks'|trans }}</p>
+                        <h3 class="mb-0">0</h3>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 rounded p-2">
+                        <i class="bi bi-list-check text-primary fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card warning">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.in_progress'|trans }}</p>
+                        <h3 class="mb-0">0</h3>
+                    </div>
+                    <div class="bg-warning bg-opacity-10 rounded p-2">
+                        <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card success">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.completed'|trans }}</p>
+                        <h3 class="mb-0">0</h3>
+                    </div>
+                    <div class="bg-success bg-opacity-10 rounded p-2">
+                        <i class="bi bi-check-circle text-success fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card info">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <p class="text-muted mb-1 small">{{ 'project.stats.progress'|trans }}</p>
+                        <h3 class="mb-0">0%</h3>
+                    </div>
+                    <div class="bg-info bg-opacity-10 rounded p-2">
+                        <i class="bi bi-graph-up text-info fs-4"></i>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-info" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white border-0">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#board" role="tab">
+                        <i class="bi bi-kanban me-1"></i>
+                        {{ 'project.tabs.board'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" role="tab">
+                        <i class="bi bi-list-ul me-1"></i>
+                        {{ 'project.tabs.task_list'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" data-bs-toggle="tab" href="#activity" role="tab">
+                        <i class="bi bi-clock-history me-1"></i>
+                        {{ 'project.tabs.activity'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" role="tab">
+                        <i class="bi bi-speedometer2 me-1"></i>
+                        {{ 'project.tabs.sprints'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body" style="min-height: 500px;">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="board" role="tabpanel">
+                    <div class="kanban-board">
+                        {% for column in project.columns %}
+                            <div class="kanban-column">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">{{ column.name }}</span>
+                                    <span class="kanban-column-count">0</span>
+                                </div>
+                                <div class="kanban-column-body">
+                                    <div class="kanban-empty">
+                                        <i class="bi bi-inbox"></i>
+                                        <p class="small mb-0">{{ 'project.board.no_tasks'|trans }}</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task mt-2" disabled>
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    {{ 'project.board.add_task'|trans }}
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>{{ 'project.board.next_step'|trans }}:</strong> {{ 'project.board.next_step_description'|trans }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
