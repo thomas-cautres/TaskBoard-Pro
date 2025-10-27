@@ -8,6 +8,7 @@ use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectType;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -24,6 +25,11 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
     {
         foreach ($this->getProjects() as $projectArray) {
             $createdBy = $this->userRepository->findOneBy(['email' => $projectArray['createdByEmail']]);
+
+            if (!$createdBy instanceof User) {
+                throw new \LogicException(sprintf('No user found for email %s', $projectArray['createdByEmail']));
+            }
+
             $project = new Project();
             $project
                 ->setName($projectArray['name'])
@@ -54,6 +60,17 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 
+    /**
+     * @return \Iterator<array{
+     *     name: string,
+     *     description: string|null,
+     *     type: ProjectType,
+     *     startDate: \DateTimeImmutable|null,
+     *     endDate: \DateTimeImmutable|null,
+     *     createdByEmail: string,
+     *     columns: array<array{position: int, name: string}>
+     * }>
+     */
     private function getProjects(): \Iterator
     {
         yield [
