@@ -34,7 +34,13 @@ class ListsProjectsController extends AbstractController
 
         return $this->render('app/project/list_projects.html.twig', [
             'projects' => $this->getProjectsDtos($paginator),
-            'pagination' => new Pagination($totalProjects > 0 ? $start + 1 : 0, count($paginator), $totalProjects, $page, max(1, $totalPages)),
+            'pagination' => new Pagination(
+                $totalProjects > 0 ? $start + 1 : 0,
+                count($paginator),
+                $totalProjects,
+                $page,
+                max(1, $totalPages)
+            ),
         ]);
     }
 
