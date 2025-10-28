@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
+use App\Dto\Pagination;
 use App\Dto\Project\ProjectListDto;
 use App\Entity\Project;
 use App\Entity\User;
@@ -22,18 +23,27 @@ class ListsProjectsController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $start = ($page - 1) * self::RESULTS_LENGTH;
+        $paginator = $projectRepository->findByUserPaginated($user, $start, self::RESULTS_LENGTH);
+        $totalProjects = $paginator->count();
+        $totalPages = (int) ceil($totalProjects / self::RESULTS_LENGTH);
+
+        if ($page > $totalPages && $totalPages > 0) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('app/project/list_projects.html.twig', [
-            'projects' => $this->getProjectsDtos($projectRepository->findPaginated($user, ($page - 1) * self::RESULTS_LENGTH, self::RESULTS_LENGTH)),
+            'projects' => $this->getProjectsDtos($paginator),
+            'pagination' => new Pagination($totalProjects > 0 ? $start + 1 : 0, count($paginator), $totalProjects, $page, max(1, $totalPages)),
         ]);
     }
 
     /**
-     * @param Paginator<Project> $projectsPaginated
+     * @param Paginator<Project>|Project[] $projectsPaginated
      *
      * @return ProjectListDto[]
      */
-    private function getProjectsDtos(Paginator $projectsPaginated): array
+    private function getProjectsDtos(Paginator|array $projectsPaginated): array
     {
         $projects = [];
         foreach ($projectsPaginated as $project) {

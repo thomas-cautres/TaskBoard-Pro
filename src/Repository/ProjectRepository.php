@@ -44,7 +44,7 @@ class ProjectRepository extends ServiceEntityRepository
     /**
      * @return Paginator<Project>
      */
-    public function findPaginated(User $user, int $start, int $length): Paginator
+    public function findByUserPaginated(User $user, int $start, int $length): Paginator
     {
         $qb = $this->createQueryBuilder('p');
         $qb->andWhere('p.createdBy = :user')
@@ -53,7 +53,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->setMaxResults($length);
 
         /** @var Paginator<Project> $paginator */
-        $paginator = new Paginator($qb);
+        $paginator = new Paginator($qb, false);
 
         return $paginator;
     }
