@@ -8,13 +8,12 @@ use App\AppEnum\ProjectType;
 use App\Entity\Project;
 use Symfony\Component\Uid\Uuid;
 
-final readonly class ProjectViewDto
+final readonly class ProjectViewDto implements ProjectDtoInterface
 {
     /**
      * @param array<mixed> $columns
      */
     public function __construct(
-        public int $id,
         public Uuid $uuid,
         public string $name,
         public ?string $description,
@@ -31,7 +30,6 @@ final readonly class ProjectViewDto
     public static function fromEntity(Project $project): self
     {
         return new self(
-            id: $project->getId(),
             uuid: $project->getUuid(),
             name: $project->getName(),
             description: $project->getDescription(),

@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,23 @@ class ProjectRepository extends ServiceEntityRepository
             ->setParameter('name', strtolower($name))
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return Paginator<Project>
+     */
+    public function findPaginated(User $user, int $start, int $length): Paginator
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere('p.createdBy = :user')
+            ->setParameter('user', $user)
+            ->setFirstResult($start)
+            ->setMaxResults($length);
+
+        /** @var Paginator<Project> $paginator */
+        $paginator = new Paginator($qb);
+
+        return $paginator;
     }
 
     //    /**

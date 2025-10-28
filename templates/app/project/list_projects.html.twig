@@ -1,0 +1,243 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}My Projects - TaskBoard Pro{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/list-projects.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Real-time search simulation
+        const searchInput = document.querySelector('.search-box input');
+        searchInput?.addEventListener('input', function (e) {
+            console.log('Searching for:', e.target.value);
+            // Here you would filter the projects grid
+        });
+
+        // Filter changes
+        const filterSelects = document.querySelectorAll('.filter-select');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function (e) {
+                console.log('Filter changed:', e.target.value);
+                // Here you would apply the filters
+            });
+        });
+
+        // Reset filters
+        document.querySelector('.btn-reset-filters')?.addEventListener('click', function (e) {
+            e.preventDefault();
+            searchInput.value = '';
+            filterSelects.forEach(select => select.selectedIndex = 0);
+            console.log('Filters reset');
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item active">My Projects</li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            My Projects
+            <span class="badge-count">{{ projects|length }}</span>
+        </h1>
+        <a href="{{ path('app_project_create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>
+            New Project
+        </a>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control" placeholder="Search by name or description...">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <select class="form-select filter-select">
+                    <option selected>All Types</option>
+                    <option>SCRUM</option>
+                    <option>KANBAN</option>
+                    <option>BASIC</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <select class="form-select filter-select">
+                    <option selected>Active Only</option>
+                    <option>Archived Only</option>
+                    <option>All Status</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select filter-select">
+                    <option selected>Last Activity</option>
+                    <option>Creation Date</option>
+                    <option>Name (A-Z)</option>
+                    <option>Name (Z-A)</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 text-end">
+                <a href="#" class="btn-reset-filters">
+                    <i class="bi bi-x-circle"></i>
+                    Reset
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-container">
+        <div class="stat-card primary">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">Active Projects</p>
+                    <h3 class="mb-0">5</h3>
+                </div>
+                <div class="bg-primary bg-opacity-10 rounded p-2">
+                    <i class="bi bi-folder text-primary fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card success">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">Tasks Completed</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-success bg-opacity-10 rounded p-2">
+                    <i class="bi bi-check-circle text-success fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card warning">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">In Progress</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-warning bg-opacity-10 rounded p-2">
+                    <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card info">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">Collaborators</p>
+                    <h3 class="mb-0">12</h3>
+                </div>
+                <div class="bg-info bg-opacity-10 rounded p-2">
+                    <i class="bi bi-people text-info fs-4"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+
+        {% for project in projects %}
+            <div class="project-card" onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
+                <div class="project-card-header">
+                    <div class="d-flex align-items-center gap-3 flex-grow-1">
+                        <div class="project-icon {{ project.type.value|lower }}">
+                            <i class="bi {% if project.type.value == 'Scrum' %}bi-calendar-week{% elseif project.type.value == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
+                        </div>
+                        <div>
+                            <h3 class="project-title">{{ project.name }}</h3>
+                            <span class="project-role">PROJECT MANAGER</span>
+                        </div>
+                    </div>
+                    <div class="dropdown" onclick="event.stopPropagation()">
+                        <button class="project-menu-btn" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ path('app_project_show', {uuid:project.uuid}) }}"><i class="bi bi-eye me-2"></i>View</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>Archive</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    {{ project.description }}
+                </p>
+
+                <div class="project-progress">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="small text-muted">Progress</span>
+                        <span class="small fw-semibold text-success">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="project-stats">
+                    <div>
+                        <i class="bi bi-list-check me-1"></i>
+                        <span>0 tasks</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-hourglass-split me-1"></i>
+                        <span>0 in progress</span>
+                    </div>
+                </div>
+
+                <div class="project-footer">
+                    <div class="avatar-stack">
+                        <div class="avatar" style="background: #4F46E5;">AM</div>
+                        <div class="avatar" style="background: #10B981;">JD</div>
+                        <div class="avatar" style="background: #F59E0B;">SM</div>
+                        <div class="avatar avatar-more">+2</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+        <div class="pagination-info">
+            Showing <strong>1-5</strong> of <strong>5</strong> projects
+        </div>
+
+        <nav>
+            <ul class="pagination mb-0">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+{% endblock %}
