@@ -1,0 +1,272 @@
+[
+    {
+        "uuid": "019a2646-0166-70fc-80c2-0ddbc097a592",
+        "name": "E-Commerce Platform Redesign",
+        "description": "Complete overhaul of the customer-facing e-commerce platform with improved UX and mobile responsiveness",
+        "type": "scrum",
+        "startDate": "2025-01-15",
+        "endDate": "2025-06-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-48d0-7260-afc3-9851e6487a1f",
+        "name": "Mobile App Development",
+        "description": "Native iOS and Android applications for customer engagement and loyalty program",
+        "type": "scrum",
+        "startDate": "2025-02-01",
+        "endDate": "2025-08-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-5a12-7890-b1c2-3d4e5f6a7b8c",
+        "name": "Customer Support Portal",
+        "description": "Self-service portal with ticketing system, knowledge base, and live chat integration",
+        "type": "kanban",
+        "startDate": "2025-01-20",
+        "endDate": "2025-04-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-6b23-7901-c2d3-4e5f6a7b8c9d",
+        "name": "Data Analytics Dashboard",
+        "description": "Real-time business intelligence dashboard for executive decision making with predictive analytics",
+        "type": "scrum",
+        "startDate": "2025-03-01",
+        "endDate": "2025-07-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-7c34-7012-d3e4-5f6a7b8c9d0e",
+        "name": "Marketing Automation System",
+        "description": "Integrated marketing platform for email campaigns, social media scheduling, and lead nurturing",
+        "type": "kanban",
+        "startDate": "2025-02-15",
+        "endDate": "2025-05-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-8d45-7123-e4f5-6a7b8c9d0e1f",
+        "name": "Cloud Migration Initiative",
+        "description": "Migration of legacy infrastructure to AWS with containerization and microservices architecture",
+        "type": "scrum",
+        "startDate": "2025-01-10",
+        "endDate": "2025-12-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-9e56-7234-f5a6-7b8c9d0e1f2a",
+        "name": "Payment Gateway Integration",
+        "description": "Integration of multiple payment providers including cryptocurrency support and fraud detection",
+        "type": "scrum",
+        "startDate": "2025-03-15",
+        "endDate": "2025-06-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-af67-7345-a6b7-8c9d0e1f2a3b",
+        "name": "Inventory Management System",
+        "description": "Warehouse management system with barcode scanning, automated reordering, and supplier integration",
+        "type": "kanban",
+        "startDate": "2025-04-01",
+        "endDate": "2025-09-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-ba78-7456-b7c8-9d0e1f2a3b4c",
+        "name": "AI Chatbot Implementation",
+        "description": "Machine learning-powered chatbot for 24/7 customer support with natural language processing",
+        "type": "scrum",
+        "startDate": "2025-02-20",
+        "endDate": "2025-07-20",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-cb89-7567-c8d9-0e1f2a3b4c5d",
+        "name": "Security Audit and Compliance",
+        "description": "Comprehensive security audit, penetration testing, and GDPR/SOC2 compliance implementation",
+        "type": "kanban",
+        "startDate": "2025-01-05",
+        "endDate": "2025-05-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-dc9a-7678-d9e0-1f2a3b4c5d6e",
+        "name": "HR Management Platform",
+        "description": "Employee onboarding, performance reviews, time tracking, and benefits management system",
+        "type": "scrum",
+        "startDate": "2025-03-10",
+        "endDate": "2025-10-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-edab-7789-e0f1-2a3b4c5d6e7f",
+        "name": "API Development and Documentation",
+        "description": "RESTful API with GraphQL support, comprehensive documentation, and developer portal",
+        "type": "scrum",
+        "startDate": "2025-02-05",
+        "endDate": "2025-06-05",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-febc-7890-f1a2-3b4c5d6e7f8a",
+        "name": "Social Media Integration",
+        "description": "Unified social media management platform with analytics, scheduling, and sentiment analysis",
+        "type": "kanban",
+        "startDate": "2025-04-15",
+        "endDate": "2025-07-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-afcd-7901-a2b3-4c5d6e7f8a9b",
+        "name": "Subscription Management System",
+        "description": "Recurring billing platform with tiered pricing, proration, and subscription lifecycle management",
+        "type": "scrum",
+        "startDate": "2025-05-01",
+        "endDate": "2025-09-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-bade-7012-b3c4-5d6e7f8a9b0c",
+        "name": "Video Streaming Platform",
+        "description": "Content delivery network for live and on-demand video with adaptive bitrate streaming",
+        "type": "scrum",
+        "startDate": "2025-06-01",
+        "endDate": "2025-12-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-cbef-7123-c4d5-6e7f8a9b0c1d",
+        "name": "CRM System Enhancement",
+        "description": "Sales pipeline optimization, lead scoring, and integration with third-party tools",
+        "type": "kanban",
+        "startDate": "2025-03-20",
+        "endDate": "2025-08-20",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-dcfa-7234-d5e6-7f8a9b0c1d2e",
+        "name": "DevOps Pipeline Automation",
+        "description": "CI/CD pipeline with automated testing, deployment strategies, and infrastructure as code",
+        "type": "basic",
+        "startDate": "2025-01-25",
+        "endDate": "2025-05-25",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-edfb-7345-e6f7-8a9b0c1d2e3f",
+        "name": "Product Recommendation Engine",
+        "description": "Machine learning-based recommendation system using collaborative filtering and behavioral analysis",
+        "type": "scrum",
+        "startDate": "2025-04-10",
+        "endDate": "2025-09-10",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-feac-7456-f7a8-9b0c1d2e3f4a",
+        "name": "Notification Service",
+        "description": "Multi-channel notification system supporting email, SMS, push notifications, and in-app alerts",
+        "type": "kanban",
+        "startDate": "2025-02-28",
+        "endDate": "2025-05-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-afbd-7567-a8b9-0c1d2e3f4a5b",
+        "name": "Document Management System",
+        "description": "Enterprise document repository with version control, access management, and full-text search",
+        "type": "scrum",
+        "startDate": "2025-05-15",
+        "endDate": "2025-11-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-bace-7678-b9c0-1d2e3f4a5b6c",
+        "name": "A/B Testing Framework",
+        "description": "Experimentation platform for feature flags, multivariate testing, and statistical analysis",
+        "type": "kanban",
+        "startDate": "2025-03-25",
+        "endDate": "2025-06-25",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-cbdf-7789-c0d1-2e3f4a5b6c7d",
+        "name": "Blockchain Integration",
+        "description": "Smart contract implementation for supply chain transparency and digital asset management",
+        "type": "scrum",
+        "startDate": "2025-07-01",
+        "endDate": "2026-01-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-dcea-7890-d1e2-3f4a5b6c7d8e",
+        "name": "Localization and Internationalization",
+        "description": "Multi-language support, currency conversion, and regional compliance for global expansion",
+        "type": "basic",
+        "startDate": "2025-06-15",
+        "endDate": "2025-10-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-edfb-7901-e2f3-4a5b6c7d8e9f",
+        "name": "Performance Optimization",
+        "description": "Application performance tuning, caching strategies, and database query optimization",
+        "type": "scrum",
+        "startDate": "2025-04-20",
+        "endDate": "2025-07-20",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-feac-7012-f3a4-5b6c7d8e9f0a",
+        "name": "IoT Device Integration",
+        "description": "Internet of Things platform for device management, telemetry data processing, and remote control",
+        "type": "scrum",
+        "startDate": "2025-08-01",
+        "endDate": "2026-02-28",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-afbd-7123-a4b5-6c7d8e9f0a1b",
+        "name": "Backup and Disaster Recovery",
+        "description": "Automated backup system with point-in-time recovery and disaster recovery procedures",
+        "type": "kanban",
+        "startDate": "2025-01-30",
+        "endDate": "2025-04-30",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-bace-7234-b5c6-7d8e9f0a1b2c",
+        "name": "Accessibility Compliance",
+        "description": "WCAG 2.1 AA compliance implementation for all web properties and mobile applications",
+        "type": "kanban",
+        "startDate": "2025-05-20",
+        "endDate": "2025-08-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-cbdf-7345-c6d7-8e9f0a1b2c3d",
+        "name": "Search Engine Optimization",
+        "description": "Technical SEO improvements, content optimization, and search visibility enhancement",
+        "type": "kanban",
+        "startDate": "2025-07-15",
+        "endDate": "2025-11-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-dcea-7456-d7e8-9f0a1b2c3d4e",
+        "name": "Real-time Collaboration Tools",
+        "description": "WebSocket-based collaboration features with presence detection, live editing, and video conferencing",
+        "type": "scrum",
+        "startDate": "2025-09-01",
+        "endDate": "2026-03-31",
+        "createdByEmail": "user-confirmed@domain.com"
+    },
+    {
+        "uuid": "019a2646-edfb-7567-e8f9-0a1b2c3d4e5f",
+        "name": "Customer Loyalty Program",
+        "description": "Points-based rewards system with gamification elements, referral bonuses, and tier management",
+        "type": "scrum",
+        "startDate": "2025-10-01",
+        "endDate": "2026-01-15",
+        "createdByEmail": "user-confirmed@domain.com"
+    }
+]

@@ -76,59 +76,110 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
      */
     private function getProjects(): \Iterator
     {
-        yield [
-            'uuid' => Uuid::fromString('019a2646-0166-70fc-80c2-0ddbc097a592'),
-            'name' => 'Project Scrum',
-            'description' => 'Project description',
-            'type' => ProjectType::Scrum,
-            'startDate' => new \DateTimeImmutable('2025-01-01'),
-            'endDate' => new \DateTimeImmutable('2025-02-01'),
-            'createdByEmail' => 'user-confirmed@domain.com',
-            'columns' => [
-                [
-                    'position' => 1,
-                    'name' => ProjectColumnName::BackLog->value,
-                ],
-                [
-                    'position' => 2,
-                    'name' => ProjectColumnName::ToDo->value,
-                ],
-                [
-                    'position' => 3,
-                    'name' => ProjectColumnName::InProgress->value,
-                ],
-                [
-                    'position' => 4,
-                    'name' => ProjectColumnName::Review->value,
-                ],
-                [
-                    'position' => 5,
-                    'name' => ProjectColumnName::Done->value,
-                ],
+        $jsonPath = __DIR__.'/../../data/projects.json';
+
+        if (!file_exists($jsonPath)) {
+            throw new \RuntimeException(sprintf('Projects data file not found at: %s', $jsonPath));
+        }
+
+        $jsonContent = (string) file_get_contents($jsonPath);
+
+        /** @var array<array<string, string>> $projectsData */
+        $projectsData = json_decode($jsonContent, true);
+
+        foreach ($projectsData as $projectData) {
+            yield [
+                'uuid' => Uuid::fromString($projectData['uuid']),
+                'name' => $projectData['name'],
+                'description' => $projectData['description'] ?? null,
+                'type' => ProjectType::from($projectData['type']),
+                'startDate' => isset($projectData['startDate'])
+                    ? new \DateTimeImmutable($projectData['startDate'])
+                    : null,
+                'endDate' => isset($projectData['endDate'])
+                    ? new \DateTimeImmutable($projectData['endDate'])
+                    : null,
+                'createdByEmail' => $projectData['createdByEmail'],
+                'columns' => $this->getColumnsForProjectType(ProjectType::from($projectData['type'])),
+            ];
+        }
+    }
+
+    /**
+     * @return array<array{position: int, name: string}>
+     */
+    private function getColumnsForProjectType(ProjectType $type): array
+    {
+        return match ($type) {
+            ProjectType::Scrum => $this->getScrumColumns(),
+            ProjectType::Kanban => $this->getKanbanColumns(),
+            ProjectType::Basic => $this->getBasicColumns(),
+        };
+    }
+
+    /**
+     * @return array<array{position: int, name: string}>
+     */
+    private function getScrumColumns(): array
+    {
+        return [
+            [
+                'position' => 1,
+                'name' => ProjectColumnName::BackLog->value,
+            ],
+            [
+                'position' => 2,
+                'name' => ProjectColumnName::ToDo->value,
+            ],
+            [
+                'position' => 3,
+                'name' => ProjectColumnName::InProgress->value,
+            ],
+            [
+                'position' => 4,
+                'name' => ProjectColumnName::Review->value,
+            ],
+            [
+                'position' => 5,
+                'name' => ProjectColumnName::Done->value,
             ],
         ];
+    }
 
-        yield [
-            'uuid' => Uuid::fromString('019a2646-48d0-7260-afc3-9851e6487a1f'),
-            'name' => 'Project Kanban',
-            'description' => 'Project description',
-            'type' => ProjectType::Kanban,
-            'startDate' => new \DateTimeImmutable('2025-01-01'),
-            'endDate' => new \DateTimeImmutable('2025-02-01'),
-            'createdByEmail' => 'user-confirmed@domain.com',
-            'columns' => [
-                [
-                    'position' => 1,
-                    'name' => ProjectColumnName::ToDo->value,
-                ],
-                [
-                    'position' => 2,
-                    'name' => ProjectColumnName::InProgress->value,
-                ],
-                [
-                    'position' => 3,
-                    'name' => ProjectColumnName::Done->value,
-                ],
+    /**
+     * @return array<array{position: int, name: string}>
+     */
+    private function getKanbanColumns(): array
+    {
+        return [
+            [
+                'position' => 1,
+                'name' => ProjectColumnName::ToDo->value,
+            ],
+            [
+                'position' => 2,
+                'name' => ProjectColumnName::InProgress->value,
+            ],
+            [
+                'position' => 3,
+                'name' => ProjectColumnName::Done->value,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<array{position: int, name: string}>
+     */
+    private function getBasicColumns(): array
+    {
+        return [
+            [
+                'position' => 1,
+                'name' => ProjectColumnName::Open->value,
+            ],
+            [
+                'position' => 2,
+                'name' => ProjectColumnName::Closed->value,
             ],
         ];
     }

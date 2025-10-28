@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/app/projects/{page<\d>}', name: 'app_projects_list', methods: ['GET'])]
+#[Route('/app/projects/{page<\d+>}', name: 'app_projects_list', methods: ['GET'])]
 class ListsProjectsController extends AbstractController
 {
     public const int RESULTS_LENGTH = 12;
@@ -36,7 +36,7 @@ class ListsProjectsController extends AbstractController
             'projects' => $this->getProjectsDtos($paginator),
             'pagination' => new Pagination(
                 $totalProjects > 0 ? $start + 1 : 0,
-                count($paginator),
+                count($paginator->getIterator()),
                 $totalProjects,
                 $page,
                 max(1, $totalPages)

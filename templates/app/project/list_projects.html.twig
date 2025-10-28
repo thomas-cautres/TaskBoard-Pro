@@ -45,7 +45,7 @@
     <div class="page-header">
         <h1 class="page-title">
             My Projects
-            <span class="badge-count">{{ projects|length }}</span>
+            <span class="badge-count">{{ pagination.totalResults }}</span>
         </h1>
         <a href="{{ path('app_project_create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle me-1"></i>
@@ -153,7 +153,8 @@
     <div class="projects-grid">
 
         {% for project in projects %}
-            <div class="project-card" onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
+            <div class="project-card"
+                 onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
                 <div class="project-card-header">
                     <div class="d-flex align-items-center gap-3 flex-grow-1">
                         <div class="project-icon {{ project.type.value|lower }}">
@@ -169,7 +170,8 @@
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ path('app_project_show', {uuid:project.uuid}) }}"><i class="bi bi-eye me-2"></i>View</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_project_show', {uuid:project.uuid}) }}"><i
+                                        class="bi bi-eye me-2"></i>View</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -219,25 +221,55 @@
     <!-- Pagination -->
     <div class="pagination-container">
         <div class="pagination-info">
-            Showing <strong>{{ pagination.start }}-{{ pagination.resultsPerPage }}</strong> of <strong>{{ pagination.totalResults }}</strong> projects
+            {% if pagination.totalResults > 0 %}
+                Showing <strong>{{ pagination.start }}
+                -{{ min(pagination.start + pagination.resultsPerPage - 1, pagination.totalResults) }}</strong> of
+                <strong>{{ pagination.totalResults }}</strong> projects
+            {% else %}
+                No projects found
+            {% endif %}
         </div>
-        <nav>
-            <ul class="pagination mb-0">
-                <li class="page-item {% if pagination.currentPage == 1 %}disabled{% endif %}">
-                    <a class="page-link" href="{% if pagination.currentPage != 1 %}{{ path('app_projects_list', {page:pagination.currentPage-1}) }}{% endif %}" tabindex="-1">
-                        <i class="bi bi-chevron-left"></i>
-                    </a>
-                </li>
-                {% for page in 1..pagination.totalPages  %}
-                    <li class="page-item"><a class="page-link  {{ pagination.currentPage == page ? 'active' : '' }}" href="{{ path('app_projects_list', {page:page}) }}">{{ page }}</a></li>
-                {% endfor %}
-                <li class="page-item {% if pagination.currentPage == pagination.totalPages  %}disabled{% endif %}">
-                    <a class="page-link" href="{% if pagination.currentPage != pagination.totalPages %}{{ path('app_projects_list', {page:pagination.currentPage+1}) }}{% else %}#{% endif %}">
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+
+        {% if pagination.totalPages > 1 %}
+            <nav aria-label="Projects pagination">
+                <ul class="pagination mb-0">
+                    <li class="page-item {% if pagination.currentPage == 1 %}disabled{% endif %}">
+                        {% if pagination.currentPage > 1 %}
+                            <a class="page-link"
+                               href="{{ path('app_projects_list', {page: pagination.currentPage - 1}) }}"
+                               aria-label="Previous">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                        {% endif %}
+                    </li>
+
+                    {% for page in 1..pagination.totalPages %}
+                        <li class="page-item {% if pagination.currentPage == page %}active{% endif %}"
+                            {% if pagination.currentPage == page %}aria-current="page"{% endif %}>
+                            <a class="page-link" href="{{ path('app_projects_list', {page: page}) }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+
+                    <li class="page-item {% if pagination.currentPage == pagination.totalPages %}disabled{% endif %}">
+                        {% if pagination.currentPage < pagination.totalPages %}
+                            <a class="page-link"
+                               href="{{ path('app_projects_list', {page: pagination.currentPage + 1}) }}"
+                               aria-label="Next">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
     </div>
 
 {% endblock %}
