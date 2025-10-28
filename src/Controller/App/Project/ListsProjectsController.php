@@ -24,8 +24,8 @@ class ListsProjectsController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $start = ($page - 1) * self::RESULTS_LENGTH;
-        $paginator = $projectRepository->findByUserPaginated($user, $start, self::RESULTS_LENGTH);
-        $totalProjects = $paginator->count();
+        $projects = $projectRepository->findByUserPaginated($user, $start, self::RESULTS_LENGTH);
+        $totalProjects = $projects->count();
         $totalPages = (int) ceil($totalProjects / self::RESULTS_LENGTH);
 
         if ($page > $totalPages && $totalPages > 0) {
@@ -33,10 +33,10 @@ class ListsProjectsController extends AbstractController
         }
 
         return $this->render('app/project/list_projects.html.twig', [
-            'projects' => $this->getProjectsDtos($paginator),
+            'projects' => $this->getProjectsDtos($projects),
             'pagination' => new Pagination(
                 $totalProjects > 0 ? $start + 1 : 0,
-                count($paginator->getIterator()),
+                min(self::RESULTS_LENGTH, max(0, $totalProjects - $start)),
                 $totalProjects,
                 $page,
                 max(1, $totalPages)

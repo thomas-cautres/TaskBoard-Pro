@@ -20,7 +20,7 @@ class UserExtension extends AbstractExtension
     {
         return [
             new TwigFilter('user_notifications', [$this, 'getNotifications']),
-            new TwigFilter('user_unread_notifications', [$this, 'getUnreadNotifications']),
+            new TwigFilter('user_unread_notifications_count', [$this, 'getUnreadNotificationsCount']),
         ];
     }
 
@@ -32,11 +32,8 @@ class UserExtension extends AbstractExtension
         return $this->notificationRepository->findByUser($user);
     }
 
-    /**
-     * @return array<mixed>
-     */
-    public function getUnreadNotifications(User $user): array
+    public function getUnreadNotificationsCount(User $user): int
     {
-        return $this->notificationRepository->findByUser($user, true);
+        return $this->notificationRepository->countByUser($user, true);
     }
 }
