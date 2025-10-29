@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,7 +22,7 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
-    public function persist(Project $project, bool $flush = true): void
+    public function save(Project $project, bool $flush = true): void
     {
         $this->getEntityManager()->persist($project);
 
@@ -44,7 +46,7 @@ class ProjectRepository extends ServiceEntityRepository
     /**
      * @return Paginator<Project>
      */
-    public function findByUserPaginated(User $user, int $start, int $length): Paginator
+    public function findByUserPaginated(User $user, ProjectFiltersDto $filters, int $start, int $length): Paginator
     {
         $qb = $this->createQueryBuilder('p');
         $qb->andWhere('p.createdBy = :user')
@@ -52,9 +54,35 @@ class ProjectRepository extends ServiceEntityRepository
             ->setFirstResult($start)
             ->setMaxResults($length);
 
+        $this->applyFilters($qb, $filters);
+
         /** @var Paginator<Project> $paginator */
         $paginator = new Paginator($qb, false);
 
         return $paginator;
+    }
+
+    private function applyFilters(QueryBuilder $qb, ProjectFiltersDto $filters): void
+    {
+        if (null !== $filters->getName()) {
+            $qb->andWhere('LOWER(p.name) LIKE LOWER(:name)')->setParameter('name', '%'.$filters->getName().'%');
+        }
+
+        if (null !== $filters->getType()) {
+            $qb->andWhere('p.type = :type')->setParameter('type', $filters->getType());
+        }
+
+        $now = new \DateTimeImmutable();
+        if (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
+            $qb
+                ->andWhere('p.startDate <= :now')
+                ->andWhere('p.endDate < :now')
+                ->setParameter('now', $now);
+        } elseif (null === $filters->getActive()) {
+            $qb
+                ->andWhere('p.startDate <= :now')
+                ->andWhere('p.endDate > :now')
+                ->setParameter('now', $now);
+        }
     }
 }

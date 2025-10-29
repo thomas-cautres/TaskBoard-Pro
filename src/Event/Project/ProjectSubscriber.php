@@ -60,7 +60,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
         $this->userRepository->persist($user, flush: false);
 
-        $this->projectRepository->persist($project);
+        $this->projectRepository->save($project);
         $this->log($project);
     }
 

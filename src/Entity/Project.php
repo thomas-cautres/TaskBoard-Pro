@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
-#[ORM\Index(name: "name_idx", columns: ["name"])]
+#[ORM\Index(name: 'name_idx', columns: ['name'])]
 class Project
 {
     #[ORM\Id]

@@ -57,6 +57,6 @@ class NotificationRepository extends ServiceEntityRepository
             $qb->andWhere('n.readAt IS NULL');
         }
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 }

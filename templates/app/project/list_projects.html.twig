@@ -53,31 +53,23 @@
         </a>
     </div>
 
+    {{ form_start(filters_form) }}
     <!-- Filters Bar -->
     <div class="filters-bar">
         <div class="row g-3 align-items-center">
             <div class="col-md-4">
                 <div class="search-box">
                     <i class="bi bi-search"></i>
-                    <input type="text" class="form-control" placeholder="Search by name or description...">
+                    {{ form_widget(filters_form.name) }}
                 </div>
             </div>
 
             <div class="col-md-2">
-                <select class="form-select filter-select">
-                    <option selected>All Types</option>
-                    <option>SCRUM</option>
-                    <option>KANBAN</option>
-                    <option>BASIC</option>
-                </select>
+                {{ form_widget(filters_form.type) }}
             </div>
 
             <div class="col-md-2">
-                <select class="form-select filter-select">
-                    <option selected>Active Only</option>
-                    <option>Archived Only</option>
-                    <option>All Status</option>
-                </select>
+                {{ form_widget(filters_form.active) }}
             </div>
 
             <div class="col-md-3">
@@ -89,15 +81,15 @@
                 </select>
             </div>
 
-            <div class="col-md-1 text-end">
-                <a href="#" class="btn-reset-filters">
-                    <i class="bi bi-x-circle"></i>
-                    Reset
-                </a>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel-fill me-1"></i>
+                    Filter
+                </button>
             </div>
         </div>
     </div>
-
+    {{ form_end(filters_form) }}
     <!-- Statistics -->
     <div class="stats-container">
         <div class="stat-card primary">
