@@ -17,27 +17,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/app/projects/{page<\d+>}', name: 'app_projects_list', methods: ['GET', 'POST'])]
+#[Route('/app/projects/{page<\d+>}', name: 'app_projects_list', methods: ['GET'])]
 class ListsProjectsController extends AbstractController
 {
-    public const int RESULTS_LENGTH = 12;
+    public const int RESULTS_PER_PAGE = 12;
 
     public function __invoke(Request $request, ProjectRepository $projectRepository, int $page = 1): Response
     {
         /** @var User $user */
         $user = $this->getUser();
-        $start = ($page - 1) * self::RESULTS_LENGTH;
 
         $filters = new ProjectFiltersDto();
         $filtersForm = $this->createForm(FiltersType::class, $filters, [
             'method' => 'GET',
         ]);
-
         $filtersForm->handleRequest($request);
 
-        $projects = $projectRepository->findByUserPaginated($user, $filters, $start, self::RESULTS_LENGTH);
+        if ($filtersForm->isSubmitted() && $page > 1) {
+            return $this->redirectToRoute('app_projects_list', array_merge(
+                ['page' => 1],
+                $request->query->all()
+            ));
+        }
+
+        $start = ($page - 1) * self::RESULTS_PER_PAGE;
+        $projects = $projectRepository->findByUserPaginated($user, $filters, $start, self::RESULTS_PER_PAGE);
         $totalProjects = $projects->count();
-        $totalPages = (int) ceil($totalProjects / self::RESULTS_LENGTH);
+        $totalPages = (int) ceil($totalProjects / self::RESULTS_PER_PAGE);
 
         if ($page > $totalPages && $totalPages > 0) {
             throw $this->createNotFoundException();
@@ -45,15 +51,20 @@ class ListsProjectsController extends AbstractController
 
         return $this->render('app/project/list_projects.html.twig', [
             'projects' => $this->getProjectsDtos($projects),
-            'pagination' => new Pagination(
-                $totalProjects > 0 ? $start + 1 : 0,
-                min(self::RESULTS_LENGTH, max(0, $totalProjects - $start)),
-                $totalProjects,
-                $page,
-                max(1, $totalPages)
-            ),
+            'pagination' => $this->createPagination($start, $totalProjects, $page, $totalPages),
             'filters_form' => $filtersForm,
         ]);
+    }
+
+    private function createPagination(int $start, int $totalProjects, int $page, int $totalPages): Pagination
+    {
+        return new Pagination(
+            $totalProjects > 0 ? $start + 1 : 0,
+            min(self::RESULTS_PER_PAGE, max(0, $totalProjects - $start)),
+            $totalProjects,
+            $page,
+            max(1, $totalPages)
+        );
     }
 
     /**
