@@ -6,18 +6,42 @@ A **Symfony 7** project management application showcasing modern PHP development
 
 ## 🎯 Features
 
-### Current
-- ✅ User authentication (register, login, email confirmation)
-- ✅ Create projects (SCRUM/KANBAN/BASIC)
-- ✅ View project with Kanban board
-- ✅ List projects with search, filters, and pagination
+### ✅ Current (Sprint 1 - Complete)
+- **Authentication**: Register, email confirmation (OTP), login/logout, remember me
+- **Projects**: Create with 3 types (SCRUM/KANBAN/BASIC), auto-generated columns
+- **Project List**: Search, filters (type, status), sorting, pagination (12/page)
+- **Project View**: Kanban board, project details, tabs (Board/List/Activity/Sprints)
+- **Notifications**: In-app dropdown, badge counter, mark as read
+- **Security**: User checker, project voter (view permission), ownership-based access
 
-### Planned
-- 🔜 Edit and archive projects
-- 🔜 Create and manage tasks
-- 🔜 Drag & drop tasks between columns
-- 🔜 Sprints, comments
-- 🔜 Project statistics dashboard
+### 🔜 Sprint 2 (In Progress)
+- Edit project (name, description, dates)
+- Archive/restore projects (soft delete)
+- Delete projects (hard delete with confirmation)
+- Dynamic navbar (real username, avatar)
+- Dashboard with real statistics
+
+### 🔜 Sprint 3-6 (Planned)
+- **Tasks**: Create, edit, move, delete with auto-numbering (EX-1, EX-2...)
+- **Comments**: Add, edit, delete comments on tasks
+- **Activity Log**: Timeline of all project actions
+- **Drag & Drop**: Intuitive task movement between columns
+- **Filters**: Priority, search on board
+- **Statistics**: Charts, progress tracking, time metrics
+- **Global Search**: Find projects and tasks instantly
+- **Email Notifications**: Async with Symfony Messenger
+
+---
+
+## 🏗️ Architecture Highlights
+
+- **Event-Driven**: ProjectCreatedEvent, NotificationReadEvent with subscribers
+- **DTOs**: Separation between entities and presentation (ProjectListDto, ProjectViewDto)
+- **Invokable Controllers**: Single-responsibility pattern
+- **Voters**: Fine-grained permissions (ProjectVoter with VIEW/EDIT/DELETE)
+- **Enums PHP 8.1**: Type-safe (ProjectType, ProjectColumnName)
+- **UUID v7**: Time-ordered for better indexing
+- **Doctrine**: Optimized queries, eager loading, cascade operations
 
 ---
 
