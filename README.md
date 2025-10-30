@@ -1,57 +1,132 @@
-### TaskBoard Pro
+# TaskBoard Pro
 
-A Symfony 7 starter and personal skills demo project. The end goal is a lightweight task management app (Jira-like) showcasing modern Symfony practices: auth (register, login, email confirmation), Twig UI, Doctrine ORM (PostgreSQL), translations, and a Dockerized runtime (FrankenPHP + Caddy). Includes Makefile workflows and a basic test suite.
-
----
-
-### Vision / Roadmap (Jira-like)
-- Core: projects, issues/tasks, statuses, assignees
-- Boards: Kanban-style columns, drag & drop
-- Sprints and backlogs (planned)
-- Comments, activity log, and notifications (planned)
-- Labels, priorities, and search/filtering (planned)
+A **Symfony 7** project management application showcasing modern PHP development practices. Supports SCRUM, KANBAN, and BASIC project methodologies with a clean Kanban board interface.
 
 ---
 
-### Features
-- Auth: registration, login (CSRF), email confirmation (signed URLs)
-- Dev: Docker Compose, Makefile, Importmap, translations (XLIFF)
-- Tests: PHPUnit 11, DAMA Doctrine Test Bundle
+## 🎯 Features
+
+### Current (Sprint 1)
+- ✅ User authentication (register, login, email confirmation)
+- ✅ Create projects (SCRUM/KANBAN/BASIC)
+- ✅ View project with Kanban board
+- ✅ List projects with search, filters, and pagination
+- ✅ Project statistics dashboard
+
+### Planned
+- 🔜 Edit and archive projects
+- 🔜 Create and manage tasks
+- 🔜 Drag & drop tasks between columns
+- 🔜 Sprints, comments, notifications
+- 🔜 Project statistics dashboard
 
 ---
 
-### Stack
-- Language: `PHP >= 8.4.13`
-- Framework: `Symfony 7`
-- Runtime: `FrankenPHP` + `Caddy` (Docker)
-- Database: `PostgreSQL`
-- ORM: `Doctrine ORM 3`
-- Templates: `Twig`
-- Mailer: `symfony/mailer`
-- Messaging: `symfony/messenger`
-- URL signing: `tilleuls/url-signer-bundle`
-- Package manager: `Composer`
-- Code quality: `PHPStan`, `PHP CS Fixer`
+## 🛠️ Stack
+
+- **PHP** 8.4.13+ | **Symfony** 7.0
+- **Database**: PostgreSQL | **ORM**: Doctrine 3.5
+- **Runtime**: FrankenPHP + Caddy (Docker)
+- **Frontend**: Twig, Bootstrap 5.3, Importmap
+- **Tests**: PHPUnit 11, Behat, Panther
+- **Quality**: PHPStan, PHP CS Fixer
 
 ---
 
-### Quick start (Docker)
-1) Build & run: `make start`
-2) Init DB (dev only): `make db`
-3) Open: `http://localhost`
-4) Logs: `make logs` — Shell: `make bash` — Down: `make down`
+## 🚀 Quick Start
+```bash
+# Clone and start
+git clone https://github.com/thomas-cautres/TaskBoard-Pro.git
+cd taskboard-pro
+make start
 
-> Ports via `HTTP_PORT`, `HTTPS_PORT`, `HTTP3_PORT` in environment or `.env`.
+# Initialize database (dev only)
+make db
+
+# Open app
+http://localhost
+
+# Default login (from fixtures)
+Email: user-confirmed@domain.com
+Password: test1234
+```
 
 ---
 
-### Common Make targets
-- `make start` — Build + up
-- `make db` — Recreate DB, migrate, load fixtures (non-prod)
-- `make test` — PHPUnit (resets test DB)
-- `make phpstan` / `make phpcsfixer`
+## 📋 Common Commands
+```bash
+# Development
+make start          # Start containers
+make stop           # Stop containers
+make logs           # View logs
+make bash           # Open shell
+
+# Database
+make db             # Reset DB + fixtures
+make migrate        # Run migrations
+
+# Testing
+make test           # Run PHPUnit
+make phpstan        # Static analysis
+make phpcsfixer     # Code style check
+
+# Cache
+make cc             # Clear cache
+```
 
 ---
 
-### Tests
-- Docker: `make test`
+## 🗂️ Project Structure
+```
+src/
+├── Controller/     # HTTP endpoints
+├── Entity/         # Database models
+├── Form/           # Form types
+├── Repository/     # Queries
+├── Security/       # Voters, auth
+└── Service/        # Business logic
+
+templates/          # Twig views
+translations/       # i18n (EN/FR)
+tests/             # PHPUnit tests
+```
+
+---
+
+## 🧪 Testing
+```bash
+make test           # All tests
+make coverage       # Coverage report
+```
+
+---
+
+## 🌐 Translations
+
+Uses XLIFF format:
+- `translations/messages.en.xlf` - English
+- `translations/messages.fr.xlf` - French
+```twig
+{{ 'project.list.title'|trans }}
+```
+
+---
+
+## 🔒 Security
+
+- CSRF protection on forms
+- Password hashing (Symfony native)
+- Email confirmation (signed URLs)
+- Ownership-based permissions
+
+---
+
+## 📝 License
+
+MIT License
+
+---
+
+## 👤 Author
+
+**Thomas Cautrès** - [GitHub](https://github.com/thomas-cautres)
