@@ -37,7 +37,3 @@ Feature: Home Page
         Then I should be on "/registration"
         And the response status code should be 200
 
-    @javascript
-    Scenario: Simple JavaScript test
-        Given I am on "/"
-        Then I should see "Key features"

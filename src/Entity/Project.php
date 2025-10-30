@@ -176,6 +176,20 @@ class Project
         return $this->columns;
     }
 
+    /**
+     * @return Collection<int, ProjectColumn>
+     *
+     * @throws \Exception
+     */
+    public function getColumnsSortedByPosition(): Collection
+    {
+        $iterator = $this->columns->getIterator();
+
+        $iterator->uasort(fn (ProjectColumn $projectColumnA, ProjectColumn $projectColumnB) => $projectColumnA->getPosition() <=> $projectColumnB->getPosition());
+
+        return new ArrayCollection(iterator_to_array($iterator));
+    }
+
     public function addColumn(ProjectColumn $projectColumn): static
     {
         if (!$this->columns->contains($projectColumn)) {

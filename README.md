@@ -6,18 +6,17 @@ A **Symfony 7** project management application showcasing modern PHP development
 
 ## 🎯 Features
 
-### Current (Sprint 1)
+### Current
 - ✅ User authentication (register, login, email confirmation)
 - ✅ Create projects (SCRUM/KANBAN/BASIC)
 - ✅ View project with Kanban board
 - ✅ List projects with search, filters, and pagination
-- ✅ Project statistics dashboard
 
 ### Planned
 - 🔜 Edit and archive projects
 - 🔜 Create and manage tasks
 - 🔜 Drag & drop tasks between columns
-- 🔜 Sprints, comments, notifications
+- 🔜 Sprints, comments
 - 🔜 Project statistics dashboard
 
 ---

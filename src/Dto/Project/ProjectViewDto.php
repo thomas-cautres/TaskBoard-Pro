@@ -27,6 +27,9 @@ final readonly class ProjectViewDto implements ProjectDtoInterface
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function fromEntity(Project $project): self
     {
         return new self(
@@ -39,7 +42,7 @@ final readonly class ProjectViewDto implements ProjectDtoInterface
             createdAt: $project->getCreatedAt(),
             createdByEmail: $project->getCreatedBy()->getEmail(),
             columnsCount: $project->getColumns()->count(),
-            columns: $project->getColumns()->toArray()
+            columns: $project->getColumnsSortedByPosition()->toArray()
         );
     }
 

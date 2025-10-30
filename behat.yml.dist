@@ -2,7 +2,8 @@ default:
     suites:
         default:
             contexts:
-                - Behat\MinkExtension\Context\MinkContext
+                - App\Tests\Behat\FeatureContext
+
 
     extensions:
         Robertfausk\Behat\PantherExtension: ~
@@ -26,3 +27,7 @@ default:
                         options:
                             browser: chrome
                             webServerDir: '%paths.base%/public'
+
+    formatters:
+        pretty:
+            verbose: true
