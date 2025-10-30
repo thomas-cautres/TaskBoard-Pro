@@ -1,6 +1,6 @@
 {% extends 'app/base.html.twig' %}
 
-{% block title %}My Projects - TaskBoard Pro{% endblock %}
+{% block title %}{{ 'project.list.title'|trans }} - TaskBoard Pro{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/list-projects.css') }}">
 {% endblock %}
@@ -8,19 +8,19 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active">My Projects</li>
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'project.breadcrumb.my_projects'|trans }}</li>
         </ol>
     </nav>
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">
-            My Projects
+            {{ 'project.list.title'|trans }}
             <span class="badge-count">{{ pagination.totalResults }}</span>
         </h1>
         <a href="{{ path('app_project_create') }}" class="btn btn-primary">
             <i class="bi bi-plus-circle me-1"></i>
-            New Project
+            {{ 'project.list.new_project'|trans }}
         </a>
     </div>
     {{ form_start(filters_form) }}
@@ -53,7 +53,7 @@
         <div class="stat-card primary">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <p class="text-muted mb-1 small">Active Projects</p>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.active_projects'|trans }}</p>
                     <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-primary bg-opacity-10 rounded p-2">
@@ -65,7 +65,7 @@
         <div class="stat-card success">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <p class="text-muted mb-1 small">Tasks Completed</p>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.tasks_completed'|trans }}</p>
                     <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-success bg-opacity-10 rounded p-2">
@@ -77,7 +77,7 @@
         <div class="stat-card warning">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <p class="text-muted mb-1 small">In Progress</p>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.in_progress'|trans }}</p>
                     <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-warning bg-opacity-10 rounded p-2">
@@ -89,7 +89,7 @@
         <div class="stat-card info">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
-                    <p class="text-muted mb-1 small">Collaborators</p>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.collaborators'|trans }}</p>
                     <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-info bg-opacity-10 rounded p-2">
@@ -121,12 +121,12 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ path('app_project_show', {uuid:project.uuid}) }}"><i
-                                        class="bi bi-eye me-2"></i>View</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                                        class="bi bi-eye me-2"></i>{{ 'project.card.view'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>{{ 'project.action.edit'|trans }}</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>Archive</a>
+                            <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>{{ 'project.menu.archive'|trans }}</a>
                             </li>
                         </ul>
                     </div>
@@ -138,7 +138,7 @@
 
                 <div class="project-progress">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="small text-muted">Progress</span>
+                        <span class="small text-muted">{{ 'project.card.progress'|trans }}</span>
                         <span class="small fw-semibold text-success">0%</span>
                     </div>
                     <div class="progress">
@@ -149,11 +149,11 @@
                 <div class="project-stats">
                     <div>
                         <i class="bi bi-list-check me-1"></i>
-                        <span>0 tasks</span>
+                        <span>{{ 'project.card.tasks'|trans({'%count%': 0}) }}</span>
                     </div>
                     <div>
                         <i class="bi bi-hourglass-split me-1"></i>
-                        <span>0 in progress</span>
+                        <span>0 {{ 'project.stats.in_progress'|trans|lower }}</span>
                     </div>
                 </div>
 
@@ -169,11 +169,11 @@
     <div class="pagination-container">
         <div class="pagination-info">
             {% if pagination.totalResults > 0 %}
-                Showing <strong>{{ pagination.start }}
-                -{{ min(pagination.start + pagination.resultsPerPage - 1, pagination.totalResults) }}</strong> of
-                <strong>{{ pagination.totalResults }}</strong> projects
+                {{ 'project.pagination.showing'|trans }} <strong>{{ pagination.start }}
+                -{{ min(pagination.start + pagination.resultsPerPage - 1, pagination.totalResults) }}</strong> {{ 'project.pagination.of'|trans }}
+                <strong>{{ pagination.totalResults }}</strong> {{ 'project.pagination.projects'|trans }}
             {% else %}
-                No projects found
+                {{ 'project.pagination.no_projects'|trans }}
             {% endif %}
         </div>
 
