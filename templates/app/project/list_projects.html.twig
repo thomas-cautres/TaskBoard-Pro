@@ -4,34 +4,6 @@
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/list-projects.css') }}">
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        // Real-time search simulation
-        const searchInput = document.querySelector('.search-box input');
-        searchInput?.addEventListener('input', function (e) {
-            console.log('Searching for:', e.target.value);
-            // Here you would filter the projects grid
-        });
-
-        // Filter changes
-        const filterSelects = document.querySelectorAll('.filter-select');
-        filterSelects.forEach(select => {
-            select.addEventListener('change', function (e) {
-                console.log('Filter changed:', e.target.value);
-                // Here you would apply the filters
-            });
-        });
-
-        // Reset filters
-        document.querySelector('.btn-reset-filters')?.addEventListener('click', function (e) {
-            e.preventDefault();
-            searchInput.value = '';
-            filterSelects.forEach(select => select.selectedIndex = 0);
-            console.log('Filters reset');
-        });
-    </script>
-{% endblock %}
 {% block body %}
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
@@ -63,29 +35,17 @@
                     {{ form_widget(filters_form.name) }}
                 </div>
             </div>
-
             <div class="col-md-2">
                 {{ form_widget(filters_form.type) }}
             </div>
-
             <div class="col-md-2">
                 {{ form_widget(filters_form.active) }}
             </div>
-
             <div class="col-md-3">
-                <select class="form-select filter-select">
-                    <option selected>Last Activity</option>
-                    <option>Creation Date</option>
-                    <option>Name (A-Z)</option>
-                    <option>Name (Z-A)</option>
-                </select>
+                {{ form_widget(filters_form.sort) }}
             </div>
-
             <div class="col-md-1 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-funnel-fill me-1"></i>
-                    Filter
-                </button>
+                {{ form_row(filters_form.submit) }}
             </div>
         </div>
     </div>
@@ -132,7 +92,7 @@
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
                     <p class="text-muted mb-1 small">Collaborators</p>
-                    <h3 class="mb-0">12</h3>
+                    <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-info bg-opacity-10 rounded p-2">
                     <i class="bi bi-people text-info fs-4"></i>
@@ -228,7 +188,7 @@
                     <li class="page-item {% if pagination.currentPage == 1 %}disabled{% endif %}">
                         {% if pagination.currentPage > 1 %}
                             <a class="page-link"
-                               href="{{ path('app_projects_list',app.request.query.all|merge({page:pagination.currentPage - 1})) }}"
+                               href="{{ path('app_projects_list',{filters:filters}|merge({page:pagination.currentPage - 1})) }}"
                                aria-label="Previous">
                                 <i class="bi bi-chevron-left"></i>
                             </a>
@@ -242,14 +202,14 @@
                     {% for page in 1..pagination.totalPages %}
                         <li class="page-item {% if pagination.currentPage == page %}active{% endif %}"
                             {% if pagination.currentPage == page %}aria-current="page"{% endif %}>
-                            <a class="page-link" href="{{ path('app_projects_list', app.request.query.all|merge({page:page})) }}">{{ page }}</a>
+                            <a class="page-link" href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
                         </li>
                     {% endfor %}
 
                     <li class="page-item {% if pagination.currentPage == pagination.totalPages %}disabled{% endif %}">
                         {% if pagination.currentPage < pagination.totalPages %}
                             <a class="page-link"
-                               href="{{ path('app_projects_list', app.request.query.all|merge({page:pagination.currentPage + 1})) }}"
+                               href="{{ path('app_projects_list', {filters:filters}|merge({page:pagination.currentPage + 1})) }}"
                                aria-label="Next">
                                 <i class="bi bi-chevron-right"></i>
                             </a>

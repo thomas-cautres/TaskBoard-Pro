@@ -55,11 +55,21 @@ class ProjectRepository extends ServiceEntityRepository
             ->setMaxResults($length);
 
         $this->applyFilters($qb, $filters);
+        $this->applySorting($qb, $filters->getSort());
 
         /** @var Paginator<Project> $paginator */
         $paginator = new Paginator($qb, false);
 
         return $paginator;
+    }
+
+    private function applySorting(QueryBuilder $qb, ?int $sort = null): void
+    {
+        match ($sort) {
+            ProjectFiltersDto::SORT_NAME_ASC => $qb->addOrderBy('p.name', 'ASC'),
+            ProjectFiltersDto::SORT_NAME_DESC => $qb->addOrderBy('p.name', 'DESC'),
+            default => null,
+        };
     }
 
     private function applyFilters(QueryBuilder $qb, ProjectFiltersDto $filters): void

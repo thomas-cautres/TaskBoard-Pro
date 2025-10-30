@@ -13,6 +13,8 @@ use App\Form\Project\FiltersType;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,13 +33,14 @@ class ListsProjectsController extends AbstractController
         $filtersForm = $this->createForm(FiltersType::class, $filters, [
             'method' => 'GET',
         ]);
+
         $filtersForm->handleRequest($request);
 
-        if ($filtersForm->isSubmitted() && $page > 1) {
-            return $this->redirectToRoute('app_projects_list', array_merge(
-                ['page' => 1],
-                $request->query->all()
-            ));
+        if (true === $this->shouldRedirectToFirstPage($filtersForm, $page)) {
+            return $this->redirectToRoute('app_projects_list', [
+                'filters' => $this->getCleanFiltersFromRequest($request),
+                'page' => 1,
+            ]);
         }
 
         $start = ($page - 1) * self::RESULTS_PER_PAGE;
@@ -53,7 +56,30 @@ class ListsProjectsController extends AbstractController
             'projects' => $this->getProjectsDtos($projects),
             'pagination' => $this->createPagination($start, $totalProjects, $page, $totalPages),
             'filters_form' => $filtersForm,
+            'filters' => $this->getCleanFiltersFromRequest($request),
         ]);
+    }
+
+    /**
+     * @param FormInterface<ProjectFiltersDto> $filtersForm
+     */
+    private function shouldRedirectToFirstPage(FormInterface $filtersForm, int $page): bool
+    {
+        /** @var SubmitButton $submitButton */
+        $submitButton = $filtersForm->get('submit');
+
+        return $filtersForm->isSubmitted() && $submitButton->isClicked() && $page > 1;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    private function getCleanFiltersFromRequest(Request $request): array
+    {
+        $filters = $request->query->all('filters');
+        unset($filters['submit']);
+
+        return $filters;
     }
 
     private function createPagination(int $start, int $totalProjects, int $page, int $totalPages): Pagination

@@ -8,6 +8,7 @@ use App\AppEnum\ProjectType;
 use App\Dto\Project\ProjectFiltersDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,6 +43,17 @@ class FiltersType extends AbstractType
                     'Archived' => ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED,
                     'All status' => ProjectFiltersDto::ACTIVE_FILTER_ALL_STATUS,
                 ],
+            ])
+            ->add('sort', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Creation Date',
+                'choices' => [
+                    'Name (A-Z)' => ProjectFiltersDto::SORT_NAME_ASC,
+                    'Name (Z-A)' => ProjectFiltersDto::SORT_NAME_DESC,
+                ],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filter',
             ]);
     }
 
@@ -49,6 +61,7 @@ class FiltersType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProjectFiltersDto::class,
+            'csrf_protection' => false,
         ]);
     }
 }
