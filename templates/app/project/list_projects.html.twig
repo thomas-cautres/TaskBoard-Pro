@@ -12,7 +12,6 @@
             <li class="breadcrumb-item active">My Projects</li>
         </ol>
     </nav>
-
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">
@@ -24,7 +23,6 @@
             New Project
         </a>
     </div>
-
     {{ form_start(filters_form) }}
     <!-- Filters Bar -->
     <div class="filters-bar">
@@ -56,7 +54,7 @@
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
                     <p class="text-muted mb-1 small">Active Projects</p>
-                    <h3 class="mb-0">5</h3>
+                    <h3 class="mb-0">0</h3>
                 </div>
                 <div class="bg-primary bg-opacity-10 rounded p-2">
                     <i class="bi bi-folder text-primary fs-4"></i>
@@ -114,7 +112,7 @@
                         </div>
                         <div>
                             <h3 class="project-title">{{ project.name }}</h3>
-                            <span class="project-role">PROJECT MANAGER</span>
+                            <span class="project-role">{% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
                         </div>
                     </div>
                     <div class="dropdown" onclick="event.stopPropagation()">
@@ -161,10 +159,7 @@
 
                 <div class="project-footer">
                     <div class="avatar-stack">
-                        <div class="avatar" style="background: #4F46E5;">AM</div>
-                        <div class="avatar" style="background: #10B981;">JD</div>
-                        <div class="avatar" style="background: #F59E0B;">SM</div>
-                        <div class="avatar avatar-more">+2</div>
+                        <div class="avatar" style="background: #4F46E5;">{{ app.user.initials }}</div>
                     </div>
                 </div>
             </div>
@@ -202,7 +197,8 @@
                     {% for page in 1..pagination.totalPages %}
                         <li class="page-item {% if pagination.currentPage == page %}active{% endif %}"
                             {% if pagination.currentPage == page %}aria-current="page"{% endif %}>
-                            <a class="page-link" href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
+                            <a class="page-link"
+                               href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
                         </li>
                     {% endfor %}
 
@@ -223,5 +219,4 @@
             </nav>
         {% endif %}
     </div>
-
 {% endblock %}

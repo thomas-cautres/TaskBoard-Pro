@@ -16,6 +16,7 @@ final readonly class ProjectListDto implements ProjectDtoInterface
         public ?string $description,
         public ProjectType $type,
         public \DateTimeImmutable $createdAt,
+        public string $createdByEmail,
     ) {
     }
 
@@ -27,6 +28,7 @@ final readonly class ProjectListDto implements ProjectDtoInterface
             description: $project->getDescription(),
             type: $project->getType(),
             createdAt: $project->getCreatedAt(),
+            createdByEmail: $project->getCreatedBy()->getEmail(),
         );
     }
 

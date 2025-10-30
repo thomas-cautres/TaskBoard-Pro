@@ -17,6 +17,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class ProjectSubscriber implements EventSubscriberInterface
 {
@@ -27,6 +28,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private LoggerInterface $projectLogger,
         private RequestStack $requestStack,
         private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -54,7 +56,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
         $user->addNotification(
             new Notification()
-                ->setContent(sprintf('Nouveau projet créé : %s', $project->getName()))
+                ->setContent(sprintf($this->translator->trans('project.created.message').' : %s', $project->getName()))
                 ->setRedirectUrl($this->urlGenerator->generate('app_project_show', ['uuid' => $project->getUuid()]))
         );
 
