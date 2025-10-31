@@ -76,21 +76,19 @@ class CreateProjectType extends AbstractType
                     'class' => 'fw-semibold',
                 ],
                 'constraints' => [
-                    new Callback([
-                        'callback' => function (?\DateTimeImmutable $value, ExecutionContextInterface $context) {
-                            if (null === $value) {
-                                return;
-                            }
-                            /** @var FormInterface<Project> $projectRoot */
-                            $projectRoot = $context->getRoot();
-                            /** @var Project $project */
-                            $project = $projectRoot->getData();
+                    new Callback(function (?\DateTimeImmutable $value, ExecutionContextInterface $context) {
+                        if (null === $value) {
+                            return;
+                        }
+                        /** @var FormInterface<Project> $projectRoot */
+                        $projectRoot = $context->getRoot();
+                        /** @var Project $project */
+                        $project = $projectRoot->getData();
 
-                            if ($value < $project->getStartDate()) {
-                                $context->addViolation('validator.project.end.date');
-                            }
-                        },
-                    ]),
+                        if ($value < $project->getStartDate()) {
+                            $context->addViolation('validator.project.end.date');
+                        }
+                    }),
                 ],
             ]);
     }

@@ -14,25 +14,25 @@
         "doctrine/doctrine-migrations-bundle": "^3.5",
         "doctrine/orm": "^3.5",
         "runtime/frankenphp-symfony": "^0.2.0",
-        "symfony/asset": "7.0.*",
-        "symfony/asset-mapper": "7.0.*",
-        "symfony/console": "7.0.*",
-        "symfony/dotenv": "7.0.*",
-        "symfony/event-dispatcher": "7.0.*",
+        "symfony/asset": "7.3.*",
+        "symfony/asset-mapper": "7.3.*",
+        "symfony/console": "7.3.*",
+        "symfony/dotenv": "7.3.*",
+        "symfony/event-dispatcher": "7.3.*",
         "symfony/flex": "^2",
-        "symfony/form": "7.0.*",
-        "symfony/framework-bundle": "7.0.*",
-        "symfony/mailer": "7.0.*",
-        "symfony/messenger": "7.0.*",
+        "symfony/form": "7.3.*",
+        "symfony/framework-bundle": "7.3.*",
+        "symfony/mailer": "7.3.*",
+        "symfony/messenger": "7.3.*",
         "symfony/monolog-bundle": "^3.10",
-        "symfony/runtime": "7.0.*",
-        "symfony/security-bundle": "7.0.*",
+        "symfony/runtime": "7.3.*",
+        "symfony/security-bundle": "7.3.*",
         "symfony/stimulus-bundle": "^2.31",
-        "symfony/translation": "7.0.*",
-        "symfony/twig-bundle": "7.0.*",
-        "symfony/uid": "7.0.*",
-        "symfony/validator": "7.0.*",
-        "symfony/yaml": "7.0.*",
+        "symfony/translation": "7.3.*",
+        "symfony/twig-bundle": "7.3.*",
+        "symfony/uid": "7.3.*",
+        "symfony/validator": "7.3.*",
+        "symfony/yaml": "7.3.*",
         "tilleuls/url-signer-bundle": "^2.2",
         "twbs/bootstrap-icons": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
@@ -65,7 +65,8 @@
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php81": "*",
-        "symfony/polyfill-php82": "*"
+        "symfony/polyfill-php82": "*",
+        "symfony/polyfill-php83": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -86,7 +87,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.0.*",
+            "require": "7.3.*",
             "docker": true
         }
     },
@@ -104,11 +105,11 @@
         "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^11.5",
         "robertfausk/behat-panther-extension": "^1.2",
-        "symfony/browser-kit": "7.0.*",
-        "symfony/css-selector": "7.0.*",
+        "symfony/browser-kit": "7.3.*",
+        "symfony/css-selector": "7.3.*",
         "symfony/maker-bundle": "*",
         "symfony/panther": "^2.2",
-        "symfony/stopwatch": "7.0.*",
-        "symfony/web-profiler-bundle": "7.0.*"
+        "symfony/stopwatch": "7.3.*",
+        "symfony/web-profiler-bundle": "7.3.*"
     }
 }
