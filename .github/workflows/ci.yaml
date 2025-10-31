@@ -16,10 +16,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Build once, use in multiple jobs
-  build:
-    name: Build Docker Images
+  qa:
+    name: QA
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -42,39 +42,6 @@ jobs:
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
 
-      - name: Export Docker images
-        run: |
-          docker compose config --images | xargs -I {} docker save {} -o /tmp/images.tar
-          gzip /tmp/images.tar
-
-      - name: Upload Docker images
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-images
-          path: /tmp/images.tar.gz
-          retention-days: 1
-
-  qa:
-    name: QA
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-
-      - name: Download Docker images
-        uses: actions/download-artifact@v4
-        with:
-          name: docker-images
-          path: /tmp
-
-      - name: Load Docker images
-        run: |
-          gunzip /tmp/images.tar.gz
-          docker load -i /tmp/images.tar
-
       - name: Start services
         run: docker compose up --wait --no-build
 
@@ -84,29 +51,41 @@ jobs:
             make phpstan & PID1=$!
             make phpcsfixer & PID2=$!
             bin/console lint:twig templates & PID3=$!
-            wait $PID1 $PID2 $PID3
+          
+            # Wait for all and capture exit codes
+            wait $PID1; EXIT1=$?
+            wait $PID2; EXIT2=$?
+            wait $PID3; EXIT3=$?
+          
+            # Exit with error if any failed
+            [ $EXIT1 -eq 0 ] && [ $EXIT2 -eq 0 ] && [ $EXIT3 -eq 0 ]
           '
 
   tests:
     name: Tests
-    needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
           persist-credentials: false
 
-      - name: Download Docker images
-        uses: actions/download-artifact@v4
-        with:
-          name: docker-images
-          path: /tmp
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Load Docker images
-        run: |
-          gunzip /tmp/images.tar.gz
-          docker load -i /tmp/images.tar
+      - name: Build Docker images
+        uses: docker/bake-action@v6
+        with:
+          pull: true
+          load: true
+          files: |
+            compose.yaml
+            compose.override.yaml
+          set: |
+            *.cache-from=type=gha,scope=${{github.ref}}
+            *.cache-from=type=gha,scope=refs/heads/main
+            *.cache-to=type=gha,scope=${{github.ref}},mode=max
 
       - name: Start services
         run: docker compose up --wait --no-build
@@ -114,24 +93,43 @@ jobs:
       - name: Setup test environment
         run: |
           docker compose exec -T php sh -c '
-            bin/console importmap:install &
-            bin/console -e test doctrine:database:create &
-            wait
+            # Run independent tasks in parallel
+            bin/console importmap:install & PID1=$!
+            bin/console -e test doctrine:database:create & PID2=$!
+            wait $PID1 $PID2
+          
+            # Sequential tasks that depend on database
             bin/console -e test doctrine:migrations:migrate --no-interaction
             bin/console -e test doctrine:fixtures:load --no-interaction
           '
 
-      - name: Validate setup (non-blocking)
+      - name: Validate setup
         run: |
-          (curl -fsSL http://localhost > /dev/null && echo "✓ HTTP OK" || echo "✗ HTTP failed") &
-          (curl -fsSL --insecure https://localhost > /dev/null && echo "✓ HTTPS OK" || echo "✗ HTTPS failed") &
-          docker compose exec -T php bin/console -e test doctrine:schema:validate &
-          wait
+          # Quick HTTP checks
+          curl -fsSL http://localhost > /dev/null
+          curl -fsSL --insecure https://localhost > /dev/null
+          docker compose exec -T php bin/console -e test doctrine:schema:validate
 
       - name: Run tests in parallel
         run: |
           docker compose exec -T php sh -c '
             bin/phpunit & PID1=$!
             vendor/bin/behat & PID2=$!
-            wait $PID1 $PID2
+          
+            # Wait for all and capture exit codes
+            wait $PID1; EXIT1=$?
+            wait $PID2; EXIT2=$?
+          
+            # Exit with error if any failed
+            [ $EXIT1 -eq 0 ] && [ $EXIT2 -eq 0 ]
           '
+
+      - name: Upload test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs
+          path: |
+            var/log/
+            var/cache/test/
+          retention-days: 3
