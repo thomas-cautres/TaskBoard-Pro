@@ -183,11 +183,11 @@ class Project
      */
     public function getColumnsSortedByPosition(): Collection
     {
-        $iterator = $this->columns->getIterator();
+        $columns = $this->columns->toArray();
 
-        $iterator->uasort(fn (ProjectColumn $projectColumnA, ProjectColumn $projectColumnB) => $projectColumnA->getPosition() <=> $projectColumnB->getPosition());
+        uasort($columns, fn (ProjectColumn $projectColumnA, ProjectColumn $projectColumnB) => $projectColumnA->getPosition() <=> $projectColumnB->getPosition());
 
-        return new ArrayCollection(iterator_to_array($iterator));
+        return new ArrayCollection($columns);
     }
 
     public function addColumn(ProjectColumn $projectColumn): static

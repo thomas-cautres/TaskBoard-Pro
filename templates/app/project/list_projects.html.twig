@@ -182,7 +182,7 @@
                 <ul class="pagination mb-0">
                     <li class="page-item {% if pagination.currentPage == 1 %}disabled{% endif %}">
                         {% if pagination.currentPage > 1 %}
-                            <a class="page-link"
+                            <a class="page-link" id="page-prev"
                                href="{{ path('app_projects_list',{filters:filters}|merge({page:pagination.currentPage - 1})) }}"
                                aria-label="Previous">
                                 <i class="bi bi-chevron-left"></i>
@@ -197,14 +197,13 @@
                     {% for page in 1..pagination.totalPages %}
                         <li class="page-item {% if pagination.currentPage == page %}active{% endif %}"
                             {% if pagination.currentPage == page %}aria-current="page"{% endif %}>
-                            <a class="page-link"
-                               href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
+                            <a class="page-link" id="page-{{ page }}" href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
                         </li>
                     {% endfor %}
 
                     <li class="page-item {% if pagination.currentPage == pagination.totalPages %}disabled{% endif %}">
                         {% if pagination.currentPage < pagination.totalPages %}
-                            <a class="page-link"
+                            <a class="page-link" id="page-next"
                                href="{{ path('app_projects_list', {filters:filters}|merge({page:pagination.currentPage + 1})) }}"
                                aria-label="Next">
                                 <i class="bi bi-chevron-right"></i>
