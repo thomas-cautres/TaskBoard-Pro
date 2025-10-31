@@ -11,7 +11,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build up start down logs sh composer vendor sf cc test phpstan phpcsfixer bash db migration migrate
+.PHONY        : help build up start down logs sh composer vendor sf cc unit behat phpstan phpcsfixer bash db migration migrate
 
 ## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
@@ -77,10 +77,15 @@ migrate: ## Run doctrine migrations
 
 
 ## —— Tests 🐳 ————————————————————————————————————————————————————————————————
-test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
+unit: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
 	make db env=test
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
+
+behat: ## Behat
+	@$(eval c ?=)
+	make db env=test
+	@$(DOCKER_COMP) exec -e APP_ENV=test php vendor/bin/behat $(c)
 
 ## —— Quality ——————————————————————————————————————————————————————————————
 phpstan: ## Phpstan

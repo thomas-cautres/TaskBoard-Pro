@@ -430,113 +430,205 @@
                 <source>Simple open/closed list, ideal for beginners</source>
                 <target>Simple open/closed list, ideal for beginners</target>
             </trans-unit>
-            <trans-unit id="project.breadcrumb.home">
-                <source>project.breadcrumb.home</source>
+            <trans-unit id="project.breadcrumb.home" resname="project.breadcrumb.home">
+                <source>Home</source>
                 <target>Home</target>
             </trans-unit>
-            <trans-unit id="project.breadcrumb.my_projects">
-                <source>project.breadcrumb.my_projects</source>
+            <trans-unit id="project.breadcrumb.my_projects" resname="project.breadcrumb.my_projects">
+                <source>My Projects</source>
                 <target>My Projects</target>
             </trans-unit>
-            <trans-unit id="project.role.project_manager">
-                <source>project.role.project_manager</source>
+            <trans-unit id="project.role.project_manager" resname="project.role.project_manager">
+                <source>PROJECT MANAGER</source>
                 <target>PROJECT MANAGER</target>
             </trans-unit>
-            <trans-unit id="project.status.active">
-                <source>project.status.active</source>
+            <trans-unit id="project.status.active" resname="project.status.active">
+                <source>ACTIVE</source>
                 <target>ACTIVE</target>
             </trans-unit>
-            <trans-unit id="project.status.inactive">
-                <source>project.status.inactive</source>
+            <trans-unit id="project.status.inactive" resname="project.status.inactive">
+                <source>INACTIVE</source>
                 <target>INACTIVE</target>
             </trans-unit>
-            <trans-unit id="project.action.edit">
-                <source>project.action.edit</source>
+            <trans-unit id="project.action.edit" resname="project.action.edit">
+                <source>Edit</source>
                 <target>Edit</target>
             </trans-unit>
-            <trans-unit id="project.menu.favorites">
-                <source>project.menu.favorites</source>
+            <trans-unit id="project.menu.favorites" resname="project.menu.favorites">
+                <source>Favorites</source>
                 <target>Favorites</target>
             </trans-unit>
-            <trans-unit id="project.menu.view_members">
-                <source>project.menu.view_members</source>
+            <trans-unit id="project.menu.view_members" resname="project.menu.view_members">
+                <source>View Members</source>
                 <target>View Members</target>
             </trans-unit>
-            <trans-unit id="project.menu.export">
-                <source>project.menu.export</source>
+            <trans-unit id="project.menu.export" resname="project.menu.export">
+                <source>Export</source>
                 <target>Export</target>
             </trans-unit>
-            <trans-unit id="project.menu.archive">
-                <source>project.menu.archive</source>
+            <trans-unit id="project.menu.archive" resname="project.menu.archive">
+                <source>Archive</source>
                 <target>Archive</target>
             </trans-unit>
-            <trans-unit id="project.date.start">
-                <source>project.date.start</source>
+            <trans-unit id="project.date.start" resname="project.date.start">
+                <source>Start</source>
                 <target>Start</target>
             </trans-unit>
-            <trans-unit id="project.date.end">
-                <source>project.date.end</source>
+            <trans-unit id="project.date.end" resname="project.date.end">
+                <source>End</source>
                 <target>End</target>
             </trans-unit>
-            <trans-unit id="project.date.created_on">
-                <source>project.date.created_on</source>
+            <trans-unit id="project.date.created_on" resname="project.date.created_on">
+                <source>Created on</source>
                 <target>Created on</target>
             </trans-unit>
-            <trans-unit id="project.date.undefined">
-                <source>project.date.undefined</source>
+            <trans-unit id="project.date.undefined" resname="project.date.undefined">
+                <source>Undefined</source>
                 <target>Undefined</target>
             </trans-unit>
-            <trans-unit id="project.members.count">
-                <source>project.members.count</source>
+            <trans-unit id="project.members.count" resname="project.members.count">
+                <source>%count% member|%count% members</source>
                 <target>%count% member|%count% members</target>
             </trans-unit>
-            <trans-unit id="project.stats.total_tasks">
-                <source>project.stats.total_tasks</source>
+            <trans-unit id="project.stats.total_tasks" resname="project.stats.total_tasks">
+                <source>Total Tasks</source>
                 <target>Total Tasks</target>
             </trans-unit>
-            <trans-unit id="project.stats.in_progress">
-                <source>project.stats.in_progress</source>
+            <trans-unit id="project.stats.in_progress" resname="project.stats.in_progress">
+                <source>In Progress</source>
                 <target>In Progress</target>
             </trans-unit>
-            <trans-unit id="project.stats.completed">
-                <source>project.stats.completed</source>
+            <trans-unit id="project.stats.completed" resname="project.stats.completed">
+                <source>Completed</source>
                 <target>Completed</target>
             </trans-unit>
-            <trans-unit id="project.stats.progress">
-                <source>project.stats.progress</source>
+            <trans-unit id="project.stats.progress" resname="project.stats.progress">
+                <source>Progress</source>
                 <target>Progress</target>
             </trans-unit>
-            <trans-unit id="project.tabs.board">
-                <source>project.tabs.board</source>
+            <trans-unit id="project.tabs.board" resname="project.tabs.board">
+                <source>Board</source>
                 <target>Board</target>
             </trans-unit>
-            <trans-unit id="project.tabs.task_list">
-                <source>project.tabs.task_list</source>
+            <trans-unit id="project.tabs.task_list" resname="project.tabs.task_list">
+                <source>Task List</source>
                 <target>Task List</target>
             </trans-unit>
-            <trans-unit id="project.tabs.activity">
-                <source>project.tabs.activity</source>
+            <trans-unit id="project.tabs.activity" resname="project.tabs.activity">
+                <source>Activity</source>
                 <target>Activity</target>
             </trans-unit>
-            <trans-unit id="project.tabs.sprints">
-                <source>project.tabs.sprints</source>
+            <trans-unit id="project.tabs.sprints" resname="project.tabs.sprints">
+                <source>Sprints</source>
                 <target>Sprints</target>
             </trans-unit>
-            <trans-unit id="project.board.no_tasks">
-                <source>project.board.no_tasks</source>
+            <trans-unit id="project.board.no_tasks" resname="project.board.no_tasks">
+                <source>No tasks</source>
                 <target>No tasks</target>
             </trans-unit>
-            <trans-unit id="project.board.add_task">
-                <source>project.board.add_task</source>
+            <trans-unit id="project.board.add_task" resname="project.board.add_task">
+                <source>Add a task</source>
                 <target>Add a task</target>
             </trans-unit>
-            <trans-unit id="project.board.next_step">
-                <source>project.board.next_step</source>
+            <trans-unit id="project.board.next_step" resname="project.board.next_step">
+                <source>Next step</source>
                 <target>Next step</target>
             </trans-unit>
-            <trans-unit id="project.board.next_step_description">
-                <source>project.board.next_step_description</source>
+            <trans-unit id="project.board.next_step_description" resname="project.board.next_step_description">
+                <source>Start creating tasks to organize your work. Tasks can be moved between columns by drag and drop.</source>
                 <target>Start creating tasks to organize your work. Tasks can be moved between columns by drag and drop.</target>
+            </trans-unit>
+            <trans-unit id="project.created.message" resname="project.created.message">
+                <source>New project created</source>
+                <target>New project created</target>
+            </trans-unit>
+            <trans-unit id="project.list.title" resname="project.list.title">
+                <source>My Projects</source>
+                <target>My Projects</target>
+            </trans-unit>
+            <trans-unit id="project.list.new_project" resname="project.list.new_project">
+                <source>New Project</source>
+                <target>New Project</target>
+            </trans-unit>
+            <trans-unit id="project.filter.name.placeholder" resname="project.filter.name.placeholder">
+                <source>Search by name...</source>
+                <target>Search by name...</target>
+            </trans-unit>
+            <trans-unit id="project.filter.type.all" resname="project.filter.type.all">
+                <source>All types</source>
+                <target>All types</target>
+            </trans-unit>
+            <trans-unit id="project.filter.active.all" resname="project.filter.active.all">
+                <source>All projects</source>
+                <target>All projects</target>
+            </trans-unit>
+            <trans-unit id="project.filter.active.active_only" resname="project.filter.active.active_only">
+                <source>Active only</source>
+                <target>Active only</target>
+            </trans-unit>
+            <trans-unit id="project.filter.active.inactive_only" resname="project.filter.active.inactive_only">
+                <source>Inactive only</source>
+                <target>Inactive only</target>
+            </trans-unit>
+            <trans-unit id="project.filter.sort.name_asc" resname="project.filter.sort.name_asc">
+                <source>Name (A-Z)</source>
+                <target>Name (A-Z)</target>
+            </trans-unit>
+            <trans-unit id="project.filter.sort.name_desc" resname="project.filter.sort.name_desc">
+                <source>Name (Z-A)</source>
+                <target>Name (Z-A)</target>
+            </trans-unit>
+            <trans-unit id="project.filter.sort.date_newest" resname="project.filter.sort.date_newest">
+                <source>Most recent</source>
+                <target>Most recent</target>
+            </trans-unit>
+            <trans-unit id="project.filter.sort.date_oldest" resname="project.filter.sort.date_oldest">
+                <source>Oldest</source>
+                <target>Oldest</target>
+            </trans-unit>
+            <trans-unit id="project.filter.submit" resname="project.filter.submit">
+                <source>Filter</source>
+                <target>Filter</target>
+            </trans-unit>
+            <trans-unit id="project.stats.active_projects" resname="project.stats.active_projects">
+                <source>Active Projects</source>
+                <target>Active Projects</target>
+            </trans-unit>
+            <trans-unit id="project.stats.tasks_completed" resname="project.stats.tasks_completed">
+                <source>Tasks Completed</source>
+                <target>Tasks Completed</target>
+            </trans-unit>
+            <trans-unit id="project.stats.collaborators" resname="project.stats.collaborators">
+                <source>Collaborators</source>
+                <target>Collaborators</target>
+            </trans-unit>
+            <trans-unit id="project.card.progress" resname="project.card.progress">
+                <source>Progress</source>
+                <target>Progress</target>
+            </trans-unit>
+            <trans-unit id="project.card.tasks" resname="project.card.tasks">
+                <source>%count% tasks</source>
+                <target>%count% tasks</target>
+            </trans-unit>
+            <trans-unit id="project.card.view" resname="project.card.view">
+                <source>View</source>
+                <target>View</target>
+            </trans-unit>
+            <trans-unit id="project.pagination.showing" resname="project.pagination.showing">
+                <source>Showing</source>
+                <target>Showing</target>
+            </trans-unit>
+            <trans-unit id="project.pagination.of" resname="project.pagination.of">
+                <source>of</source>
+                <target>of</target>
+            </trans-unit>
+            <trans-unit id="project.pagination.projects" resname="project.pagination.projects">
+                <source>projects</source>
+                <target>projects</target>
+            </trans-unit>
+            <trans-unit id="project.pagination.no_projects" resname="project.pagination.no_projects">
+                <source>No projects found</source>
+                <target>No projects found</target>
             </trans-unit>
         </body>
     </file>

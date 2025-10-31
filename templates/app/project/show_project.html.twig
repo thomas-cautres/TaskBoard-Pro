@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
-            <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
             <li class="breadcrumb-item active">{{ project.name }}</li>
         </ol>
     </nav>

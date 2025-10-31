@@ -18,7 +18,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (false === $user->isConfirmed()) {
-            throw new CustomUserMessageAccountStatusException('Your registration is not confirmed.');
+            throw new CustomUserMessageAccountStatusException('registration_not_confirmed');
         }
     }
 

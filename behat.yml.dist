@@ -1,0 +1,29 @@
+default:
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\FeatureContext
+
+    extensions:
+        Robertfausk\Behat\PantherExtension: ~
+        DAMA\DoctrineTestBundle\Behat\ServiceContainer\DoctrineExtension: ~
+
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/bootstrap.php
+            kernel:
+                class: App\Kernel
+                environment: test
+                debug: false
+
+        Behat\MinkExtension:
+            base_url: 'http://php'
+            default_session: symfony
+            javascript_session: panther
+            sessions:
+                symfony:
+                    symfony: ~
+                panther:
+                    panther:
+                        options:
+                            browser: chrome
+                            webServerDir: '%paths.base%/public'

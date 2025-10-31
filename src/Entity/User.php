@@ -132,7 +132,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    #[\Deprecated]
+    /**
+     * @deprecated
+     */
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
@@ -227,5 +229,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getInitials(): string
+    {
+        return mb_strtoupper(mb_substr($this->firstName, 0, 1).mb_substr($this->lastName, 0, 1));
     }
 }

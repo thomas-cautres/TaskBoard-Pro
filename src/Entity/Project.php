@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[ORM\Index(name: 'name_idx', columns: ['name'])]
 class Project
 {
     #[ORM\Id]
@@ -173,6 +174,20 @@ class Project
     public function getColumns(): Collection
     {
         return $this->columns;
+    }
+
+    /**
+     * @return Collection<int, ProjectColumn>
+     *
+     * @throws \Exception
+     */
+    public function getColumnsSortedByPosition(): Collection
+    {
+        $columns = $this->columns->toArray();
+
+        uasort($columns, fn (ProjectColumn $projectColumnA, ProjectColumn $projectColumnB) => $projectColumnA->getPosition() <=> $projectColumnB->getPosition());
+
+        return new ArrayCollection($columns);
     }
 
     public function addColumn(ProjectColumn $projectColumn): static

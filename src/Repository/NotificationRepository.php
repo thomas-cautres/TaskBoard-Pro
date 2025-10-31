@@ -45,4 +45,18 @@ class NotificationRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function countByUser(User $user, bool $unread = false): int
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->select('count(n.id)')
+            ->andWhere('n.user = :user')
+            ->setParameter('user', $user);
+
+        if (true === $unread) {
+            $qb->andWhere('n.readAt IS NULL');
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,7 +22,7 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
-    public function persist(Project $project, bool $flush = true): void
+    public function save(Project $project, bool $flush = true): void
     {
         $this->getEntityManager()->persist($project);
 
@@ -40,28 +43,56 @@ class ProjectRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    //    /**
-    //     * @return Project[] Returns an array of Project objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return Paginator<Project>
+     */
+    public function findByUserPaginated(User $user, ProjectFiltersDto $filters, int $start, int $length): Paginator
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere('p.createdBy = :user')
+            ->setParameter('user', $user)
+            ->setFirstResult($start)
+            ->setMaxResults($length);
 
-    //    public function findOneBySomeField($value): ?Project
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $this->applyFilters($qb, $filters);
+        $this->applySorting($qb, $filters->getSort());
+
+        /** @var Paginator<Project> $paginator */
+        $paginator = new Paginator($qb, false);
+
+        return $paginator;
+    }
+
+    private function applySorting(QueryBuilder $qb, ?int $sort = null): void
+    {
+        match ($sort) {
+            ProjectFiltersDto::SORT_NAME_ASC => $qb->addOrderBy('p.name', 'ASC'),
+            ProjectFiltersDto::SORT_NAME_DESC => $qb->addOrderBy('p.name', 'DESC'),
+            default => null,
+        };
+    }
+
+    private function applyFilters(QueryBuilder $qb, ProjectFiltersDto $filters): void
+    {
+        if (null !== $filters->getName()) {
+            $qb->andWhere('LOWER(p.name) LIKE LOWER(:name)')->setParameter('name', '%'.$filters->getName().'%');
+        }
+
+        if (null !== $filters->getType()) {
+            $qb->andWhere('p.type = :type')->setParameter('type', $filters->getType());
+        }
+
+        $now = new \DateTimeImmutable();
+        if (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
+            $qb
+                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
+                ->andWhere('(p.endDate IS NULL OR p.endDate < :now)')
+                ->setParameter('now', $now);
+        } elseif (null === $filters->getActive()) {
+            $qb
+                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
+                ->andWhere('(p.endDate IS NULL OR p.endDate > :now)')
+                ->setParameter('now', $now);
+        }
+    }
 }

@@ -24,7 +24,7 @@
                 <li class="nav-item dropdown me-2">
                     <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-bell" style="font-size: 1.2rem;"></i>
-                        {% set unread_notifications_length = app.user|user_unread_notifications|length %}
+                        {% set unread_notifications_length = app.user|user_unread_notifications_count %}
                         {% if unread_notifications_length > 0 %}
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {{ unread_notifications_length }}

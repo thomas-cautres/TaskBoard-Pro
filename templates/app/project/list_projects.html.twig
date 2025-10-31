@@ -1,0 +1,221 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ 'project.list.title'|trans }} - TaskBoard Pro{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/list-projects.css') }}">
+{% endblock %}
+{% block body %}
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
+            <li class="breadcrumb-item active">{{ 'project.breadcrumb.my_projects'|trans }}</li>
+        </ol>
+    </nav>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            {{ 'project.list.title'|trans }}
+            <span class="badge-count">{{ pagination.totalResults }}</span>
+        </h1>
+        <a href="{{ path('app_project_create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>
+            {{ 'project.list.new_project'|trans }}
+        </a>
+    </div>
+    {{ form_start(filters_form) }}
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    {{ form_widget(filters_form.name) }}
+                </div>
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filters_form.type) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filters_form.active) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(filters_form.sort) }}
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                {{ form_row(filters_form.submit) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(filters_form) }}
+    <!-- Statistics -->
+    <div class="stats-container">
+        <div class="stat-card primary">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.active_projects'|trans }}</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-primary bg-opacity-10 rounded p-2">
+                    <i class="bi bi-folder text-primary fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card success">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.tasks_completed'|trans }}</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-success bg-opacity-10 rounded p-2">
+                    <i class="bi bi-check-circle text-success fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card warning">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.in_progress'|trans }}</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-warning bg-opacity-10 rounded p-2">
+                    <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card info">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <p class="text-muted mb-1 small">{{ 'project.stats.collaborators'|trans }}</p>
+                    <h3 class="mb-0">0</h3>
+                </div>
+                <div class="bg-info bg-opacity-10 rounded p-2">
+                    <i class="bi bi-people text-info fs-4"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+
+        {% for project in projects %}
+            <div class="project-card"
+                 onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
+                <div class="project-card-header">
+                    <div class="d-flex align-items-center gap-3 flex-grow-1">
+                        <div class="project-icon {{ project.type.value|lower }}">
+                            <i class="bi {% if project.type.value == 'Scrum' %}bi-calendar-week{% elseif project.type.value == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
+                        </div>
+                        <div>
+                            <h3 class="project-title">{{ project.name }}</h3>
+                            <span class="project-role">{% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="dropdown" onclick="event.stopPropagation()">
+                        <button class="project-menu-btn" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ path('app_project_show', {uuid:project.uuid}) }}"><i
+                                        class="bi bi-eye me-2"></i>{{ 'project.card.view'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2"></i>{{ 'project.action.edit'|trans }}</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>{{ 'project.menu.archive'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    {{ project.description }}
+                </p>
+
+                <div class="project-progress">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="small text-muted">{{ 'project.card.progress'|trans }}</span>
+                        <span class="small fw-semibold text-success">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="project-stats">
+                    <div>
+                        <i class="bi bi-list-check me-1"></i>
+                        <span>{{ 'project.card.tasks'|trans({'%count%': 0}) }}</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-hourglass-split me-1"></i>
+                        <span>0 {{ 'project.stats.in_progress'|trans|lower }}</span>
+                    </div>
+                </div>
+
+                <div class="project-footer">
+                    <div class="avatar-stack">
+                        <div class="avatar" style="background: #4F46E5;">{{ app.user.initials }}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Pagination -->
+    <div class="pagination-container">
+        <div class="pagination-info">
+            {% if pagination.totalResults > 0 %}
+                {{ 'project.pagination.showing'|trans }} <strong>{{ pagination.start }}
+                -{{ min(pagination.start + pagination.resultsPerPage - 1, pagination.totalResults) }}</strong> {{ 'project.pagination.of'|trans }}
+                <strong>{{ pagination.totalResults }}</strong> {{ 'project.pagination.projects'|trans }}
+            {% else %}
+                {{ 'project.pagination.no_projects'|trans }}
+            {% endif %}
+        </div>
+
+        {% if pagination.totalPages > 1 %}
+            <nav aria-label="Projects pagination">
+                <ul class="pagination mb-0">
+                    <li class="page-item {% if pagination.currentPage == 1 %}disabled{% endif %}">
+                        {% if pagination.currentPage > 1 %}
+                            <a class="page-link" id="page-prev"
+                               href="{{ path('app_projects_list',{filters:filters}|merge({page:pagination.currentPage - 1})) }}"
+                               aria-label="Previous">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                        {% endif %}
+                    </li>
+
+                    {% for page in 1..pagination.totalPages %}
+                        <li class="page-item {% if pagination.currentPage == page %}active{% endif %}"
+                            {% if pagination.currentPage == page %}aria-current="page"{% endif %}>
+                            <a class="page-link" id="page-{{ page }}" href="{{ path('app_projects_list', {filters:filters}|merge({page:page})) }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+
+                    <li class="page-item {% if pagination.currentPage == pagination.totalPages %}disabled{% endif %}">
+                        {% if pagination.currentPage < pagination.totalPages %}
+                            <a class="page-link" id="page-next"
+                               href="{{ path('app_projects_list', {filters:filters}|merge({page:pagination.currentPage + 1})) }}"
+                               aria-label="Next">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock %}
