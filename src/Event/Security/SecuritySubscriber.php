@@ -43,13 +43,13 @@ final readonly class SecuritySubscriber implements EventSubscriberInterface
             ->setPassword($hashedPassword)
             ->setConfirmationCode((string) random_int(1000, 9999));
 
-        $this->userRepository->persist($user);
+        $this->userRepository->save($user);
 
         $this->bus->dispatch(new RegistrationConfirmationEmail($user->getEmail(), $user->getConfirmationCode()));
     }
 
     public function onUserConfirmed(UserConfirmedEvent $event): void
     {
-        $this->userRepository->persist($event->getUser()->setConfirmed(true));
+        $this->userRepository->save($event->getUser()->setConfirmed(true));
     }
 }

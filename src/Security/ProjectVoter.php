@@ -13,10 +13,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class ProjectVoter extends Voter
 {
     public const string VIEW = 'view';
+    public const string EDIT = 'edit';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!in_array($attribute, [self::VIEW])) {
+        if (!in_array($attribute, [self::VIEW, self::EDIT])) {
             return false;
         }
 
@@ -40,11 +41,17 @@ class ProjectVoter extends Voter
 
         return match ($attribute) {
             self::VIEW => $this->canView($project, $user),
+            self::EDIT => $this->canEdit($project, $user),
             default => throw new \LogicException('This code should not be reached!'),
         };
     }
 
     private function canView(Project $project, User $user): bool
+    {
+        return $user === $project->getCreatedBy();
+    }
+
+    private function canEdit(Project $project, User $user): bool
     {
         return $user === $project->getCreatedBy();
     }

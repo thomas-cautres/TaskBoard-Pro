@@ -61,6 +61,7 @@ class CreateProjectType extends AbstractType
                 'constraints' => [
                     new NotBlank(message: 'validator.project.type.empty'),
                 ],
+                'disabled' => true === $options['is_edit'],
             ])
             ->add('startDate', null, [
                 'widget' => 'single_text',
@@ -97,6 +98,7 @@ class CreateProjectType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Project::class,
+            'is_edit' => false,
         ]);
     }
 }

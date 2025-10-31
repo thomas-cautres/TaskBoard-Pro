@@ -41,7 +41,7 @@
             </div>
 
             <div class="d-flex gap-2">
-                <a href="project_edit_complete.html" class="btn btn-outline-primary">
+                <a href="{{ path('app_project_edit', {uuid:project.uuid}) }}" class="btn btn-outline-primary">
                     <i class="bi bi-pencil"></i>
                     {{ 'project.action.edit'|trans }}
                 </a>

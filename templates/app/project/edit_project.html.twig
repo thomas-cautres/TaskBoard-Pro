@@ -9,14 +9,14 @@
         <div class="col-lg-8 mx-auto">
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="project_index_complete.html">{{ 'project.breadcrumb.projects'|trans }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.projects'|trans }}</a></li>
                     <li class="breadcrumb-item active">{{ 'project.breadcrumb.create'|trans }}</li>
                 </ol>
             </nav>
             <div class="mb-4">
                 <h1 class="h2 mb-2">
                     <i class="bi bi-plus-circle text-primary"></i>
-                    {{ 'project.create.heading'|trans }}
+                    Edit a project
                 </h1>
                 <p class="text-muted mb-0">{{ 'project.create.description'|trans }}</p>
             </div>
@@ -42,11 +42,6 @@
                         <div class="row g-3">
                             {{ form_row(form.type) }}
                         </div>
-
-                        <div class="alert alert-info mt-3">
-                            <i class="bi bi-lightbulb"></i>
-                            <strong>{{ 'project.create.type_info_title'|trans }}</strong> {{ 'project.create.type_info_text'|trans }}
-                        </div>
                     </div>
 
                     <!-- Dates -->
@@ -58,7 +53,7 @@
 
                         <div class="col-md-6">
                             {{ form_row(form.endDate) }}
-                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>
+{#                            <div class="form-text">{{ 'project.create.optional'|trans }}</div>#}
                         </div>
                     </div>
 
@@ -73,26 +68,10 @@
 
                         <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
                             <i class="bi bi-check-circle"></i>
-                            {{ 'project.create.submit'|trans }}
+                            {{ 'project.edit.submit'|trans }}
                         </button>
                     </div>
                     {{ form_end(form) }}
-                </div>
-            </div>
-
-            <!-- Informations complémentaires -->
-            <div class="card mt-4 border-0 bg-light">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        <i class="bi bi-info-circle text-primary"></i>
-                        {{ 'project.create.after_creation_title'|trans }}
-                    </h6>
-                    <ul class="mb-0 small text-muted">
-                        <li>{{ 'project.create.after_creation.manager'|trans }}</li>
-                        <li>{{ 'project.create.after_creation.columns'|trans }}</li>
-                        <li>{{ 'project.create.after_creation.members'|trans }}</li>
-                        <li>{{ 'project.create.after_creation.type_locked'|trans }}</li>
-                    </ul>
                 </div>
             </div>
         </div>
