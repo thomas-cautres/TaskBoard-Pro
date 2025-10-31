@@ -2,7 +2,6 @@
 
 A **Symfony 7** project management application showcasing modern PHP development practices. Supports SCRUM, KANBAN, and BASIC project methodologies with a clean Kanban board interface.
 
----
 
 ## 🎯 Features
 
@@ -20,7 +19,6 @@ A **Symfony 7** project management application showcasing modern PHP development
 - 🔜 Sprints, comments, notifications
 - 🔜 Project statistics dashboard
 
----
 
 ## 🛠️ Stack
 
@@ -31,7 +29,6 @@ A **Symfony 7** project management application showcasing modern PHP development
 - **Tests**: PHPUnit 11, Behat, Panther
 - **Quality**: PHPStan, PHP CS Fixer
 
----
 
 ## 🚀 Quick Start
 ```bash
@@ -51,7 +48,6 @@ Email: user-confirmed@domain.com
 Password: test1234
 ```
 
----
 
 ## 📋 Common Commands
 ```bash
@@ -91,7 +87,8 @@ translations/       # i18n (EN/FR)
 tests/             # PHPUnit tests
 ```
 
----
+Ports
+- Override via environment or `.env` using `HTTP_PORT`, `HTTPS_PORT`, `HTTP3_PORT`.
 
 ## 🧪 Testing
 ```bash
@@ -99,7 +96,39 @@ make test           # All tests
 make coverage       # Coverage report
 ```
 
----
+## Demo users (fixtures)
+Loading fixtures via `make db` creates the following demo accounts:
+- Confirmed: `user-confirmed@domain.com` / `test1234`
+- Confirmed: `user2-confirmed@domain.com` / `test1234`
+- Unconfirmed: `user-unconfirmed@domain.com` / `test1234`
+
+Note: Some features may require a confirmed account.
+
+
+## Make targets
+- `make start` — Build images and start containers
+- `make up` — Start containers (no rebuild)
+- `make down` — Stop containers and remove orphans
+- `make logs` — Follow container logs
+- `make sh` / `make bash` — Shell into the PHP container
+- `make composer c="<args>"` — Run Composer inside the container
+- `make vendor` — Install vendors (no-dev, from lock)
+- `make sf c="<console cmd>"` — Run Symfony console, e.g. `make sf c=about`
+- `make cc` — Clear cache (`c:c`)
+- `make db env=dev|test` — Recreate DB, run migrations, load fixtures (refuses prod)
+- `make migration` — Create Doctrine migration from entity changes
+- `make migrate` — Apply migrations
+- `make test c="<phpunit args>"` — Reset test DB and run PHPUnit
+- `make phpstan` — Static analysis
+- `make phpcsfixer` — Code style fix
+- `make im-require c="<package>"` — Importmap: require a frontend package
+
+
+## Environment & configuration
+- App environment: use `APP_ENV=dev|test|prod` (Compose services set this for you).
+- Ports: `HTTP_PORT`, `HTTPS_PORT`, `HTTP3_PORT` can be set in your environment or `.env`.
+- Database: Docker Compose wires the DB; migrations/fixtures are run via Make targets.
+- Mailer: configure `MAILER_DSN` in `.env.local` if you want to test email sending.
 
 ## 🌐 Translations
 
