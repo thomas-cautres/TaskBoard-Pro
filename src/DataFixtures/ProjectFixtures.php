@@ -87,6 +87,10 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         /** @var array<array<string, string>> $projectsData */
         $projectsData = json_decode($jsonContent, true);
 
+        if (null === $projectsData) {
+            throw new \RuntimeException(sprintf('Invalid JSON in projects data file: %s', $jsonPath));
+        }
+
         foreach ($projectsData as $projectData) {
             yield [
                 'uuid' => Uuid::fromString($projectData['uuid']),

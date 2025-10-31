@@ -85,13 +85,13 @@ class ProjectRepository extends ServiceEntityRepository
         $now = new \DateTimeImmutable();
         if (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
             $qb
-                ->andWhere('p.startDate <= :now')
-                ->andWhere('p.endDate < :now')
+                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
+                ->andWhere('(p.endDate IS NULL OR p.endDate < :now)')
                 ->setParameter('now', $now);
         } elseif (null === $filters->getActive()) {
             $qb
-                ->andWhere('p.startDate <= :now')
-                ->andWhere('p.endDate > :now')
+                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
+                ->andWhere('(p.endDate IS NULL OR p.endDate > :now)')
                 ->setParameter('now', $now);
         }
     }

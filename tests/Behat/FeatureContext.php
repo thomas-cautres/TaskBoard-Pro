@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat;
 
+use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Behat\Behat\Context\Context;
@@ -65,7 +66,7 @@ class FeatureContext extends MinkContext implements Context
         $projectRepository = $this->getContainer()->get(ProjectRepository::class);
         $project = $projectRepository->findOneBy(['name' => $name]);
 
-        if (!$project instanceof \App\Entity\Project) {
+        if (!$project instanceof Project) {
             throw new \Exception(sprintf('Project with name "%s" not found', $name));
         }
     }
@@ -77,6 +78,10 @@ class FeatureContext extends MinkContext implements Context
     {
         $projectRepository = $this->getContainer()->get(ProjectRepository::class);
         $project = $projectRepository->findOneBy(['name' => $name]);
+
+        if (!$project instanceof Project) {
+            throw new \Exception(sprintf('Project with name "%s" not found', $name));
+        }
 
         if ($project->getType()->value !== $type) {
             throw new \Exception(sprintf('Project type is "%s", expected "%s"', $project->getType()->value, $type));
@@ -91,6 +96,10 @@ class FeatureContext extends MinkContext implements Context
         $projectRepository = $this->getContainer()->get(ProjectRepository::class);
         $project = $projectRepository->findOneBy(['name' => $name]);
 
+        if (!$project instanceof Project) {
+            throw new \Exception(sprintf('Project with name "%s" not found', $name));
+        }
+
         $actualCount = $project->getColumns()->count();
         if ($actualCount !== $count) {
             throw new \Exception(sprintf('Project has %d columns, expected %d', $actualCount, $count));
@@ -104,6 +113,10 @@ class FeatureContext extends MinkContext implements Context
     {
         $projectRepository = $this->getContainer()->get(ProjectRepository::class);
         $project = $projectRepository->findOneBy(['name' => $name]);
+
+        if (!$project instanceof Project) {
+            throw new \Exception(sprintf('Project with name "%s" not found', $name));
+        }
 
         $column = $project->getColumns()->get($position);
 

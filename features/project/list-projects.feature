@@ -1,6 +1,6 @@
 Feature: List Projects
     As a logged-in user
-    I want list my prokects
+    I want list my projects
     So that I can organize and manage tasks
 
     Background:
