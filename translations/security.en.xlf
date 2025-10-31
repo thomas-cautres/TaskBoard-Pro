@@ -2,7 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="registration_not_confirmed">
+            <trans-unit id="registration_not_confirmed" resname="registration_not_confirmed">
                 <source>Your registration is not confirmed.</source>
                 <target>Your registration is not confirmed.</target>
             </trans-unit>

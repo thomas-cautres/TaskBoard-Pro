@@ -25,7 +25,8 @@ Feature: Login
         When I fill in "_username" with "user-confirmed@domain.com"
         And I fill in "_password" with "test1234"
         And I press "login-btn"
-        Then I dump the page
+        Then I should be on "/app"
+        And the response status code should be 200
 
     Scenario: Login fails with invalid password
         Given I am on "/login"
@@ -39,7 +40,8 @@ Feature: Login
         When I fill in "_username" with "user-unconfirmed@domain.com"
         And I fill in "_password" with "test"
         And I press "login-btn"
-        Then I should see "Your registration is not confirmed."
+        Then I should be on "/login"
+        And I should see "Your registration is not confirmed."
 
     Scenario: Sign up link works
         Given I am on "/login"
