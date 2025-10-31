@@ -85,11 +85,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $jsonContent = (string) file_get_contents($jsonPath);
 
         /** @var array<array<string, string>> $projectsData */
-        $projectsData = json_decode($jsonContent, true);
-
-        if (null === $projectsData) {
-            throw new \RuntimeException(sprintf('Invalid JSON in projects data file: %s', $jsonPath));
-        }
+        $projectsData = json_decode($jsonContent, true, flags: JSON_THROW_ON_ERROR);
 
         foreach ($projectsData as $projectData) {
             yield [
