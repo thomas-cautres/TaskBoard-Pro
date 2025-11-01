@@ -32,10 +32,10 @@ readonly class UserProjectNameValidator
         $nameForm = $context->getObject();
         /** @var FormInterface<Project> $projectForm */
         $projectForm = $nameForm->getParent();
-        /** @var Project $project */
+        /** @var ?Project $project */
         $project = $projectForm->getData();
 
-        if (0 !== $this->projectRepository->countByUserAndName($user, $value, $project)) {
+        if (0 !== $this->projectRepository->countByUserAndName($user, $value, $projectForm->getConfig()->getOption('is_edit') ? $project : null)) {
             $context->buildViolation('validator.project.name')
                 ->atPath('name')
                 ->addViolation();

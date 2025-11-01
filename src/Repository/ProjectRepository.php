@@ -31,18 +31,20 @@ class ProjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function countByUserAndName(User $user, string $name, Project $validatedProject): int
+    public function countByUserAndName(User $user, string $name, ?Project $validatedProject): int
     {
-        return (int) $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->select('count(p.id)')
             ->andWhere('p.createdBy = :createdBy')
             ->andWhere('LOWER(p.name) = :name')
-            ->andWhere('p.id != :validatedProject')
             ->setParameter('createdBy', $user->getId())
-            ->setParameter('name', strtolower($name))
-            ->setParameter('validatedProject', $validatedProject)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->setParameter('name', strtolower($name));
+
+        if ($validatedProject instanceof Project) {
+            $qb->andWhere('p.id != :validatedProject')->setParameter('validatedProject', $validatedProject);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
