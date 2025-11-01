@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
+use App\Dto\Project\ProjectEditDto;
 use App\Entity\Project;
 use App\Event\Project\ProjectEditedEvent;
 use App\Form\Project\CreateProjectType;
@@ -36,6 +37,7 @@ class EditProjectController extends AbstractController
 
         return $this->render('app/project/edit_project.html.twig', [
             'form' => $form,
+            'project' => ProjectEditDto::fromEntity($project),
         ]);
     }
 }

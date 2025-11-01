@@ -61,6 +61,7 @@ class CreateProjectType extends AbstractType
                 'constraints' => [
                     new NotBlank(message: 'validator.project.type.empty'),
                 ],
+                // TODO When project has tasks, true === $options['is_edit'] && $project->getTasks()->isEmpty(),
                 'disabled' => true === $options['is_edit'],
             ])
             ->add('startDate', null, [
