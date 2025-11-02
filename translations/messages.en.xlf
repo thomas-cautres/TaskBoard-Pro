@@ -654,6 +654,10 @@
                 <source>New project edited</source>
                 <target>New project edited</target>
             </trans-unit>
+            <trans-unit id="project.edit.title" resname="project.edit.title">
+                <source>Edit a project</source>
+                <target>Edit a project</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
