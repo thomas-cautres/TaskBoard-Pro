@@ -630,6 +630,34 @@
                 <source>No projects found</source>
                 <target>No projects found</target>
             </trans-unit>
+            <trans-unit id="project.edit.type_locked" resname="project.edit.type_locked">
+                <source>Cannot change project type when tasks exist</source>
+                <target>Cannot change project type when tasks exist</target>
+            </trans-unit>
+            <trans-unit id="project.edit.heading" resname="project.edit.heading">
+                <source>Edit project</source>
+                <target>Edit project</target>
+            </trans-unit>
+            <trans-unit id="project.breadcrumb.edit" resname="project.breadcrumb.edit">
+                <source>Edit project</source>
+                <target>Edit project</target>
+            </trans-unit>
+            <trans-unit id="project.edit.submit" resname="project.edit.submit">
+                <source>Edit the project</source>
+                <target>Edit the project</target>
+            </trans-unit>
+            <trans-unit id="project.edit.flash.message.success" resname="project.edit.flash.message.success">
+                <source>Project successfully edited</source>
+                <target>Project successfully edited</target>
+            </trans-unit>
+            <trans-unit id="project.edited.message" resname="project.edited.message">
+                <source>New project edited</source>
+                <target>New project edited</target>
+            </trans-unit>
+            <trans-unit id="project.edit.title" resname="project.edit.title">
+                <source>Edit a project</source>
+                <target>Edit a project</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

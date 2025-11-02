@@ -36,6 +36,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         return [
             ProjectCreatedEvent::class => 'onProjectCreated',
+            ProjectEditedEvent::class => 'onProjectEdited',
         ];
     }
 
@@ -60,10 +61,27 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
                 ->setRedirectUrl($this->urlGenerator->generate('app_project_show', ['uuid' => $project->getUuid()]))
         );
 
-        $this->userRepository->persist($user, flush: false);
+        $this->userRepository->save($user, flush: false);
 
         $this->projectRepository->save($project);
-        $this->log($project);
+        $this->log($project, 'Project created', 'project.created');
+    }
+
+    public function onProjectEdited(ProjectEditedEvent $event): void
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+        $project = $event->getProject();
+
+        $user->addNotification(
+            new Notification()
+                ->setContent(sprintf($this->translator->trans('project.edited.message').' : %s', $project->getName()))
+                ->setRedirectUrl($this->urlGenerator->generate('app_project_show', ['uuid' => $project->getUuid()]))
+        );
+
+        $this->userRepository->save($user, flush: false);
+        $this->projectRepository->save($project);
+        $this->log($project, 'Project edited', 'project.edited');
     }
 
     private function updateUserRoles(User $user): void
@@ -102,12 +120,12 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
             ->addColumn(new ProjectColumn()->setName(ProjectColumnName::Closed->value)->setPosition(2));
     }
 
-    private function log(Project $project): void
+    private function log(Project $project, string $message, string $action): void
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        $this->projectLogger->info('Project created', [
-            'action' => 'project.created',
+        $this->projectLogger->info($message, [
+            'action' => $action,
             'user_id' => $project->getCreatedBy()->getId(),
             'created_at' => $project->getCreatedAt()->getTimestamp(),
             'project_name' => $project->getName(),
