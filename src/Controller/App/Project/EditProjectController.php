@@ -7,7 +7,7 @@ namespace App\Controller\App\Project;
 use App\Dto\Project\ProjectEditDto;
 use App\Entity\Project;
 use App\Event\Project\ProjectEditedEvent;
-use App\Form\Project\CreateProjectType;
+use App\Form\Project\EditProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class EditProjectController extends AbstractController
 {
     public function __invoke(Request $request, Project $project, EventDispatcherInterface $dispatcher): Response
     {
-        $form = $this->createForm(CreateProjectType::class, $project, [
+        $form = $this->createForm(EditProjectType::class, $project, [
             'is_edit' => true,
         ]);
 
