@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Project\ProjectEditDto;
-use App\Entity\Project;
+use App\Dto\Project\ProjectDto;
 use App\Event\Project\ProjectEditedEvent;
 use App\Form\Project\EditProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('edit', 'project')]
 class EditProjectController extends AbstractController
 {
-    public function __invoke(Request $request, Project $project, EventDispatcherInterface $dispatcher): Response
+    public function __invoke(Request $request, ProjectDto $project, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(EditProjectType::class, $project, [
             'is_edit' => true,
@@ -37,7 +36,7 @@ class EditProjectController extends AbstractController
 
         return $this->render('app/project/edit_project.html.twig', [
             'form' => $form,
-            'project' => ProjectEditDto::fromEntity($project),
+            'project' => $project,
         ]);
     }
 }

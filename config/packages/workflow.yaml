@@ -5,18 +5,18 @@ framework:
             audit_trail:
                 enabled: true
             marking_store:
-                type: 'property'
+                type: 'method'
                 property: 'status'
             supports:
-                - App\Entity\Project
-            initial_marking: !php/const App\Enum\ProjectStatus::Active->value
+                - App\Dto\Project\ProjectDto
+            initial_marking: active
             places:
-                - !php/const App\Enum\ProjectStatus::Active->value
-                - !php/const App\Enum\ProjectStatus::Archived->value
+                - active
+                - archived
             transitions:
                 archive:
-                    from: !php/const App\Enum\ProjectStatus::Active->value
-                    to:   !php/const App\Enum\ProjectStatus::Archived->value
+                    from: active
+                    to:   archived
                 restore:
-                    from: !php/const App\Enum\ProjectStatus::Archived->value
-                    to:   !php/const App\Enum\ProjectStatus::Active->value
+                    from: archived
+                    to:   active

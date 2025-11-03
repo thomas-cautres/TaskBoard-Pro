@@ -6,32 +6,25 @@ namespace App\Twig;
 
 use App\Entity\User;
 use App\Repository\NotificationRepository;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\Attribute\AsTwigFilter;
 
-class UserExtension extends AbstractExtension
+readonly class UserExtension
 {
     public function __construct(
-        private readonly NotificationRepository $notificationRepository,
+        private NotificationRepository $notificationRepository,
     ) {
-    }
-
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('user_notifications', [$this, 'getNotifications']),
-            new TwigFilter('user_unread_notifications_count', [$this, 'getUnreadNotificationsCount']),
-        ];
     }
 
     /**
      * @return array<mixed>
      */
+    #[AsTwigFilter('user_notifications')]
     public function getNotifications(User $user): array
     {
         return $this->notificationRepository->findByUser($user);
     }
 
+    #[AsTwigFilter('user_unread_notifications_count')]
     public function getUnreadNotificationsCount(User $user): int
     {
         return $this->notificationRepository->countByUser($user, true);

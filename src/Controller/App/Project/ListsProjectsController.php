@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\App\Project;
 
 use App\Dto\Pagination;
+use App\Dto\Project\ProjectDto;
 use App\Dto\Project\ProjectFiltersDto;
-use App\Dto\Project\ProjectListDto;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Project\FiltersType;
@@ -96,13 +96,13 @@ class ListsProjectsController extends AbstractController
     /**
      * @param Paginator<Project>|Project[] $projectsPaginated
      *
-     * @return ProjectListDto[]
+     * @return ProjectDto[]
      */
     private function getProjectsDtos(Paginator|array $projectsPaginated): array
     {
         $projects = [];
         foreach ($projectsPaginated as $project) {
-            $projects[] = ProjectListDto::fromEntity($project);
+            $projects[] = ProjectDto::fromEntity($project);
         }
 
         return $projects;

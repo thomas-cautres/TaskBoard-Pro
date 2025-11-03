@@ -222,4 +222,21 @@ class Project
 
         return $this;
     }
+
+    public function getStatusAsString(): string
+    {
+        return $this->status->value;
+    }
+
+    public function setStatusAsString(string $status): static
+    {
+        $this->status = ProjectStatus::from($status);
+
+        return $this;
+    }
+
+    public function getColumnsCount(): int
+    {
+        return $this->columns->count();
+    }
 }

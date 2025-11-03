@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Event\Project;
 
-use App\Entity\Project;
+use App\Dto\Project\ProjectDto;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjectArchivedEvent extends Event
 {
-    public function __construct(private readonly Project $project)
+    public function __construct(private readonly ProjectDto $project)
     {
     }
 
-    public function getProject(): Project
+    public function getProject(): ProjectDto
     {
         return $this->project;
     }

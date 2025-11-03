@@ -93,13 +93,13 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     public function onProjectArchived(ProjectArchivedEvent $event): void
     {
         $this->projectStateMachine->apply($event->getProject(), 'archive');
-        $this->em->flush();
+        $this->projectRepository->save($event->getProject());
     }
 
     public function onProjectRestored(ProjectRestoredEvent $event): void
     {
         $this->projectStateMachine->apply($event->getProject(), 'restore');
-        $this->em->flush();
+        $this->projectRepository->save($event->getProject());
     }
 
     private function updateUserRoles(User $user): void

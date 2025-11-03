@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\AppEnum\ProjectStatus;
+use App\Dto\Project\ProjectDto;
 use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
 use App\Entity\User;
@@ -11,22 +13,27 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 /**
  * @extends ServiceEntityRepository<Project>
  */
 class ProjectRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly ObjectMapperInterface $objectMapper)
     {
         parent::__construct($registry, Project::class);
     }
 
-    public function save(Project $project, bool $flush = true): void
+    public function save(ProjectDto $project, bool $flush = true): void
     {
-        $this->getEntityManager()->persist($project);
+        $entity = $this->findOneBy(['uuid' => $project->getUuid()]);
 
-        if ($flush) {
+        $this->objectMapper->map($project, $entity);
+
+        $this->getEntityManager()->persist($entity);
+
+        if (true === $flush) {
             $this->getEntityManager()->flush();
         }
     }
@@ -86,17 +93,10 @@ class ProjectRepository extends ServiceEntityRepository
             $qb->andWhere('p.type = :type')->setParameter('type', $filters->getType());
         }
 
-        $now = new \DateTimeImmutable();
-        if (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
-            $qb
-                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
-                ->andWhere('(p.endDate IS NULL OR p.endDate < :now)')
-                ->setParameter('now', $now);
-        } elseif (null === $filters->getActive()) {
-            $qb
-                ->andWhere('(p.startDate IS NULL OR p.startDate <= :now)')
-                ->andWhere('(p.endDate IS NULL OR p.endDate > :now)')
-                ->setParameter('now', $now);
+        if (null === $filters->getActive()) {
+            $qb->andWhere('p.status = :status')->setParameter('status', ProjectStatus::Active->value);
+        } elseif (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
+            $qb->andWhere('p.status = :status')->setParameter('status', ProjectStatus::Archived->value);
         }
     }
 }
