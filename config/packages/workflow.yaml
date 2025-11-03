@@ -1,0 +1,22 @@
+framework:
+    workflows:
+        project:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'property'
+                property: 'status'
+            supports:
+                - App\Entity\Project
+            initial_marking: !php/const App\Enum\ProjectStatus::Active->value
+            places:
+                - !php/const App\Enum\ProjectStatus::Active->value
+                - !php/const App\Enum\ProjectStatus::Archived->value
+            transitions:
+                archive:
+                    from: !php/const App\Enum\ProjectStatus::Active->value
+                    to:   !php/const App\Enum\ProjectStatus::Archived->value
+                restore:
+                    from: !php/const App\Enum\ProjectStatus::Archived->value
+                    to:   !php/const App\Enum\ProjectStatus::Active->value

@@ -8,16 +8,24 @@ use App\Entity\Project;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 /** @extends Voter<string, Project> */
 class ProjectVoter extends Voter
 {
     public const string VIEW = 'view';
     public const string EDIT = 'edit';
+    public const string ARCHIVE = 'archive';
+    public const string RESTORE = 'restore';
+
+    public function __construct(
+        private readonly WorkflowInterface $projectStateMachine,
+    ) {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!in_array($attribute, [self::VIEW, self::EDIT])) {
+        if (!in_array($attribute, [self::VIEW, self::EDIT, self::ARCHIVE, self::RESTORE])) {
             return false;
         }
 
@@ -42,6 +50,8 @@ class ProjectVoter extends Voter
         return match ($attribute) {
             self::VIEW => $this->canView($project, $user),
             self::EDIT => $this->canEdit($project, $user),
+            self::ARCHIVE => $this->canArchive($project, $user),
+            self::RESTORE => $this->canRestore($project, $user),
             default => throw new \LogicException('This code should not be reached!'),
         };
     }
@@ -54,5 +64,15 @@ class ProjectVoter extends Voter
     private function canEdit(Project $project, User $user): bool
     {
         return $user === $project->getCreatedBy();
+    }
+
+    private function canArchive(Project $project, User $user): bool
+    {
+        return $user === $project->getCreatedBy() && true === $this->projectStateMachine->can($project, 'archive');
+    }
+
+    private function canRestore(Project $project, User $user): bool
+    {
+        return $user === $project->getCreatedBy() && true === $this->projectStateMachine->can($project, 'restore');
     }
 }

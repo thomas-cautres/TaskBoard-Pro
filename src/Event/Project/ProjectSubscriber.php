@@ -12,11 +12,13 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class ProjectSubscriber implements EventSubscriberInterface
@@ -29,6 +31,8 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private RequestStack $requestStack,
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $translator,
+        private WorkflowInterface $projectStateMachine,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -37,6 +41,8 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         return [
             ProjectCreatedEvent::class => 'onProjectCreated',
             ProjectEditedEvent::class => 'onProjectEdited',
+            ProjectArchivedEvent::class => 'onProjectArchived',
+            ProjectRestoredEvent::class => 'onProjectRestored',
         ];
     }
 
@@ -82,6 +88,18 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $this->userRepository->save($user, flush: false);
         $this->projectRepository->save($project);
         $this->log($project, 'Project edited', 'project.edited');
+    }
+
+    public function onProjectArchived(ProjectArchivedEvent $event): void
+    {
+        $this->projectStateMachine->apply($event->getProject(), 'archive');
+        $this->em->flush();
+    }
+
+    public function onProjectRestored(ProjectRestoredEvent $event): void
+    {
+        $this->projectStateMachine->apply($event->getProject(), 'restore');
+        $this->em->flush();
     }
 
     private function updateUserRoles(User $user): void
