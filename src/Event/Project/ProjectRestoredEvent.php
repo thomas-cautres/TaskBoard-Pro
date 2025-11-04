@@ -7,7 +7,7 @@ namespace App\Event\Project;
 use App\Dto\Project\ProjectDto;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class ProjectCreatedEvent extends Event
+class ProjectRestoredEvent extends Event
 {
     public function __construct(private readonly ProjectDto $project)
     {

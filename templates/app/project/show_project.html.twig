@@ -8,8 +8,10 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a>
+            </li>
+            <li class="breadcrumb-item"><a
+                    href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
             <li class="breadcrumb-item active">{{ project.name }}</li>
         </ol>
     </nav>
@@ -24,18 +26,26 @@
                 <div>
                     <h1 class="h2 mb-2">{{ project.name }}</h1>
                     <div class="d-flex flex-wrap gap-2 mb-3">
-                            <span class="badge-role">
-                                <i class="bi bi-person-fill-gear me-1"></i>
-                                {% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}
-                            </span>
-                        <span class="badge-type">
-                                <i class="bi bi-calendar-week me-1"></i>
-                                {{ project.type.value|upper }}
-                            </span>
-                        <span class="badge-status">
+                        <span class="badge bg-primary">
+                            <i class="bi bi-person-fill-gear me-1"></i>
+                            {% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}
+                        </span>
+                        <span class="badge bg-info">
+                        <i class="bi bi-calendar-week me-1"></i>
+                        {{ project.type.value|upper }}
+                        </span>
+
+                        {% if workflow_has_marked_place(project, 'active') %}
+                            <span class="badge bg-success">
                                 <i class="bi bi-check-circle me-1"></i>
-                                {{ project.active ? 'project.status.active'|trans : 'project.status.inactive'|trans }}
-                         </span>
+                                {{ 'project.status.active'|trans }}
+                            </span>
+                        {% elseif workflow_has_marked_place(project, 'archived') %}
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-archive me-1"></i>
+                                {{ 'project.status.archived'|trans }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -46,18 +56,35 @@
                     {{ 'project.action.edit'|trans }}
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" id="dropdown">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="#"><i
+                                    class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="#"><i
+                                    class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
-                        <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>{{ 'project.menu.archive'|trans }}</a>
-                        </li>
+                        <li><a class="dropdown-item" href="#"><i
+                                    class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
+
+                        {% if is_granted('archive', project) %}
+                            <li><a class="dropdown-item text-warning" href="#" data-controller="project"
+                                   data-action="project#openModalArchive"
+                                   data-project-url-param="{{ path('app_project_archive', {uuid:project.uuid}) }}">
+                                    <i class="bi bi-archive me-2"></i>
+                                    {{ 'project.menu.archive'|trans }}</a>
+                            </li>
+                        {% elseif is_granted('restore', project) %}
+                            <li><a class="dropdown-item text-success" href="#" data-controller="project"
+                                   data-action="project#openModalRestore"
+                                   data-project-url-param="{{ path('app_project_restore', {uuid:project.uuid}) }}">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i>
+                                    {{ 'project.menu.restore'|trans }}</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -70,11 +97,13 @@
         <div class="row g-3 text-muted small">
             <div class="col-auto">
                 <i class="bi bi-calendar3 me-1"></i>
-                <strong>{{ 'project.date.start'|trans }}:</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
+                <strong>{{ 'project.date.start'|trans }}
+                    :</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-calendar-check me-1"></i>
-                <strong>{{ 'project.date.end'|trans }}:</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
+                <strong>{{ 'project.date.end'|trans }}
+                    :</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-clock-history me-1"></i>
@@ -208,7 +237,8 @@
 
                     <div class="alert alert-info mt-4">
                         <i class="bi bi-info-circle me-2"></i>
-                        <strong>{{ 'project.board.next_step'|trans }}:</strong> {{ 'project.board.next_step_description'|trans }}
+                        <strong>{{ 'project.board.next_step'|trans }}
+                            :</strong> {{ 'project.board.next_step_description'|trans }}
                     </div>
                 </div>
             </div>

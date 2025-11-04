@@ -7,16 +7,14 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 
 class UserFixtures extends Fixture
 {
-    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
-    {
-    }
-
     public function load(ObjectManager $manager): void
     {
+        $passwordHasher = new PasswordHasherFactory([User::class => ['algorithm' => 'auto']])->getPasswordHasher(User::class);
+
         /**
          * @var array<int, string|bool> $userArray
          */
@@ -26,7 +24,7 @@ class UserFixtures extends Fixture
                 ->setFirstName((string) $userArray[0])
                 ->setLastName((string) $userArray[1])
                 ->setEmail((string) $userArray[2])
-                ->setPassword($this->passwordHasher->hashPassword($user, (string) $userArray[3]))
+                ->setPassword($passwordHasher->hash((string) $userArray[3]))
                 ->setConfirmed((bool) $userArray[4])
                 ->setConfirmationCode((string) $userArray[5]);
 

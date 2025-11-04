@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Form\Project;
 
+use App\Dto\Project\ProjectDto;
 use App\Entity\Project;
 use App\Form\Type\ProjectTypeType;
 use App\Form\Validator\UserProjectNameValidator;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @extends AbstractType<Project>
+ * @extends AbstractType<ProjectDto>
  */
 class CreateProjectType extends AbstractType
 {
@@ -64,27 +66,29 @@ class CreateProjectType extends AbstractType
                 // TODO When project has tasks, true === $options['is_edit'] && $project->getTasks()->isEmpty(),
                 'disabled' => true === $options['is_edit'],
             ])
-            ->add('startDate', null, [
+            ->add('startDate', DateType::class, [
+                'required' => false,
                 'widget' => 'single_text',
                 'label' => 'project.form.start_date.label',
                 'label_attr' => [
                     'class' => 'fw-semibold',
                 ],
             ])
-            ->add('endDate', null, [
+            ->add('endDate', DateType::class, [
+                'required' => false,
                 'widget' => 'single_text',
                 'label' => 'project.form.end_date.label',
                 'label_attr' => [
                     'class' => 'fw-semibold',
                 ],
                 'constraints' => [
-                    new Callback(function (?\DateTimeImmutable $value, ExecutionContextInterface $context) {
+                    new Callback(function (?\DateTime $value, ExecutionContextInterface $context) {
                         if (null === $value) {
                             return;
                         }
                         /** @var FormInterface<Project> $projectRoot */
                         $projectRoot = $context->getRoot();
-                        /** @var Project $project */
+                        /** @var ProjectDto $project */
                         $project = $projectRoot->getData();
 
                         if ($value < $project->getStartDate()) {
@@ -98,7 +102,7 @@ class CreateProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Project::class,
+            'data_class' => ProjectDto::class,
             'is_edit' => false,
         ]);
     }

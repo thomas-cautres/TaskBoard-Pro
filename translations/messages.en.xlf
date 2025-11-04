@@ -446,9 +446,9 @@
                 <source>ACTIVE</source>
                 <target>ACTIVE</target>
             </trans-unit>
-            <trans-unit id="project.status.inactive" resname="project.status.inactive">
-                <source>INACTIVE</source>
-                <target>INACTIVE</target>
+            <trans-unit id="project.status.archived" resname="project.status.archived">
+                <source>ARCHIVED</source>
+                <target>ARCHIVED</target>
             </trans-unit>
             <trans-unit id="project.action.edit" resname="project.action.edit">
                 <source>Edit</source>
@@ -657,6 +657,87 @@
             <trans-unit id="project.edit.title" resname="project.edit.title">
                 <source>Edit a project</source>
                 <target>Edit a project</target>
+            </trans-unit>
+            <!-- messages.en.xlf -->
+            <trans-unit id="project.archive.modal.title" resname="project.archive.modal.title">
+                <source>Archive Project</source>
+                <target>Archive Project</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.message" resname="project.archive.modal.message">
+                <source>Are you sure you want to archive this project?</source>
+                <target>Are you sure you want to archive this project?</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.info_title" resname="project.archive.modal.info_title">
+                <source>What will happen:</source>
+                <target>What will happen:</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.info_hidden" resname="project.archive.modal.info_hidden">
+                <source>The project will be hidden from the default list</source>
+                <target>The project will be hidden from the default list</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.info_restore" resname="project.archive.modal.info_restore">
+                <source>You can restore it at any time</source>
+                <target>You can restore it at any time</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.info_readonly" resname="project.archive.modal.info_readonly">
+                <source>Existing tasks will be preserved as read-only</source>
+                <target>Existing tasks will be preserved as read-only</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.info_no_tasks" resname="project.archive.modal.info_no_tasks">
+                <source>Cannot create new tasks</source>
+                <target>Cannot create new tasks</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.cancel" resname="project.archive.modal.cancel">
+                <source>Cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="project.archive.modal.confirm" resname="project.archive.modal.confirm">
+                <source>Archive Project</source>
+                <target>Archive Project</target>
+            </trans-unit>
+            <trans-unit id="project.archive.success" resname="project.archive.success">
+                <source>Project archived successfully</source>
+                <target>Project archived successfully</target>
+            </trans-unit>
+            <trans-unit id="project.menu.restore" resname="project.menu.restore">
+                <source>Restore</source>
+                <target>Restore</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.title" resname="project.restore.modal.title">
+                <source>Restore Project</source>
+                <target>Restore Project</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.message" resname="project.restore.modal.message">
+                <source>Are you sure you want to restore this project?</source>
+                <target>Are you sure you want to restore this project?</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.info_title" resname="project.restore.modal.info_title">
+                <source>What will happen:</source>
+                <target>What will happen:</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.info_visible" resname="project.restore.modal.info_visible">
+                <source>The project will be visible in the default list</source>
+                <target>The project will be visible in the default list</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.info_create_tasks" resname="project.restore.modal.info_create_tasks">
+                <source>You will be able to create new tasks again</source>
+                <target>You will be able to create new tasks again</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.info_active_status" resname="project.restore.modal.info_active_status">
+                <source>The project status will change to Active</source>
+                <target>The project status will change to Active</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.cancel" resname="project.restore.modal.cancel">
+                <source>Cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="project.restore.modal.confirm" resname="project.restore.modal.confirm">
+                <source>Restore Project</source>
+                <target>Restore Project</target>
+            </trans-unit>
+            <trans-unit id="project.restore.success" resname="project.restore.success">
+                <source>Project restored successfully</source>
+                <target>Project restored successfully</target>
             </trans-unit>
         </body>
     </file>

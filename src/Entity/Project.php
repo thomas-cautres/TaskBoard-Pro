@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -53,10 +54,11 @@ class Project
     #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $columns;
 
+    #[ORM\Column(type: Types::STRING, enumType: ProjectStatus::class, options: ['default' => ProjectStatus::Active->value])]
+    private ProjectStatus $status = ProjectStatus::Active;
+
     public function __construct()
     {
-        $this->uuid = Uuid::v7();
-        $this->createdAt = new \DateTimeImmutable('now');
         $this->columns = new ArrayCollection();
     }
 
@@ -205,5 +207,34 @@ class Project
         $this->columns->removeElement($projectColumn);
 
         return $this;
+    }
+
+    public function getStatus(): ProjectStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(ProjectStatus $status): Project
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStatusAsString(): string
+    {
+        return $this->status->value;
+    }
+
+    public function setStatusAsString(string $status): static
+    {
+        $this->status = ProjectStatus::from($status);
+
+        return $this;
+    }
+
+    public function getColumnsCount(): int
+    {
+        return $this->columns->count();
     }
 }

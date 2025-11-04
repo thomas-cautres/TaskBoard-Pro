@@ -1,0 +1,44 @@
+<!-- Modal Restore Project -->
+<div class="modal fade" tabindex="-1" id="modal-restore-project" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-arrow-counterclockwise text-success me-2"></i>
+                    {{ 'project.restore.modal.title'|trans }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3">
+                    {{ 'project.restore.modal.message'|trans }}
+                </p>
+
+                <div class="alert alert-success d-flex align-items-start mb-0" style="background-color: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                    <i class="bi bi-info-circle fs-5 me-2 mt-1 text-success"></i>
+                    <div>
+                        <strong>{{ 'project.restore.modal.info_title'|trans }}</strong>
+                        <ul class="mb-0 mt-2 small">
+                            <li>{{ 'project.restore.modal.info_visible'|trans }}</li>
+                            <li>{{ 'project.restore.modal.info_create_tasks'|trans }}</li>
+                            <li>{{ 'project.restore.modal.info_active_status'|trans }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    {{ 'project.restore.modal.cancel'|trans }}
+                </button>
+
+                {{ form_start(form) }}
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                    {{ 'project.restore.modal.confirm'|trans }}
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

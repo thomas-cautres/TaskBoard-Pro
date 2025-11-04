@@ -69,7 +69,7 @@ jobs:
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
       - name: Start services
-        run: docker compose up --wait --no-build
+        run: APP_ENV=test docker compose up --wait --no-build
       - name: AssetMapper importmap install
         run: docker compose exec -T php bin/console importmap:install
       - name: Check HTTP reachability
@@ -77,7 +77,7 @@ jobs:
       - name: Check HTTPS reachability
         run: curl -v --insecure https://localhost
       - name: Create test database
-        run: docker compose exec -T php bin/console -e test doctrine:database:create
+        run: docker compose exec -T php bin/console -e test doctrine:database:create --if-not-exists
       - name: Run migrations
         run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: Doctrine Schema Validator

@@ -11,9 +11,9 @@ A **Symfony 7** project management application showcasing modern PHP development
 - ✅ View project with Kanban board
 - ✅ List projects with search, filters, and pagination
 - ✅ Project statistics dashboard
+- ✅ Edit and archive projects
 
 ### Planned
-- 🔜 Edit and archive projects
 - 🔜 Create and manage tasks
 - 🔜 Drag & drop tasks between columns
 - 🔜 Sprints, comments, notifications
@@ -22,13 +22,41 @@ A **Symfony 7** project management application showcasing modern PHP development
 
 ## 🛠️ Stack
 
-- **PHP** 8.4.13+ | **Symfony** 7.0
+- **PHP** 8.4.13+ | **Symfony** 7.3
 - **Database**: PostgreSQL | **ORM**: Doctrine 3.5
 - **Runtime**: FrankenPHP + Caddy (Docker)
 - **Frontend**: Twig, Bootstrap 5.3, Importmap
 - **Tests**: PHPUnit 11, Behat, Panther
 - **Quality**: PHPStan, PHP CS Fixer
 
+
+## 🔧 Symfony Components Used and Why
+
+- [FrameworkBundle](https://symfony.com/doc/current/reference/configuration/framework.html) — Core kernel, DI, config, routing.
+- [Security](https://symfony.com/doc/current/security.html) — Auth, authorization, CSRF.
+- [Form](https://symfony.com/doc/current/forms.html) — Build and process forms.
+- [Validator](https://symfony.com/doc/current/validation.html) — Object and input validation.
+- [TwigBundle / Templates](https://symfony.com/doc/current/templates.html) — Server-side rendering with Twig.
+- [Translation](https://symfony.com/doc/current/translation.html) — i18n with message catalogs.
+- [Asset](https://symfony.com/doc/current/components/asset.html) + [Asset Mapper](https://symfony.com/doc/current/frontend/asset_mapper.html) — Serve and map static assets.
+- [StimulusBundle](https://symfony.com/doc/current/frontend/stimulus.html) — Lightweight JS controllers.
+- [Messenger](https://symfony.com/doc/current/messenger.html) — Async messages and queues.
+- [Mailer](https://symfony.com/doc/current/mailer.html) — Send emails.
+- [Uid](https://symfony.com/doc/current/components/uid.html) — UUID/ULID value objects.
+- [Workflow](https://symfony.com/doc/current/workflow.html) — Define state machines.
+- [Object Mapper](https://symfony.com/doc/current/object_mapper.html) — Map doctrine entity / dto
+- [EventDispatcher](https://symfony.com/doc/current/components/event_dispatcher.html) — Events and subscribers.
+- [Console](https://symfony.com/doc/current/components/console.html) — CLI commands framework.
+- [Dotenv](https://symfony.com/doc/current/components/dotenv.html) — Load env vars in dev.
+- [Runtime](https://symfony.com/doc/current/components/runtime.html) — Application bootstrapping.
+- [Monolog (MonologBundle)](https://symfony.com/doc/current/logging.html) — Structured logging.
+- [Yaml](https://symfony.com/doc/current/components/yaml.html) — YAML parsing.
+
+Developer and testing tooling
+- [MakerBundle](https://symfony.com/bundles/SymfonyMakerBundle/current/index.html) — Code generators for scaffolding.
+- [Web Profiler](https://symfony.com/doc/current/profiler.html) — Dev toolbar and profiler panels.
+- [BrowserKit](https://symfony.com/doc/current/components/browser_kit.html) + [CssSelector](https://symfony.com/doc/current/components/css_selector.html) — HTTP client and DOM selectors for tests.
+- [Panther](https://symfony.com/doc/current/testing/end_to_end.html) — Headless end‑to‑end browser tests.
 
 ## 🚀 Quick Start
 ```bash
@@ -71,24 +99,6 @@ make cc             # Clear cache
 ```
 
 ---
-
-## 🗂️ Project Structure
-```
-src/
-├── Controller/     # HTTP endpoints
-├── Entity/         # Database models
-├── Form/           # Form types
-├── Repository/     # Queries
-├── Security/       # Voters, auth
-└── Service/        # Business logic
-
-templates/          # Twig views
-translations/       # i18n (EN/FR)
-tests/             # PHPUnit tests
-```
-
-Ports
-- Override via environment or `.env` using `HTTP_PORT`, `HTTPS_PORT`, `HTTP3_PORT`.
 
 ## 🧪 Testing
 ```bash
@@ -134,7 +144,6 @@ Note: Some features may require a confirmed account.
 
 Uses XLIFF format:
 - `translations/messages.en.xlf` - English
-- `translations/messages.fr.xlf` - French
 ```twig
 {{ 'project.list.title'|trans }}
 ```

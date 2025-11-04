@@ -4,24 +4,33 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Entity\Project;
+use App\Dto\Project\AbstractProjectDto;
+use App\Dto\Project\ProjectDto;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Workflow\WorkflowInterface;
 
-/** @extends Voter<string, Project> */
+/** @extends Voter<string, ProjectDto> */
 class ProjectVoter extends Voter
 {
     public const string VIEW = 'view';
     public const string EDIT = 'edit';
+    public const string ARCHIVE = 'archive';
+    public const string RESTORE = 'restore';
+
+    public function __construct(
+        private readonly WorkflowInterface $projectStateMachine,
+    ) {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!in_array($attribute, [self::VIEW, self::EDIT])) {
+        if (!in_array($attribute, [self::VIEW, self::EDIT, self::ARCHIVE, self::RESTORE])) {
             return false;
         }
 
-        if (!$subject instanceof Project) {
+        if (!$subject instanceof AbstractProjectDto) {
             return false;
         }
 
@@ -36,23 +45,35 @@ class ProjectVoter extends Voter
             return false;
         }
 
-        /** @var Project $project */
+        /** @var AbstractProjectDto $project */
         $project = $subject;
 
         return match ($attribute) {
             self::VIEW => $this->canView($project, $user),
             self::EDIT => $this->canEdit($project, $user),
+            self::ARCHIVE => $this->canArchive($project, $user),
+            self::RESTORE => $this->canRestore($project, $user),
             default => throw new \LogicException('This code should not be reached!'),
         };
     }
 
-    private function canView(Project $project, User $user): bool
+    private function canView(AbstractProjectDto $project, User $user): bool
     {
-        return $user === $project->getCreatedBy();
+        return $user->getEmail() === $project->getCreatedByEmail();
     }
 
-    private function canEdit(Project $project, User $user): bool
+    private function canEdit(AbstractProjectDto $project, User $user): bool
     {
-        return $user === $project->getCreatedBy();
+        return $user->getEmail() === $project->getCreatedByEmail();
+    }
+
+    private function canArchive(AbstractProjectDto $project, User $user): bool
+    {
+        return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'archive');
+    }
+
+    private function canRestore(AbstractProjectDto $project, User $user): bool
+    {
+        return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'restore');
     }
 }

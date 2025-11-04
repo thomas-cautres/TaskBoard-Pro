@@ -43,16 +43,16 @@
 ## 🔜 Sprint 2 - Compléter la Gestion des Projets
 
 ### Modifier un projet
-- [ ] Formulaire d'édition
-- [ ] Changer nom, description, dates
+- [x] Formulaire d'édition
+- [x] Changer nom, description, dates
 - [ ] Empêcher changement de type si tâches existent
-- [ ] Notification de modification
+- [x] Notification de modification
 
 ### Archiver un projet
-- [ ] Bouton "Archiver"
-- [ ] Projet masqué par défaut dans la liste
-- [ ] Badge "ARCHIVED" visible
-- [ ] Bouton "Restaurer"
+- [x] Bouton "Archiver"
+- [x] Projet masqué par défaut dans la liste
+- [x] Badge "ARCHIVED" visible
+- [x] Bouton "Restaurer"
 - [ ] Impossible de créer des tâches si archivé
 
 ### Supprimer un projet

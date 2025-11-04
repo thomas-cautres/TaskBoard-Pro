@@ -5,3 +5,5 @@ services:
 
     App\Tests\Behat\:
         resource: '../tests/Behat/*'
+
+    Symfony\Component\HttpFoundation\Session\SessionFactoryInterface: '@session.factory'

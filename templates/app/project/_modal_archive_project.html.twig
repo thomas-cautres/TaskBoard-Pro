@@ -1,0 +1,44 @@
+<div class="modal fade" tabindex="-1" id="modal-archive-project" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-archive text-warning me-2"></i>
+                    {{ 'project.archive.modal.title'|trans }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3">
+                    {{ 'project.archive.modal.message'|trans }}
+                </p>
+
+                <div class="alert alert-info d-flex align-items-start mb-0">
+                    <i class="bi bi-info-circle fs-5 me-2 mt-1"></i>
+                    <div>
+                        <strong>{{ 'project.archive.modal.info_title'|trans }}</strong>
+                        <ul class="mb-0 mt-2 small">
+                            <li>{{ 'project.archive.modal.info_hidden'|trans }}</li>
+                            <li>{{ 'project.archive.modal.info_restore'|trans }}</li>
+                            <li>{{ 'project.archive.modal.info_readonly'|trans }}</li>
+                            <li>{{ 'project.archive.modal.info_no_tasks'|trans }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    {{ 'project.archive.modal.cancel'|trans }}
+                </button>
+
+                {{ form_start(form) }}
+                <button type="submit" class="btn btn-warning">
+                    <i class="bi bi-archive me-1"></i>
+                    {{ 'project.archive.modal.confirm'|trans }}
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

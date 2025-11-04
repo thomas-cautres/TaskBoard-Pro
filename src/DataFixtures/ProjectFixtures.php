@@ -39,7 +39,8 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 ->setType($projectArray['type'])
                 ->setStartDate($projectArray['startDate'])
                 ->setEndDate($projectArray['endDate'])
-                ->setCreatedBy($createdBy);
+                ->setCreatedBy($createdBy)
+                ->setCreatedAt(new \DateTimeImmutable());
 
             foreach ($projectArray['columns'] as $columnArray) {
                 $project->addColumn(

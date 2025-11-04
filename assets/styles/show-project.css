@@ -49,14 +49,6 @@
     font-weight: 600;
 }
 
-.badge-status {
-    background-color: var(--info);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
 /* Stats Cards */
 .stat-card {
     background: white;

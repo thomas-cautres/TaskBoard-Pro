@@ -16,7 +16,9 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class ProjectSubscriber implements EventSubscriberInterface
@@ -29,6 +31,8 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private RequestStack $requestStack,
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $translator,
+        private WorkflowInterface $projectStateMachine,
+        private ObjectMapperInterface $objectMapper,
     ) {
     }
 
@@ -37,6 +41,8 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         return [
             ProjectCreatedEvent::class => 'onProjectCreated',
             ProjectEditedEvent::class => 'onProjectEdited',
+            ProjectArchivedEvent::class => 'onProjectArchived',
+            ProjectRestoredEvent::class => 'onProjectRestored',
         ];
     }
 
@@ -44,7 +50,9 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-        $project = $event->getProject();
+        $projectDto = $event->getProject();
+
+        $project = $this->objectMapper->map($projectDto, Project::class);
 
         $this->updateUserRoles($user);
         $project->setCreatedBy($user);
@@ -71,7 +79,9 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-        $project = $event->getProject();
+        $projectDto = $event->getProject();
+
+        $project = $this->objectMapper->map($projectDto, $this->projectRepository->find($projectDto->getId()));
 
         $user->addNotification(
             new Notification()
@@ -82,6 +92,18 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $this->userRepository->save($user, flush: false);
         $this->projectRepository->save($project);
         $this->log($project, 'Project edited', 'project.edited');
+    }
+
+    public function onProjectArchived(ProjectArchivedEvent $event): void
+    {
+        $this->projectStateMachine->apply($event->getProject(), 'archive');
+        $this->projectRepository->save($event->getProject());
+    }
+
+    public function onProjectRestored(ProjectRestoredEvent $event): void
+    {
+        $this->projectStateMachine->apply($event->getProject(), 'restore');
+        $this->projectRepository->save($event->getProject());
     }
 
     private function updateUserRoles(User $user): void

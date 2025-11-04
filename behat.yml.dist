@@ -2,11 +2,12 @@ default:
     suites:
         default:
             contexts:
-                - App\Tests\Behat\FeatureContext
+                - App\Tests\Behat\BaseContext
+                - App\Tests\Behat\ProjectContext
+                - App\Tests\Behat\DatabaseContext
 
     extensions:
         Robertfausk\Behat\PantherExtension: ~
-        DAMA\DoctrineTestBundle\Behat\ServiceContainer\DoctrineExtension: ~
 
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/bootstrap.php
@@ -27,3 +28,11 @@ default:
                         options:
                             browser: chrome
                             webServerDir: '%paths.base%/public'
+                            browser_arguments:
+                                - '--headless'
+                                - '--no-sandbox'
+                                - '--disable-gpu'
+                                - '--disable-dev-shm-usage'
+                                - '--window-size=1920,1080'
+                                - '--force-prefers-reduced-motion'
+

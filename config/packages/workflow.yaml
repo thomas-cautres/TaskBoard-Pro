@@ -1,0 +1,22 @@
+framework:
+    workflows:
+        project:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'statusAsString'
+            supports:
+                - App\Dto\Project\ProjectDto
+            initial_marking: active
+            places:
+                - active
+                - archived
+            transitions:
+                archive:
+                    from: active
+                    to:   archived
+                restore:
+                    from: archived
+                    to:   active
