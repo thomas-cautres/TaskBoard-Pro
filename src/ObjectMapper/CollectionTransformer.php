@@ -2,15 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\ObjectMapper;
 
 use Symfony\Component\ObjectMapper\Exception\MappingException;
@@ -34,12 +25,7 @@ final class CollectionTransformer implements TransformCallableInterface
             throw new MappingException(\sprintf('The MapCollection transform expects an iterable, "%s" given.', get_debug_type($value)));
         }
 
-        $values = [];
-
-        foreach ($value as $k => $v) {
-            $values[$k] = $this->objectMapper->map($v);
-        }
-
-        return $values;
+        /* @phpstan-ignore-next-line */
+        return array_map(fn ($v) => $this->objectMapper->map($v), $value);
     }
 }
