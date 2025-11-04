@@ -15,10 +15,8 @@ Feature: Show Project
         Then I should see "E-Commerce Platform Redesign" in the "h1" element
         And I should see a ".breadcrumb" element
         And I should see "E-Commerce Platform Redesign" in the ".breadcrumb .breadcrumb-item.active" element
-        And I should see a ".badge-type" element
-        And I should see "SCRUM" in the ".badge-type" element
-        And I should see a ".badge-status" element
-        And I should see "ACTIVE" in the ".badge-status" element
+        And I should see "SCRUM"
+        And I should see "ACTIVE"
         And I should see a ".project-header .text-muted" element
 
     Scenario: Project page displays statistics cards

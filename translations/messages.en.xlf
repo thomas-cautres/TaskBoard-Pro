@@ -446,9 +446,9 @@
                 <source>ACTIVE</source>
                 <target>ACTIVE</target>
             </trans-unit>
-            <trans-unit id="project.status.inactive" resname="project.status.inactive">
-                <source>INACTIVE</source>
-                <target>INACTIVE</target>
+            <trans-unit id="project.status.archived" resname="project.status.archived">
+                <source>ARCHIVED</source>
+                <target>ARCHIVED</target>
             </trans-unit>
             <trans-unit id="project.action.edit" resname="project.action.edit">
                 <source>Edit</source>

@@ -25,7 +25,13 @@ final class CollectionTransformer implements TransformCallableInterface
             throw new MappingException(\sprintf('The MapCollection transform expects an iterable, "%s" given.', get_debug_type($value)));
         }
 
-        /* @phpstan-ignore-next-line */
-        return array_map(fn ($v) => $this->objectMapper->map($v), $value);
+        $values = [];
+
+        foreach ($value as $k => $v) {
+            /* @phpstan-ignore-next-line */
+            $values[$k] = $this->objectMapper->map($v);
+        }
+
+        return $values;
     }
 }

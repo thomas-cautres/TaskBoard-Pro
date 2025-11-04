@@ -18,6 +18,7 @@ Feature: Archive Project
         And I should see "Cannot create new tasks"
         And I press "Archive Project"
         Then I should be on "/app/projects"
+        And the project "E-Commerce Platform Redesign" should have status "archived"
         And I should see "Project archived successfully"
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I press "dropdown"

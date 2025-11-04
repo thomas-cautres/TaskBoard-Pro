@@ -2,7 +2,9 @@ default:
     suites:
         default:
             contexts:
-                - App\Tests\Behat\FeatureContext:
+                - App\Tests\Behat\BaseContext
+                - App\Tests\Behat\ProjectContext
+                - App\Tests\Behat\DatabaseContext
 
     extensions:
         Robertfausk\Behat\PantherExtension: ~
