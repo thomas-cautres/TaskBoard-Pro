@@ -4,7 +4,11 @@ Feature: Archive Project
 
     @javascript
     Scenario: Archive and restore project successfully
-        Given I am logged in as "user-confirmed@domain.com"
+        Given I am on "/login"
+        And I fill in "_username" with "user-confirmed@domain.com"
+        And I fill in "_password" with "test1234"
+        And I press "login-btn"
+        Then I should be on "/app"
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I press "dropdown"
         And I follow "Archive"
