@@ -77,7 +77,7 @@ jobs:
       - name: Check HTTPS reachability
         run: curl -v --insecure https://localhost
       - name: Create test database
-        run: docker compose exec -T php bin/console -e test doctrine:database:create
+        run: docker compose exec -T php bin/console -e test doctrine:database:create --if-not-exists
       - name: Run migrations
         run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: Doctrine Schema Validator
