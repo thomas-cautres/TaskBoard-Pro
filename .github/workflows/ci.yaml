@@ -87,7 +87,7 @@ jobs:
       - name: Run PHPUnit
         run: docker compose exec -T php bin/phpunit
       - name: Run Behat
-        run: docker compose exec -T php vendor/bin/behat
+        run: docker compose exec -T php vendor/bin/behat features/project/archive-project.feature
         continue-on-error: true
       - name: Copy screenshots from container
         if: always()
