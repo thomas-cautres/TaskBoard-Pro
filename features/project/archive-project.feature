@@ -6,6 +6,7 @@ Feature: Archive Project
     Scenario: Archive and restore project successfully
         Given I am logged in as "user-confirmed@domain.com"
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
+        And I wait 1000 ms
         And I press "dropdown"
         And I follow "Archive"
         And I should see "Archive Project"
