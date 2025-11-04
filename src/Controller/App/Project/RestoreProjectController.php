@@ -12,9 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/app/project/{uuid}/restore', name: 'app_project_restore', methods: ['GET', 'POST'])]
+#[Route('/app/project/{uuid}/restore', name: 'app_project_restore', requirements: ['uuid' => Requirement::UID_RFC4122], methods: ['GET', 'POST'])]
 #[IsGranted('restore', 'project')]
 class RestoreProjectController extends AbstractController
 {

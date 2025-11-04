@@ -5,6 +5,3 @@ Feature: Archive Project
     Background:
         Given I am logged in as "user-confirmed@domain.com"
 
-    Scenario: Edit project page loads successfully
-        When I am on "/app/projects/list"
-        And I

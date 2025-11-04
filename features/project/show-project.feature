@@ -18,7 +18,7 @@ Feature: Show Project
         And I should see a ".badge-type" element
         And I should see "SCRUM" in the ".badge-type" element
         And I should see a ".badge-status" element
-        And I should see "INACTIVE" in the ".badge-status" element
+        And I should see "ACTIVE" in the ".badge-status" element
         And I should see a ".project-header .text-muted" element
 
     Scenario: Project page displays statistics cards

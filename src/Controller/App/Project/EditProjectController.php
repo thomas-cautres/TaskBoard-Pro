@@ -12,9 +12,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/app/project/{uuid}/edit', name: 'app_project_edit', methods: ['GET', 'POST'])]
+#[Route('/app/project/{uuid}/edit', name: 'app_project_edit', requirements: ['uuid' => Requirement::UID_RFC4122], methods: ['GET', 'POST'])]
 #[IsGranted('edit', 'project')]
 class EditProjectController extends AbstractController
 {
