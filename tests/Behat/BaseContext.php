@@ -109,6 +109,7 @@ class BaseContext extends MinkContext implements Context
             $session->set('_security_main', serialize($token));
             $session->save();
             $this->getSession()->setCookie($session->getName(), $session->getId());
+            $this->visitPath('/app');
         } else {
             /** @var KernelBrowser $client */
             $client = $driver->getClient();
