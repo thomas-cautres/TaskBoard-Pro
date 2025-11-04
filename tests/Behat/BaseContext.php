@@ -38,6 +38,34 @@ class BaseContext extends MinkContext implements Context
         }
     }
 
+    public function clickLink(mixed $link): void
+    {
+        $this->retryStep(function () use ($link) {
+            parent::clickLink($link);
+        });
+    }
+
+    public function pressButton(mixed $button): void
+    {
+        $this->retryStep(function () use ($button) {
+            parent::pressButton($button);
+        });
+    }
+
+    public function assertPageContainsText(mixed $text): void
+    {
+        $this->retryStep(function () use ($text) {
+            parent::assertPageContainsText($text);
+        });
+    }
+
+    public function assertPageAddress(mixed $page): void
+    {
+        $this->retryStep(function () use ($page) {
+            parent::assertPageAddress($page);
+        });
+    }
+
     /**
      * @Given there is a signed confirmation URL for :email
      */

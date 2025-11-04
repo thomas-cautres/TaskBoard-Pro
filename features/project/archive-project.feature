@@ -8,7 +8,6 @@ Feature: Archive Project
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I press "dropdown"
         And I follow "Archive"
-        And I wait 1000 ms
         And I should see "Archive Project"
         And I should see "Are you sure you want to archive this project?"
         And I should see "What will happen:"
@@ -23,7 +22,6 @@ Feature: Archive Project
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I press "dropdown"
         And I follow "Restore"
-        And I wait 1000 ms
         And I should see "Restore Project"
         And I should see "Are you sure you want to restore this project?"
         And I should see "What will happen:"

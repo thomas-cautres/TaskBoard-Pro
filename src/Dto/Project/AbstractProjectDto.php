@@ -14,7 +14,7 @@ abstract class AbstractProjectDto
 {
     #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
     public string $createdByEmail = '';
-    protected ProjectStatus $status;
+    protected ProjectStatus $status = ProjectStatus::Active;
 
     public function getStatus(): ProjectStatus
     {
