@@ -89,16 +89,11 @@ jobs:
       - name: Run Behat
         run: docker compose exec -T php vendor/bin/behat features/project/archive-project.feature
         continue-on-error: true
-      - name: Copy screenshots from container
-        if: always()
-        run: |
-          mkdir -p behat-screenshots
-          docker compose cp php:/var/behat/screenshots behat-screenshots/ || true
       - name: Upload Behat screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: behat-screenshots
-          path: behat-screenshots/
+          path: var/behat/screenshots/
           if-no-files-found: ignore
           retention-days: 7
