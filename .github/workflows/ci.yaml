@@ -93,7 +93,7 @@ jobs:
         if: always()
         run: |
           mkdir -p behat-screenshots
-          docker compose cp php:/var/behat/screenshot/. behat-screenshots/ || true
+          docker compose cp php:/var/behat/screenshots/. behat-screenshots/ || true
       - name: Upload Behat screenshots
         if: always()
         uses: actions/upload-artifact@v4
