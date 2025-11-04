@@ -19,11 +19,9 @@ use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\ObjectMapper\TransformCallableInterface;
 
 /**
- * @template T of object
- *
- * @implements TransformCallableInterface<object, T>
+ * @implements TransformCallableInterface<object, object>
  */
-class CollectionTransformer implements TransformCallableInterface
+final class CollectionTransformer implements TransformCallableInterface
 {
     public function __construct(
         private ObjectMapperInterface $objectMapper = new ObjectMapper(),

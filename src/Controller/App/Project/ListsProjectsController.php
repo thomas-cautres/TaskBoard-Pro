@@ -7,6 +7,7 @@ namespace App\Controller\App\Project;
 use App\Dto\Pagination;
 use App\Dto\Project\ProjectDto;
 use App\Dto\Project\ProjectFiltersDto;
+use App\Dto\Project\ProjectListDto;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Project\FiltersType;
@@ -108,7 +109,7 @@ class ListsProjectsController extends AbstractController
     {
         $projects = [];
         foreach ($projectsPaginated as $project) {
-            $projects[] = $this->objectMapper->map($project, ProjectDto::class);
+            $projects[] = $this->objectMapper->map($project, ProjectListDto::class);
         }
 
         return $projects;

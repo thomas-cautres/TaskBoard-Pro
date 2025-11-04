@@ -21,6 +21,9 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
     ) {
     }
 
+    /**
+     * @return iterable<ProjectDto>
+     */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         if (ProjectDto::class !== $argument->getType()) {

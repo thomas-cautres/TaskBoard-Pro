@@ -4,31 +4,24 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
-use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
-use App\Entity\Project;
 use App\ObjectMapper\CollectionTransformer;
-use App\ObjectMapper\UserTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[Map(source: Project::class)]
-class ProjectDto
+class ProjectDto extends AbstractProjectDto
 {
     private int $id;
-    private ?Uuid $uuid = null;
+    private ?Uuid $uuid;
     private string $name;
     private ?string $description;
     private ProjectType $type;
     private ?\DateTimeImmutable $startDate;
     private ?\DateTimeImmutable $endDate;
     private \DateTimeImmutable $createdAt;
-    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
-    public string $createdByEmail = '';
+    /** @var ProjectColumnDto[] */
     #[Map(target: 'columns', source: 'columnsSortedByPosition', transform: CollectionTransformer::class)]
     public array $columns = [];
-    private int $columnsCount;
-    private ProjectStatus $status;
 
     public function __construct()
     {
@@ -61,24 +54,12 @@ class ProjectDto
         return null !== $this->description && '' !== $this->description;
     }
 
-    public function getStatusAsString(): string
-    {
-        return $this->status->value;
-    }
-
-    public function setStatusAsString(string $status): static
-    {
-        $this->status = ProjectStatus::from($status);
-
-        return $this;
-    }
-
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id): ProjectDto
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -90,7 +71,7 @@ class ProjectDto
         return $this->uuid;
     }
 
-    public function setUuid(?Uuid $uuid): ProjectDto
+    public function setUuid(?Uuid $uuid): static
     {
         $this->uuid = $uuid;
 
@@ -102,7 +83,7 @@ class ProjectDto
         return $this->name;
     }
 
-    public function setName(string $name): ProjectDto
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -114,7 +95,7 @@ class ProjectDto
         return $this->description;
     }
 
-    public function setDescription(?string $description): ProjectDto
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -126,7 +107,7 @@ class ProjectDto
         return $this->type;
     }
 
-    public function setType(ProjectType $type): ProjectDto
+    public function setType(ProjectType $type): static
     {
         $this->type = $type;
 
@@ -138,7 +119,7 @@ class ProjectDto
         return $this->startDate;
     }
 
-    public function setStartDate(?\DateTimeImmutable $startDate): ProjectDto
+    public function setStartDate(?\DateTimeImmutable $startDate): static
     {
         $this->startDate = $startDate;
 
@@ -150,7 +131,7 @@ class ProjectDto
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeImmutable $endDate): ProjectDto
+    public function setEndDate(?\DateTimeImmutable $endDate): static
     {
         $this->endDate = $endDate;
 
@@ -162,57 +143,27 @@ class ProjectDto
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): ProjectDto
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedByEmail(): string
-    {
-        return $this->createdByEmail;
-    }
-
-    public function setCreatedByEmail(string $createdByEmail): ProjectDto
-    {
-        $this->createdByEmail = $createdByEmail;
-
-        return $this;
-    }
-
+    /**
+     * @return ProjectColumnDto[]
+     */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
-    public function setColumns(array $columns): ProjectDto
+    /**
+     * @param ProjectColumnDto[] $columns
+     */
+    public function setColumns(array $columns): static
     {
         $this->columns = $columns;
-
-        return $this;
-    }
-
-    public function getColumnsCount(): int
-    {
-        return $this->columnsCount;
-    }
-
-    public function setColumnsCount(int $columnsCount): ProjectDto
-    {
-        $this->columnsCount = $columnsCount;
-
-        return $this;
-    }
-
-    public function getStatus(): ProjectStatus
-    {
-        return $this->status;
-    }
-
-    public function setStatus(ProjectStatus $status): ProjectDto
-    {
-        $this->status = $status;
 
         return $this;
     }

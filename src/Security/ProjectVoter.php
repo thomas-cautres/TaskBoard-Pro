@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security;
 
+use App\Dto\Project\AbstractProjectDto;
 use App\Dto\Project\ProjectDto;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -29,7 +30,7 @@ class ProjectVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof ProjectDto) {
+        if (!$subject instanceof AbstractProjectDto) {
             return false;
         }
 
@@ -44,7 +45,7 @@ class ProjectVoter extends Voter
             return false;
         }
 
-        /** @var ProjectDto $project */
+        /** @var AbstractProjectDto $project */
         $project = $subject;
 
         return match ($attribute) {
@@ -56,22 +57,22 @@ class ProjectVoter extends Voter
         };
     }
 
-    private function canView(ProjectDto $project, User $user): bool
+    private function canView(AbstractProjectDto $project, User $user): bool
     {
         return $user->getEmail() === $project->getCreatedByEmail();
     }
 
-    private function canEdit(ProjectDto $project, User $user): bool
+    private function canEdit(AbstractProjectDto $project, User $user): bool
     {
         return $user->getEmail() === $project->getCreatedByEmail();
     }
 
-    private function canArchive(ProjectDto $project, User $user): bool
+    private function canArchive(AbstractProjectDto $project, User $user): bool
     {
         return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'archive');
     }
 
-    private function canRestore(ProjectDto $project, User $user): bool
+    private function canRestore(AbstractProjectDto $project, User $user): bool
     {
         return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'restore');
     }

@@ -8,6 +8,9 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\ObjectMapper\TransformCallableInterface;
 
+/**
+ * @implements TransformCallableInterface<object, object>
+ */
 final readonly class UserTransformer implements TransformCallableInterface
 {
     public function __construct(
