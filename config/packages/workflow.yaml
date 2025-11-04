@@ -6,7 +6,7 @@ framework:
                 enabled: true
             marking_store:
                 type: 'method'
-                property: 'status'
+                property: 'statusAsString'
             supports:
                 - App\Dto\Project\ProjectDto
             initial_marking: active

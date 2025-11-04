@@ -59,8 +59,6 @@ class Project
 
     public function __construct()
     {
-        $this->uuid = Uuid::v7();
-        $this->createdAt = new \DateTimeImmutable('now');
         $this->columns = new ArrayCollection();
     }
 

@@ -12,11 +12,11 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,7 +32,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $translator,
         private WorkflowInterface $projectStateMachine,
-        private EntityManagerInterface $em,
+        private ObjectMapperInterface $objectMapper,
     ) {
     }
 
@@ -50,7 +50,9 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-        $project = $event->getProject();
+        $projectDto = $event->getProject();
+
+        $project = $this->objectMapper->map($projectDto, Project::class);
 
         $this->updateUserRoles($user);
         $project->setCreatedBy($user);
@@ -77,7 +79,9 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-        $project = $event->getProject();
+        $projectDto = $event->getProject();
+
+        $project = $this->objectMapper->map($projectDto, $this->projectRepository->find($projectDto->getId()));
 
         $user->addNotification(
             new Notification()

@@ -11,11 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 final readonly class ProjectDtoValueResolver implements ValueResolverInterface
 {
     public function __construct(
         private ProjectRepository $projectRepository,
+        private ObjectMapperInterface $objectMapper,
     ) {
     }
 
@@ -33,6 +35,6 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
             throw new NotFoundHttpException('Project not found');
         }
 
-        yield ProjectDto::fromEntity($project);
+        yield $this->objectMapper->map($project, ProjectDto::class);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Validator;
 
+use App\Dto\Project\ProjectDto;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
@@ -32,7 +33,7 @@ readonly class UserProjectNameValidator
         $nameForm = $context->getObject();
         /** @var FormInterface<Project> $projectForm */
         $projectForm = $nameForm->getParent();
-        /** @var ?Project $project */
+        /** @var ?ProjectDto $project */
         $project = $projectForm->getData();
 
         if (0 !== $this->projectRepository->countByUserAndName($user, $value, $projectForm->getConfig()->getOption('is_edit') ? $project : null)) {

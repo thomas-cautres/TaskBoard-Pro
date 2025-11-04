@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\AppEnum\ProjectStatus;
 use App\Dto\Project\ProjectDto;
+use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,12 +21,13 @@ class TestCommand
 
     public function __invoke(): int
     {
-        $project = $this->projectRepository->find(1);
+        $project = new ProjectDto();
+        $project->id = 10;
+        $project->name = 'test';
+        $project->status = ProjectStatus::Active;
 
-        $projectDto = $this->objectMapper->map($project, ProjectDto::class);
+        dump($this->objectMapper->map($project, Project::class));
 
-        // $project = $this->objectMapper->map($projectDto, $project);
-        // dump($projectDto);
         return Command::SUCCESS;
     }
 }

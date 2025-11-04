@@ -25,20 +25,26 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
-    public function save(ProjectDto $project, bool $flush = true): void
+    public function save(ProjectDto|Project $project, bool $flush = true): void
     {
-        $entity = $this->findOneBy(['uuid' => $project->getUuid()]);
+        if ($project instanceof ProjectDto) {
+            $entity = $this->findOneBy(['uuid' => $project->getUuid()]);
 
-        $this->objectMapper->map($project, $entity);
+            if ($entity instanceof Project) {
+                $project = $this->objectMapper->map($project, $entity);
+            } else {
+                $project = $this->objectMapper->map($project, Project::class);
+            }
+        }
 
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($project);
 
         if (true === $flush) {
             $this->getEntityManager()->flush();
         }
     }
 
-    public function countByUserAndName(User $user, string $name, ?Project $validatedProject): int
+    public function countByUserAndName(User $user, string $name, ?ProjectDto $validatedProject): int
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p.id)')
@@ -47,8 +53,8 @@ class ProjectRepository extends ServiceEntityRepository
             ->setParameter('createdBy', $user->getId())
             ->setParameter('name', strtolower($name));
 
-        if ($validatedProject instanceof Project) {
-            $qb->andWhere('p.id != :validatedProject')->setParameter('validatedProject', $validatedProject);
+        if ($validatedProject instanceof ProjectDto) {
+            $qb->andWhere('p.id != :validatedProject')->setParameter('validatedProject', $validatedProject->getId());
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();
