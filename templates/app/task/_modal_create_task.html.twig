@@ -1,0 +1,100 @@
+<!-- Create Task Modal -->
+<div class="modal fade" id="modal-create-task" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" action="" id="createTaskForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createTaskModalLabel">
+                        <i class="bi bi-plus-circle"></i> {{ 'task.create.title'|trans }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Column Info (read-only) -->
+                    <div class="alert alert-light d-flex align-items-center mb-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <span>
+                            {{ 'task.create.column_info'|trans }} : 
+                            <strong id="selectedColumnName"></strong>
+                        </span>
+                    </div>
+
+                    <!-- Hidden Column ID -->
+                    <input type="hidden" name="task[column]" id="taskColumnId" required>
+
+                    <!-- Title (Required) -->
+                    <div class="mb-3">
+                        <label for="taskTitle" class="form-label">
+                            {{ 'task.create.title_label'|trans }} <span class="text-danger">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="taskTitle"
+                            name="task[title]"
+                            maxlength="255"
+                            placeholder="{{ 'task.create.title_placeholder'|trans }}"
+                            required
+                            autofocus>
+                        <div class="form-text">{{ 'task.create.title_help'|trans }}</div>
+                        <div class="invalid-feedback">
+                            {{ 'task.create.title_required'|trans }}
+                        </div>
+                    </div>
+
+                    <!-- Description (Optional) -->
+                    <div class="mb-3">
+                        <label for="taskDescription" class="form-label">
+                            {{ 'task.create.description_label'|trans }}
+                        </label>
+                        <textarea
+                            class="form-control"
+                            id="taskDescription"
+                            name="task[description]"
+                            rows="4"
+                            placeholder="{{ 'task.create.description_placeholder'|trans }}"></textarea>
+                        <div class="form-text">{{ 'task.create.description_help'|trans }}</div>
+                    </div>
+
+                    <!-- Priority (Optional) -->
+                    <div class="mb-3">
+                        <label for="taskPriority" class="form-label">
+                            {{ 'task.create.priority_label'|trans }}
+                        </label>
+                        <select class="form-select" id="taskPriority" name="task[priority]">
+                            <option value="">{{ 'task.create.priority_none'|trans }}</option>
+                            <option value="LOW">{{ 'task.priority.low'|trans }}</option>
+                            <option value="MEDIUM" selected>{{ 'task.priority.medium'|trans }}</option>
+                            <option value="HIGH">{{ 'task.priority.high'|trans }}</option>
+                        </select>
+                    </div>
+
+                    <!-- Due Date (Optional) -->
+                    <div class="mb-3">
+                        <label for="taskDueDate" class="form-label">
+                            {{ 'task.create.due_date_label'|trans }}
+                        </label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="taskDueDate"
+                            name="task[dueDate]"
+                            min="{{ "now"|date('Y-m-d') }}">
+                        <div class="form-text">{{ 'task.create.due_date_help'|trans }}</div>
+                    </div>
+                    <input type="hidden" name="task[_token]" value="{{ csrf_token('task_create') }}">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> {{ 'common.cancel'|trans }}
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> {{ 'task.create.submit'|trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

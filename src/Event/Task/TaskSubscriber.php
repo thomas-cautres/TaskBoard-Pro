@@ -16,7 +16,7 @@ class TaskSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly ObjectMapperInterface $objectMapper,
         private readonly Security $security,
-        private readonly TaskRepository $taskRepository
+        private readonly TaskRepository $taskRepository,
     ) {
     }
 

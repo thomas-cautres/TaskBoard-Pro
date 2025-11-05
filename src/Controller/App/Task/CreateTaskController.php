@@ -32,7 +32,7 @@ class CreateTaskController extends AbstractController
             return $this->redirectToRoute('app_project_show', ['uuid' => $projectColumn->getProjectUuid()]);
         }
 
-        return $this->render('app/task/create_task.html.twig', [
+        return $this->render('app/task/_modal_create_task.html.twig', [
             'form' => $form,
         ]);
     }

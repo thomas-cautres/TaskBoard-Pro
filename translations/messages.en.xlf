@@ -739,6 +739,115 @@
                 <source>Project restored successfully</source>
                 <target>Project restored successfully</target>
             </trans-unit>
+            <!-- Task Creation Modal -->
+            <trans-unit id="task.create.title" resname="task.create.title">
+                <source>Create Task</source>
+                <target>Create Task</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.column_info" resname="task.create.column_info">
+                <source>Task will be created in column</source>
+                <target>Task will be created in column</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.title_label" resname="task.create.title_label">
+                <source>Title</source>
+                <target>Title</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.title_placeholder" resname="task.create.title_placeholder">
+                <source>Enter task title...</source>
+                <target>Enter task title...</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.title_help" resname="task.create.title_help">
+                <source>Maximum 255 characters</source>
+                <target>Maximum 255 characters</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.title_required" resname="task.create.title_required">
+                <source>Title is required</source>
+                <target>Title is required</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.description_label" resname="task.create.description_label">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.description_placeholder" resname="task.create.description_placeholder">
+                <source>Enter task description...</source>
+                <target>Enter task description...</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.description_help" resname="task.create.description_help">
+                <source>Optional detailed description</source>
+                <target>Optional detailed description</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.priority_label" resname="task.create.priority_label">
+                <source>Priority</source>
+                <target>Priority</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.priority_none" resname="task.create.priority_none">
+                <source>No priority</source>
+                <target>No priority</target>
+            </trans-unit>
+
+            <trans-unit id="task.priority.low" resname="task.priority.low">
+                <source>Low</source>
+                <target>Low</target>
+            </trans-unit>
+
+            <trans-unit id="task.priority.medium" resname="task.priority.medium">
+                <source>Medium</source>
+                <target>Medium</target>
+            </trans-unit>
+
+            <trans-unit id="task.priority.high" resname="task.priority.high">
+                <source>High</source>
+                <target>High</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.due_date_label" resname="task.create.due_date_label">
+                <source>Due Date</source>
+                <target>Due Date</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.due_date_help" resname="task.create.due_date_help">
+                <source>Optional deadline for this task</source>
+                <target>Optional deadline for this task</target>
+            </trans-unit>
+
+            <trans-unit id="task.create.submit" resname="task.create.submit">
+                <source>Create Task</source>
+                <target>Create Task</target>
+            </trans-unit>
+            <trans-unit id="task.create.success" resname="task.create.success">
+                <source>Task %code% created successfully</source>
+                <target>Task %code% created successfully</target>
+            </trans-unit>
+            <trans-unit id="task.overdue" resname="task.overdue">
+                <source>Overdue</source>
+                <target>Overdue</target>
+            </trans-unit>
+            <trans-unit id="project.show.column.tasks" resname="project.show.column.tasks">
+                <source>tasks</source>
+                <target>tasks</target>
+            </trans-unit>
+            <trans-unit id="project.show.column.add_task" resname="project.show.column.add_task">
+                <source>Add Task</source>
+                <target>Add Task</target>
+            </trans-unit>
+            <trans-unit id="project.show.column.no_tasks" resname="project.show.column.no_tasks">
+                <source>No tasks yet</source>
+                <target>No tasks yet</target>
+            </trans-unit>
+            <trans-unit id="common.cancel" resname="common.cancel">
+                <source>Cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
