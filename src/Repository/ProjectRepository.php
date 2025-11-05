@@ -29,12 +29,7 @@ class ProjectRepository extends ServiceEntityRepository
     {
         if ($project instanceof ProjectDto) {
             $entity = $this->findOneBy(['uuid' => $project->getUuid()]);
-
-            if ($entity instanceof Project) {
-                $project = $this->objectMapper->map($project, $entity);
-            } else {
-                $project = $this->objectMapper->map($project, Project::class);
-            }
+            $project = $this->objectMapper->map($project, ($entity instanceof Project) ? $entity : Project::class);
         }
 
         $this->getEntityManager()->persist($project);

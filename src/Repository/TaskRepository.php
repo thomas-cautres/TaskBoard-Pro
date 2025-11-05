@@ -4,42 +4,33 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\Task\TaskDto;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 /**
  * @extends ServiceEntityRepository<Task>
  */
 class TaskRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly ObjectMapperInterface $objectMapper)
     {
         parent::__construct($registry, Task::class);
     }
 
-    //    /**
-    //     * @return Task[] Returns an array of Task objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(TaskDto|Task $task, bool $flush = true): void
+    {
+        if ($task instanceof TaskDto) {
+            $entity = $this->findOneBy(['uuid' => $task->getUuid()]);
+            $task = $this->objectMapper->map($task, ($entity instanceof Task) ? $entity : Task::class);
+        }
 
-    //    public function findOneBySomeField($value): ?Task
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $this->getEntityManager()->persist($task);
+
+        if (true === $flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

@@ -138,9 +138,4 @@ class ProjectColumn
 
         return $this;
     }
-
-    public function getProjectUuid(): string
-    {
-        return $this->project->getUuid()->toRfc4122();
-    }
 }

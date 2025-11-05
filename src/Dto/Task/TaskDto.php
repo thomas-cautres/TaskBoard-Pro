@@ -10,16 +10,23 @@ use Symfony\Component\Uid\Uuid;
 class TaskDto
 {
     private ?int $id = null;
-    private ?Uuid $uuid = null;
+    private ?Uuid $uuid;
     private ?string $code = null;
     private ?string $title = null;
     private ?string $description = null;
     private ?TaskPriority $priority = null;
     private ?\DateTime $endDate = null;
     private ?string $createdByEmail = null;
-    private ?\DateTimeImmutable $createdAt = null;
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $updatedAt;
     private ?int $position = null;
+
+    public function __construct()
+    {
+        $this->uuid = Uuid::v7();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
