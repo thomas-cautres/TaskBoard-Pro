@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Dto\Project\ProjectColumnDto;
+use App\ObjectMapper\ProjectTransformer;
+use App\Repository\ProjectColumnRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ProjectColumnRepository::class)]
 #[Map(target: ProjectColumnDto::class)]
 class ProjectColumn
 {
@@ -30,11 +34,19 @@ class ProjectColumn
 
     #[ORM\ManyToOne(inversedBy: 'columns')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Map(target: 'projectUuid', source: 'project', transform: ProjectTransformer::class)]
     private Project $project;
+
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn')]
+    private Collection $tasks;
 
     public function __construct()
     {
         $this->uuid = Uuid::v7();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): int
@@ -95,5 +107,40 @@ class ProjectColumn
         $this->position = $position;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setProjectColumn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getProjectColumn() === $this) {
+                $task->setProjectColumn(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getProjectUuid(): string
+    {
+        return $this->project->getUuid()->toRfc4122();
     }
 }

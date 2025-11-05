@@ -2,56 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Dto\Task;
 
 use App\AppEnum\TaskPriority;
-use App\Repository\TaskRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: TaskRepository::class)]
-class Task
+class TaskDto
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(type: UuidType::NAME)]
     private ?Uuid $uuid = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $code = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $title = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::STRING, nullable: true, enumType: TaskPriority::class)]
     private ?TaskPriority $priority = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $endDate = null;
-
-    #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $createdBy = null;
-
-    #[ORM\Column]
+    private ?string $createdByEmail = null;
     private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ProjectColumn $projectColumn = null;
-
-    #[ORM\Column]
     private ?int $position = null;
 
     public function getId(): ?int
@@ -59,12 +26,43 @@ class Task
         return $this->id;
     }
 
+    public function setId(?int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): static
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -107,26 +105,14 @@ class Task
         return $this;
     }
 
-    public function getUuid(): ?Uuid
+    public function getCreatedByEmail(): ?string
     {
-        return $this->uuid;
+        return $this->createdByEmail;
     }
 
-    public function setUuid(Uuid $uuid): static
+    public function setCreatedByEmail(?string $createdByEmail): static
     {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function getCreatedBy(): ?User
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedBy(?User $createdBy): static
-    {
-        $this->createdBy = $createdBy;
+        $this->createdByEmail = $createdByEmail;
 
         return $this;
     }
@@ -136,21 +122,9 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function setCode(?string $code): static
-    {
-        $this->code = $code;
 
         return $this;
     }
@@ -163,18 +137,6 @@ class Task
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getProjectColumn(): ?ProjectColumn
-    {
-        return $this->projectColumn;
-    }
-
-    public function setProjectColumn(?ProjectColumn $projectColumn): static
-    {
-        $this->projectColumn = $projectColumn;
 
         return $this;
     }

@@ -7,12 +7,13 @@ namespace App\Dto\Project;
 use App\Entity\ProjectColumn;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 
-#[Map(target: ProjectColumn::class, source: ProjectColumn::class)]
+#[Map(source: ProjectColumn::class)]
 class ProjectColumnDto
 {
     private int $id;
     private string $name;
     private int $position;
+    public string $projectUuid;
 
     public function getId(): int
     {
@@ -46,6 +47,18 @@ class ProjectColumnDto
     public function setPosition(int $position): ProjectColumnDto
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getProjectUuid(): string
+    {
+        return $this->projectUuid;
+    }
+
+    public function setProjectUuid(string $projectUuid): ProjectColumnDto
+    {
+        $this->projectUuid = $projectUuid;
 
         return $this;
     }

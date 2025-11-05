@@ -19,7 +19,6 @@ class ProjectDto extends AbstractProjectDto
     private ?\DateTimeImmutable $startDate;
     private ?\DateTimeImmutable $endDate;
     private \DateTimeImmutable $createdAt;
-    /** @var ProjectColumnDto[] */
     #[Map(target: 'columns', source: 'columnsSortedByPosition', transform: CollectionTransformer::class)]
     public array $columns = [];
 
@@ -150,17 +149,11 @@ class ProjectDto extends AbstractProjectDto
         return $this;
     }
 
-    /**
-     * @return ProjectColumnDto[]
-     */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
-    /**
-     * @param ProjectColumnDto[] $columns
-     */
     public function setColumns(array $columns): static
     {
         $this->columns = $columns;
