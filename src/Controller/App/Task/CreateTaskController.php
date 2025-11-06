@@ -34,6 +34,7 @@ class CreateTaskController extends AbstractController
 
         return $this->render('app/task/_modal_create_task.html.twig', [
             'form' => $form,
+            'column_name' => $projectColumn->getName()
         ]);
     }
 }

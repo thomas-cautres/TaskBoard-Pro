@@ -13,8 +13,14 @@ export default class extends Controller {
 
             document.body.insertAdjacentHTML('beforeend', result);
 
-            const modal = new Modal(document.getElementById('modal-create-task'));
+            const modalElement = document.getElementById('modal-create-task');
+            const modal = new Modal(modalElement);
             modal.show();
+
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modal.dispose();
+                modalElement.remove();
+            }, {once: true});
         } catch (error) {
             console.error(error.message);
         }
