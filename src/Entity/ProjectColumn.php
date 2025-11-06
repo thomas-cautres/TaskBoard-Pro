@@ -16,7 +16,7 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectColumnRepository::class)]
-#[Map(target: ProjectColumnDto::class, source: ProjectColumn::class)]
+#[Map(target: ProjectColumnDto::class)]
 class ProjectColumn
 {
     #[ORM\Id]

@@ -9,7 +9,7 @@ use App\ObjectMapper\CollectionTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[Map(target: ProjectColumnDto::class, source: ProjectColumn::class)]
+#[Map(target: ProjectColumn::class, source: ProjectColumn::class)]
 class ProjectColumnDto
 {
     private int $id;

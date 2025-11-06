@@ -10,7 +10,7 @@ use App\Entity\Task;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[Map(target: TaskDto::class, source: Task::class)]
+#[Map(target: Task::class, source: Task::class)]
 class TaskDto
 {
     private int $id;
@@ -21,7 +21,7 @@ class TaskDto
     private ?TaskPriority $priority = null;
     private ?\DateTime $endDate = null;
     #[Map(if: false)]
-    private ?UserDto $createdBy;
+    private UserDto $createdBy;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
     private ?int $position = null;

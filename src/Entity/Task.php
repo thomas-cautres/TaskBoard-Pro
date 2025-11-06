@@ -14,7 +14,7 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
-#[Map(target: TaskDto::class, source: Task::class)]
+#[Map(target: TaskDto::class, source: TaskDto::class)]
 class Task
 {
     #[ORM\Id]
