@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\AppEnum\TaskPriority;
+use App\Dto\Task\TaskDto;
+use App\ObjectMapper\UserTransformer;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[Map(target: TaskDto::class)]
 class Task
 {
     #[ORM\Id]
@@ -31,7 +35,7 @@ class Task
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true, enumType: TaskPriority::class)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true, enumType: TaskPriority::class)]
     private ?TaskPriority $priority = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -39,6 +43,7 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
     private ?User $createdBy = null;
 
     #[ORM\Column]

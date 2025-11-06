@@ -20,12 +20,14 @@ class CreateTaskController extends AbstractController
     public function __invoke(Request $request, ProjectColumnDto $projectColumn, EventDispatcherInterface $dispatcher): Response
     {
         $task = new TaskDto();
-        $form = $this->createForm(CreateTaskType::class, $task);
+        $form = $this->createForm(CreateTaskType::class, $task, [
+            'action' => $this->generateUrl('app_task_create', ['uuid' => $projectColumn->getUuid()]),
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dispatcher->dispatch(new TaskCreatedEvent($task));
+            $dispatcher->dispatch(new TaskCreatedEvent($task, $projectColumn->getUuid()->toRfc4122()));
 
             $this->addFlash('success', 'task.create.flash.message.success');
 
@@ -34,7 +36,7 @@ class CreateTaskController extends AbstractController
 
         return $this->render('app/task/_modal_create_task.html.twig', [
             'form' => $form,
-            'column_name' => $projectColumn->getName()
+            'column_name' => $projectColumn->getName(),
         ]);
     }
 }

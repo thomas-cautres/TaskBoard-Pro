@@ -17,7 +17,7 @@ final class Version20251105145728 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE SEQUENCE task_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE task (id INT NOT NULL, created_by_id INT NOT NULL, project_column_id INT NOT NULL, uuid UUID NOT NULL, code VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, description TEXT DEFAULT NULL, priority VARCHAR(255) DEFAULT NULL, end_date DATE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, position INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE task (id INT NOT NULL, created_by_id INT NOT NULL, project_column_id INT NOT NULL, uuid UUID NOT NULL, code VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, description TEXT DEFAULT NULL, priority INT DEFAULT NULL, end_date DATE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, position INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_527EDB25B03A8386 ON task (created_by_id)');
         $this->addSql('CREATE INDEX IDX_527EDB25AFB2CB02 ON task (project_column_id)');
         $this->addSql('COMMENT ON COLUMN task.uuid IS \'(DC2Type:uuid)\'');

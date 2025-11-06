@@ -5,21 +5,27 @@ declare(strict_types=1);
 namespace App\Dto\Task;
 
 use App\AppEnum\TaskPriority;
+use App\Entity\Task;
+use App\ObjectMapper\UserTransformer;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
+#[Map(source: Task::class)]
 class TaskDto
 {
-    private ?int $id = null;
-    private ?Uuid $uuid;
+    private int $id;
+    private Uuid $uuid;
     private ?string $code = null;
     private ?string $title = null;
     private ?string $description = null;
     private ?TaskPriority $priority = null;
     private ?\DateTime $endDate = null;
-    private ?string $createdByEmail = null;
-    private ?\DateTimeImmutable $createdAt;
-    private ?\DateTimeImmutable $updatedAt;
+    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
+    public ?string $createdByEmail = '';
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
     private ?int $position = null;
+    private string $projectColumnUuid;
 
     public function __construct()
     {
@@ -28,24 +34,24 @@ class TaskDto
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): static
+    public function setId(int $id): TaskDto
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function getUuid(): ?Uuid
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }
 
-    public function setUuid(?Uuid $uuid): static
+    public function setUuid(Uuid $uuid): TaskDto
     {
         $this->uuid = $uuid;
 
@@ -57,7 +63,7 @@ class TaskDto
         return $this->code;
     }
 
-    public function setCode(?string $code): static
+    public function setCode(?string $code): TaskDto
     {
         $this->code = $code;
 
@@ -69,7 +75,7 @@ class TaskDto
         return $this->title;
     }
 
-    public function setTitle(?string $title): static
+    public function setTitle(?string $title): TaskDto
     {
         $this->title = $title;
 
@@ -81,7 +87,7 @@ class TaskDto
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(?string $description): TaskDto
     {
         $this->description = $description;
 
@@ -93,7 +99,7 @@ class TaskDto
         return $this->priority;
     }
 
-    public function setPriority(?TaskPriority $priority): static
+    public function setPriority(?TaskPriority $priority): TaskDto
     {
         $this->priority = $priority;
 
@@ -105,7 +111,7 @@ class TaskDto
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTime $endDate): static
+    public function setEndDate(?\DateTime $endDate): TaskDto
     {
         $this->endDate = $endDate;
 
@@ -117,31 +123,31 @@ class TaskDto
         return $this->createdByEmail;
     }
 
-    public function setCreatedByEmail(?string $createdByEmail): static
+    public function setCreatedByEmail(?string $createdByEmail): TaskDto
     {
         $this->createdByEmail = $createdByEmail;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): TaskDto
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): TaskDto
     {
         $this->updatedAt = $updatedAt;
 
@@ -153,9 +159,21 @@ class TaskDto
         return $this->position;
     }
 
-    public function setPosition(?int $position): static
+    public function setPosition(?int $position): TaskDto
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getProjectColumnUuid(): string
+    {
+        return $this->projectColumnUuid;
+    }
+
+    public function setProjectColumnUuid(string $projectColumnUuid): TaskDto
+    {
+        $this->projectColumnUuid = $projectColumnUuid;
 
         return $this;
     }
