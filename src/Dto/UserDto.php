@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Dto;
 
 use App\Entity\User;
@@ -19,6 +21,7 @@ class UserDto
     public function setEmail(string $email): UserDto
     {
         $this->email = $email;
+
         return $this;
     }
 

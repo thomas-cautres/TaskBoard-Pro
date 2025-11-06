@@ -13,7 +13,6 @@ use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\UnitOfWork;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,7 +34,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private TranslatorInterface $translator,
         private WorkflowInterface $projectStateMachine,
         private ObjectMapperInterface $objectMapper,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
     ) {
     }
 

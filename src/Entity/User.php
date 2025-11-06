@@ -86,6 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setId(int $id): User
     {
         $this->id = $id;
+
         return $this;
     }
 

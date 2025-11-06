@@ -125,10 +125,9 @@ class TaskDto
     public function setCreatedBy(?UserDto $createdBy): TaskDto
     {
         $this->createdBy = $createdBy;
+
         return $this;
     }
-
-
 
     public function getCreatedAt(): \DateTimeImmutable
     {

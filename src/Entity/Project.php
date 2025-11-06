@@ -8,7 +8,6 @@ use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
 use App\Dto\Project\ProjectDto;
 use App\ObjectMapper\CollectionTransformer;
-use App\ObjectMapper\UserTransformer;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

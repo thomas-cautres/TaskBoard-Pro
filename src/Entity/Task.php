@@ -62,6 +62,7 @@ class Task
     public function setId(?int $id): Task
     {
         $this->id = $id;
+
         return $this;
     }
 

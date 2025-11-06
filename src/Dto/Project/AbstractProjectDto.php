@@ -36,6 +36,7 @@ abstract class AbstractProjectDto
     public function setCreatedBy(UserDto $createdBy): AbstractProjectDto
     {
         $this->createdBy = $createdBy;
+
         return $this;
     }
 
