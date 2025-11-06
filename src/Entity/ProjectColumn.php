@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Dto\Project\ProjectColumnDto;
+use App\ObjectMapper\CollectionTransformer;
 use App\ObjectMapper\ProjectTransformer;
 use App\Repository\ProjectColumnRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -41,6 +42,7 @@ class ProjectColumn
      * @var Collection<int, Task>
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn')]
+    #[Map(target: 'tasks', source: 'tasks', transform: CollectionTransformer::class)]
     private Collection $tasks;
 
     public function __construct()

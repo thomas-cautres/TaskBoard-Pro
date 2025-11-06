@@ -1,47 +1,44 @@
 {% extends 'app/base.html.twig' %}
 
 {% block title %}{{ project.name }} - TaskBoard Pro{% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('styles/show-project.css') }}">
-{% endblock %}
+
 {% block body %}
     <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-3">
+    <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a>
-            </li>
-            <li class="breadcrumb-item"><a
-                    href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
-            <li class="breadcrumb-item active">{{ project.name }}</li>
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">{{ 'project.breadcrumb.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_projects_list') }}">{{ 'project.breadcrumb.my_projects'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
         </ol>
     </nav>
 
     <!-- Project Header -->
-    <div class="project-header">
+    <div class="bg-white border rounded-3 p-4 mb-4 shadow-sm">
         <div class="d-flex justify-content-between align-items-start mb-3">
             <div class="d-flex align-items-start">
-                <div class="project-icon scrum me-3">
-                    <i class="bi bi-calendar-week"></i>
+                <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+                    <i class="bi bi-calendar-week fs-4"></i>
                 </div>
+
                 <div>
-                    <h1 class="h2 mb-2">{{ project.name }}</h1>
+                    <h1 class="h2 mb-2 fw-bold">{{ project.name }}</h1>
                     <div class="d-flex flex-wrap gap-2 mb-3">
-                        <span class="badge bg-primary">
+                        <span class="badge bg-primary rounded-pill">
                             <i class="bi bi-person-fill-gear me-1"></i>
                             {% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}
                         </span>
-                        <span class="badge bg-info">
-                        <i class="bi bi-calendar-week me-1"></i>
-                        {{ project.type.value|upper }}
+                        <span class="badge bg-info rounded-pill">
+                            <i class="bi bi-calendar-week me-1"></i>
+                            {{ project.type.value|upper }}
                         </span>
 
                         {% if workflow_has_marked_place(project, 'active') %}
-                            <span class="badge bg-success">
+                            <span class="badge bg-success rounded-pill">
                                 <i class="bi bi-check-circle me-1"></i>
                                 {{ 'project.status.active'|trans }}
                             </span>
                         {% elseif workflow_has_marked_place(project, 'archived') %}
-                            <span class="badge bg-secondary">
+                            <span class="badge bg-secondary rounded-pill">
                                 <i class="bi bi-archive me-1"></i>
                                 {{ 'project.status.archived'|trans }}
                             </span>
@@ -52,37 +49,38 @@
 
             <div class="d-flex gap-2">
                 <a href="{{ path('app_project_edit', {uuid:project.uuid}) }}" class="btn btn-outline-primary">
-                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-pencil me-1"></i>
                     {{ 'project.action.edit'|trans }}
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" id="dropdown">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" id="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i
-                                    class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
-                        <li><a class="dropdown-item" href="#"><i
-                                    class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#"><i
-                                    class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>{{ 'project.menu.favorites'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>{{ 'project.menu.view_members'|trans }}</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>{{ 'project.menu.export'|trans }}</a></li>
 
                         {% if is_granted('archive', project) %}
-                            <li><a class="dropdown-item text-warning" href="#" data-controller="project"
+                            <li>
+                                <a class="dropdown-item text-warning" href="#"
+                                   data-controller="project"
                                    data-action="project#openModalArchive"
                                    data-project-url-param="{{ path('app_project_archive', {uuid:project.uuid}) }}">
                                     <i class="bi bi-archive me-2"></i>
-                                    {{ 'project.menu.archive'|trans }}</a>
+                                    {{ 'project.menu.archive'|trans }}
+                                </a>
                             </li>
                         {% elseif is_granted('restore', project) %}
-                            <li><a class="dropdown-item text-success" href="#" data-controller="project"
+                            <li>
+                                <a class="dropdown-item text-success" href="#"
+                                   data-controller="project"
                                    data-action="project#openModalRestore"
                                    data-project-url-param="{{ path('app_project_restore', {uuid:project.uuid}) }}">
                                     <i class="bi bi-arrow-counterclockwise me-2"></i>
-                                    {{ 'project.menu.restore'|trans }}</a>
+                                    {{ 'project.menu.restore'|trans }}
+                                </a>
                             </li>
                         {% endif %}
                     </ul>
@@ -90,20 +88,18 @@
             </div>
         </div>
 
-        <p class="text-muted mb-3">
+        <p class="text-muted mb-3 fs-6">
             {{ project.description }}
         </p>
 
         <div class="row g-3 text-muted small">
             <div class="col-auto">
                 <i class="bi bi-calendar3 me-1"></i>
-                <strong>{{ 'project.date.start'|trans }}
-                    :</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
+                <strong>{{ 'project.date.start'|trans }}:</strong> {{ project.formattedStartDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-calendar-check me-1"></i>
-                <strong>{{ 'project.date.end'|trans }}
-                    :</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
+                <strong>{{ 'project.date.end'|trans }}:</strong> {{ project.formattedEndDate ?? 'project.date.undefined'|trans }}
             </div>
             <div class="col-auto">
                 <i class="bi bi-clock-history me-1"></i>
@@ -111,8 +107,11 @@
             </div>
             <div class="col-auto ms-auto">
                 <i class="bi bi-people me-1"></i>
-                <div class="avatar-stack d-inline-flex">
-                    <div class="avatar" style="background: #4F46E5;">AM</div>
+                <div class="d-inline-flex align-items-center">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-semibold"
+                         style="width: 32px; height: 32px; font-size: 0.75rem;">
+                        AM
+                    </div>
                     <span class="ms-2"><strong>{{ 'project.members.count'|trans({'%count%': 1}) }}</strong></span>
                 </div>
             </div>
@@ -120,114 +119,149 @@
     </div>
 
     <!-- Statistics -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 mb-4">
         <div class="col-md-3">
-            <div class="stat-card primary">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <p class="text-muted mb-1 small">{{ 'project.stats.total_tasks'|trans }}</p>
-                        <h3 class="mb-0">0</h3>
-                    </div>
-                    <div class="bg-primary bg-opacity-10 rounded p-2">
-                        <i class="bi bi-list-check text-primary fs-4"></i>
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'project.stats.total_tasks'|trans }}</p>
+                            <h3 class="mb-0 fw-bold">0</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 rounded-3 p-2">
+                            <i class="bi bi-list-check text-primary fs-4"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card warning">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <p class="text-muted mb-1 small">{{ 'project.stats.in_progress'|trans }}</p>
-                        <h3 class="mb-0">0</h3>
-                    </div>
-                    <div class="bg-warning bg-opacity-10 rounded p-2">
-                        <i class="bi bi-hourglass-split text-warning fs-4"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="stat-card success">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <p class="text-muted mb-1 small">{{ 'project.stats.completed'|trans }}</p>
-                        <h3 class="mb-0">0</h3>
-                    </div>
-                    <div class="bg-success bg-opacity-10 rounded p-2">
-                        <i class="bi bi-check-circle text-success fs-4"></i>
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'project.stats.in_progress'|trans }}</p>
+                            <h3 class="mb-0 fw-bold">0</h3>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 rounded-3 p-2">
+                            <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card info">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <p class="text-muted mb-1 small">{{ 'project.stats.progress'|trans }}</p>
-                        <h3 class="mb-0">0%</h3>
-                    </div>
-                    <div class="bg-info bg-opacity-10 rounded p-2">
-                        <i class="bi bi-graph-up text-info fs-4"></i>
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'project.stats.completed'|trans }}</p>
+                            <h3 class="mb-0 fw-bold">0</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-10 rounded-3 p-2">
+                            <i class="bi bi-check-circle text-success fs-4"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar bg-info" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'project.stats.progress'|trans }}</p>
+                            <h3 class="mb-0 fw-bold">0%</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-10 rounded-3 p-2">
+                            <i class="bi bi-graph-up text-info fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tabs -->
-    <div class="card shadow-sm">
-        <div class="card-header bg-white border-0">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+    <!-- Tabs & Board -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom">
+            <ul class="nav nav-tabs card-header-tabs border-0" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#board" role="tab">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#board" role="tab" aria-selected="true">
                         <i class="bi bi-kanban me-1"></i>
                         {{ 'project.tabs.board'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" role="tab">
+                    <a class="nav-link disabled" href="#" role="tab" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-list-ul me-1"></i>
                         {{ 'project.tabs.task_list'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" data-bs-toggle="tab" href="#activity" role="tab">
+                    <a class="nav-link disabled" href="#" role="tab" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-clock-history me-1"></i>
                         {{ 'project.tabs.activity'|trans }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" role="tab">
+                    <a class="nav-link disabled" href="#" role="tab" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-speedometer2 me-1"></i>
                         {{ 'project.tabs.sprints'|trans }}
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="card-body" style="min-height: 500px;">
+
+        <div class="card-body p-4" style="min-height: 500px;">
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="board" role="tabpanel">
-                    <div class="kanban-board">
+                    <div class="d-flex gap-3 overflow-auto pb-3">
                         {% for column in project.columns %}
-                            <div class="kanban-column">
-                                <div class="kanban-column-header">
-                                    <span class="kanban-column-title">{{ column.name }}</span>
-                                    <span class="kanban-column-count">0</span>
-                                </div>
-                                <div class="kanban-column-body">
-                                    <div class="kanban-empty">
-                                        <i class="bi bi-inbox"></i>
-                                        <p class="small mb-0">{{ 'project.board.no_tasks'|trans }}</p>
+                            <div class="d-flex flex-column flex-shrink-0" style="width: 280px;">
+                                <div class="bg-light rounded-3 p-3 mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-semibold text-dark">{{ column.name }}</span>
+                                        <span class="badge bg-secondary rounded-pill">{{ column.tasks|length }}</span>
                                     </div>
                                 </div>
-                                <button class="btn btn-add-task mt-2" data-controller="task" data-action="task#openModalCreate" data-task-url-param="{{ path('app_task_create', {uuid:column.uuid}) }}">
+
+                                <div class="d-flex flex-column gap-2 mb-3 flex-grow-1">
+                                    {% for task in column.tasks %}
+                                        <div class="card border shadow-sm" style="cursor: pointer;">
+                                            <div class="card-body p-3">
+                                                <div class="text-muted small mb-2">#{{ task.code }}</div>
+                                                <div class="fw-semibold mb-3">{{ task.title }}</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    {% set priorityClass = task.priority.name|lower == 'high' ? 'danger' : (task.priority.name|lower == 'medium' ? 'warning' : 'secondary') %}
+                                                    <span class="badge bg-{{ priorityClass }} rounded-pill small">{{ task.priority.name|upper }}</span>
+                                                    {% if task.endDate %}
+                                                        <span class="text-muted small">
+                                                            <i class="bi bi-calendar3"></i>
+                                                            {{ task.endDate|format_date(pattern: 'MMM dd, y')}}
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center text-muted py-5">
+                                            <i class="bi bi-inbox fs-1 opacity-25"></i>
+                                            <p class="small mb-0 mt-2">{{ 'project.board.no_tasks'|trans }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <button class="btn btn-outline-secondary w-100 border-dashed mt-auto"
+                                        data-controller="task"
+                                        data-action="task#openModalCreate"
+                                        data-task-url-param="{{ path('app_task_create', {uuid:column.uuid}) }}">
                                     <i class="bi bi-plus-circle me-1"></i>
                                     {{ 'project.board.add_task'|trans }}
                                 </button>
@@ -235,10 +269,12 @@
                         {% endfor %}
                     </div>
 
-                    <div class="alert alert-info mt-4">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <strong>{{ 'project.board.next_step'|trans }}
-                            :</strong> {{ 'project.board.next_step_description'|trans }}
+                    <div class="alert alert-info d-flex align-items-center mt-4" role="alert">
+                        <i class="bi bi-info-circle fs-5 me-3"></i>
+                        <div>
+                            <strong>{{ 'project.board.next_step'|trans }}:</strong>
+                            {{ 'project.board.next_step_description'|trans }}
+                        </div>
                     </div>
                 </div>
             </div>

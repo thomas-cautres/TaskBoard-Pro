@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Website - TaskBoard Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --secondary: #6B7280;
+        }
+        
+        body {
+            background-color: #F9FAFB;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4338CA;
+            border-color: #4338CA;
+        }
+        
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background-color: white;
+            border-right: 1px solid #E5E7EB;
+            padding-top: 1.5rem;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar .nav-link {
+            color: #6B7280;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 0.25rem 0.75rem;
+            transition: all 0.2s;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #F3F4F6;
+            color: var(--primary);
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sidebar .nav-link i {
+            width: 20px;
+            margin-right: 0.75rem;
+        }
+        
+        /* Main content */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 56px;
+            padding: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        /* Project Header */
+        .project-header {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .project-icon.scrum {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        /* Badges */
+        .badge-role {
+            background-color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-type {
+            background-color: var(--success);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-status {
+            background-color: var(--info);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border-left: 4px solid;
+            transition: all 0.2s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.primary { border-color: var(--primary); }
+        .stat-card.success { border-color: var(--success); }
+        .stat-card.warning { border-color: var(--warning); }
+        .stat-card.info { border-color: var(--info); }
+        
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid #E5E7EB;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6B7280;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--primary);
+            border-bottom-color: #E5E7EB;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: transparent;
+        }
+        
+        .nav-tabs .nav-link.disabled {
+            color: #D1D5DB;
+            cursor: not-allowed;
+        }
+        
+        /* Kanban Board */
+        .kanban-board {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            min-height: 400px;
+        }
+        
+        .kanban-column {
+            min-width: 300px;
+            max-width: 300px;
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .kanban-column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        
+        .kanban-column-title {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .kanban-column-count {
+            background: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+            font-weight: 600;
+        }
+        
+        .kanban-column-body {
+            flex: 1;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .kanban-empty {
+            text-align: center;
+            color: #9CA3AF;
+            padding: 2rem 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .kanban-empty i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .btn-add-task {
+            width: 100%;
+            border: 2px dashed #D1D5DB;
+            color: #6B7280;
+            background: transparent;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            margin-top: 0.75rem;
+        }
+        
+        .btn-add-task:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(79, 70, 229, 0.05);
+        }
+        
+        /* Task Card */
+        .task-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        .task-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .task-card.priority-low { border-left-color: var(--secondary); }
+        .task-card.priority-medium { border-left-color: var(--warning); }
+        .task-card.priority-high { border-left-color: var(--danger); }
+        
+        .task-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-title {
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #E5E7EB;
+        }
+        
+        .task-priority {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .task-priority.low {
+            background-color: rgba(107, 114, 128, 0.1);
+            color: var(--secondary);
+        }
+        
+        .task-priority.medium {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .task-priority.high {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .task-due-date {
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+        
+        .task-due-date.overdue {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        /* Modal Enhancements */
+        .modal-header {
+            border-bottom: 2px solid #E5E7EB;
+        }
+        
+        .modal-footer {
+            border-top: 2px solid #E5E7EB;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+        }
+        
+        /* Task Detail Modal */
+        .task-detail-header {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .task-detail-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6B7280;
+        }
+        
+        .task-detail-content {
+            flex: 1;
+        }
+        
+        .task-detail-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .task-meta-item {
+            padding: 1rem;
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+        
+        .task-meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-meta-value {
+            font-size: 1rem;
+            color: #111827;
+            font-weight: 500;
+        }
+        
+        .task-description {
+            background: #F9FAFB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Activity Timeline */
+        .activity-item {
+            padding-left: 2.5rem;
+            padding-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .activity-item::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 2rem;
+            bottom: 0;
+            width: 2px;
+            background: #E5E7EB;
+        }
+        
+        .activity-item:last-child::before {
+            display: none;
+        }
+        
+        .activity-dot {
+            position: absolute;
+            left: 0.25rem;
+            top: 0.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #E5E7EB;
+        }
+        
+        .activity-dot.primary { background: var(--primary); }
+        .activity-dot.success { background: var(--success); }
+        .activity-dot.warning { background: var(--warning); }
+        
+        /* Avatar Stack */
+        .avatar-stack {
+            display: flex;
+            align-items: center;
+        }
+        
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin-left: -8px;
+        }
+        
+        .avatar:first-child {
+            margin-left: 0;
+        }
+        
+        /* Progress bar */
+        .progress {
+            height: 8px;
+        }
+        
+        /* Loading State */
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 1rem;
+            z-index: 1090;
+        }
+        
+        .toast {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-kanban-fill me-2" style="font-size: 1.5rem;"></i>
+                <span class="fw-bold">TaskBoard Pro</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-3">
+                        <form class="d-flex">
+                            <input class="form-control form-control-sm" type="search" placeholder="Search..." style="width: 200px;">
+                        </form>
+                    </li>
+                    
+                    <li class="nav-item dropdown me-2">
+                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-bell" style="font-size: 1.2rem;"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="min-width: 320px;">
+                            <li><h6 class="dropdown-header">Notifications</h6></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <div class="d-flex">
+                                        <i class="bi bi-person-plus text-primary me-2"></i>
+                                        <div>
+                                            <small class="text-muted">5 min ago</small>
+                                            <p class="mb-0 small">You have been added to the "Website" project</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-center small" href="#">View all notifications</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" 
+                                 style="width: 32px; height: 32px;">
+                                <span class="text-white fw-bold">AM</span>
+                            </div>
+                            <span class="d-none d-lg-inline">Alice Martin</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#">
+                <i class="bi bi-house-door"></i>
+                Home
+            </a>
+            
+            <a class="nav-link active" href="#">
+                <i class="bi bi-folder"></i>
+                My Projects
+            </a>
+            
+            <a class="nav-link" href="#">
+                <i class="bi bi-check-square"></i>
+                My Tasks
+            </a>
+            
+            <a class="nav-link" href="#">
+                <i class="bi bi-calendar-event"></i>
+                Calendar
+            </a>
+            
+            <hr class="my-3 mx-3">
+            
+            <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">
+                <span class="small">Recent Projects</span>
+            </h6>
+            
+            <a class="nav-link small active" href="#">
+                <i class="bi bi-kanban text-success"></i>
+                E-commerce Website
+            </a>
+            
+            <a class="nav-link small" href="#">
+                <i class="bi bi-kanban text-warning"></i>
+                Mobile Application
+            </a>
+            
+            <a class="nav-link small" href="#">
+                <i class="bi bi-kanban text-secondary"></i>
+                Database Migration
+            </a>
+            
+            <hr class="my-3 mx-3">
+            
+            <a class="nav-link" href="#">
+                <i class="bi bi-people"></i>
+                Teams
+            </a>
+            
+            <a class="nav-link" href="#">
+                <i class="bi bi-bar-chart"></i>
+                Reports
+            </a>
+        </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">My Projects</a></li>
+                <li class="breadcrumb-item active">E-commerce Website</li>
+            </ol>
+        </nav>
+        
+        <!-- Project Header -->
+        <div class="project-header">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="d-flex align-items-start">
+                    <div class="project-icon scrum me-3">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+                    <div>
+                        <h1 class="h2 mb-2">E-commerce Website</h1>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge-role">
+                                <i class="bi bi-person-fill-gear me-1"></i>
+                                PROJECT MANAGER
+                            </span>
+                            <span class="badge-type">
+                                <i class="bi bi-calendar-week me-1"></i>
+                                SCRUM
+                            </span>
+                            <span class="badge-status">
+                                <i class="bi bi-check-circle me-1"></i>
+                                ACTIVE
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary">
+                        <i class="bi bi-pencil"></i>
+                        Edit
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-star me-2"></i>Favorites</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>View Members</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>Export</a></li>
+                            <li><a class="dropdown-item text-warning" href="#"><i class="bi bi-archive me-2"></i>Archive</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-muted mb-3">
+                Complete redesign of the e-commerce platform with new architecture and modern design
+            </p>
+            
+            <div class="row g-3 text-muted small">
+                <div class="col-auto">
+                    <i class="bi bi-calendar3 me-1"></i>
+                    <strong>Start:</strong> 02/01/2025
+                </div>
+                <div class="col-auto">
+                    <i class="bi bi-calendar-check me-1"></i>
+                    <strong>End:</strong> 12/31/2025
+                </div>
+                <div class="col-auto">
+                    <i class="bi bi-clock-history me-1"></i>
+                    <strong>Created on:</strong> 01/24/2025
+                </div>
+                <div class="col-auto ms-auto">
+                    <i class="bi bi-people me-1"></i>
+                    <div class="avatar-stack d-inline-flex">
+                        <div class="avatar" style="background: #4F46E5;">AM</div>
+                        <span class="ms-2"><strong>1 member</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-card primary">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-muted mb-1 small">Total Tasks</p>
+                            <h3 class="mb-0" id="stat-total">3</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 rounded p-2">
+                            <i class="bi bi-list-check text-primary fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card warning">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-muted mb-1 small">In Progress</p>
+                            <h3 class="mb-0" id="stat-progress">1</h3>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 rounded p-2">
+                            <i class="bi bi-hourglass-split text-warning fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card success">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-muted mb-1 small">Completed</p>
+                            <h3 class="mb-0" id="stat-completed">1</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-10 rounded p-2">
+                            <i class="bi bi-check-circle text-success fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card info">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <p class="text-muted mb-1 small">Progress</p>
+                            <h3 class="mb-0" id="stat-percentage">33%</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-10 rounded p-2">
+                            <i class="bi bi-graph-up text-info fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" id="progress-bar" style="width: 33%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-0">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#board" role="tab">
+                            <i class="bi bi-kanban me-1"></i>
+                            Board
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" role="tab">
+                            <i class="bi bi-list-ul me-1"></i>
+                            Task List
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#activity" role="tab">
+                            <i class="bi bi-clock-history me-1"></i>
+                            Activity
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" role="tab">
+                            <i class="bi bi-speedometer2 me-1"></i>
+                            Sprints
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card-body" style="min-height: 500px;">
+                <div class="tab-content">
+                    <!-- Board Tab -->
+                    <div class="tab-pane fade show active" id="board" role="tabpanel">
+                        <div class="kanban-board" id="kanban-board">
+                            <!-- Column 1: Backlog -->
+                            <div class="kanban-column" data-column="backlog">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">Backlog</span>
+                                    <span class="kanban-column-count" data-count="backlog">1</span>
+                                </div>
+                                <div class="kanban-column-body" data-tasks="backlog">
+                                    <div class="task-card priority-high" data-task-id="1" onclick="showTaskDetail(1)">
+                                        <div class="task-number">#ECOM-1</div>
+                                        <div class="task-title">Setup project architecture and database schema</div>
+                                        <div class="task-footer">
+                                            <span class="task-priority high">HIGH</span>
+                                            <span class="task-due-date">
+                                                <i class="bi bi-calendar3"></i>
+                                                Feb 15, 2025
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task" onclick="openCreateTaskModal('backlog')">
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add a task
+                                </button>
+                            </div>
+                            
+                            <!-- Column 2: To Do -->
+                            <div class="kanban-column" data-column="todo">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">To Do</span>
+                                    <span class="kanban-column-count" data-count="todo">0</span>
+                                </div>
+                                <div class="kanban-column-body" data-tasks="todo">
+                                    <div class="kanban-empty">
+                                        <i class="bi bi-inbox"></i>
+                                        <p class="small mb-0">No tasks</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task" onclick="openCreateTaskModal('todo')">
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add a task
+                                </button>
+                            </div>
+                            
+                            <!-- Column 3: In Progress -->
+                            <div class="kanban-column" data-column="in-progress">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">In Progress</span>
+                                    <span class="kanban-column-count" data-count="in-progress">1</span>
+                                </div>
+                                <div class="kanban-column-body" data-tasks="in-progress">
+                                    <div class="task-card priority-medium" data-task-id="2" onclick="showTaskDetail(2)">
+                                        <div class="task-number">#ECOM-2</div>
+                                        <div class="task-title">Design homepage wireframes and mockups</div>
+                                        <div class="task-footer">
+                                            <span class="task-priority medium">MEDIUM</span>
+                                            <span class="task-due-date">
+                                                <i class="bi bi-calendar3"></i>
+                                                Feb 20, 2025
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task" onclick="openCreateTaskModal('in-progress')">
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add a task
+                                </button>
+                            </div>
+                            
+                            <!-- Column 4: Review -->
+                            <div class="kanban-column" data-column="review">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">Review</span>
+                                    <span class="kanban-column-count" data-count="review">0</span>
+                                </div>
+                                <div class="kanban-column-body" data-tasks="review">
+                                    <div class="kanban-empty">
+                                        <i class="bi bi-inbox"></i>
+                                        <p class="small mb-0">No tasks</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task" onclick="openCreateTaskModal('review')">
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add a task
+                                </button>
+                            </div>
+                            
+                            <!-- Column 5: Done -->
+                            <div class="kanban-column" data-column="done">
+                                <div class="kanban-column-header">
+                                    <span class="kanban-column-title">Done</span>
+                                    <span class="kanban-column-count" data-count="done">1</span>
+                                </div>
+                                <div class="kanban-column-body" data-tasks="done">
+                                    <div class="task-card priority-low" data-task-id="3" onclick="showTaskDetail(3)">
+                                        <div class="task-number">#ECOM-3</div>
+                                        <div class="task-title">Create initial project documentation</div>
+                                        <div class="task-footer">
+                                            <span class="task-priority low">LOW</span>
+                                            <span class="task-due-date">
+                                                <i class="bi bi-calendar3"></i>
+                                                Jan 30, 2025
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-add-task" onclick="openCreateTaskModal('done')">
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add a task
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Activity Tab -->
+                    <div class="tab-pane fade" id="activity" role="tabpanel">
+                        <h5 class="mb-4">
+                            <i class="bi bi-clock-history text-primary me-2"></i>
+                            Action History
+                        </h5>
+                        
+                        <div class="activity-item">
+                            <span class="activity-dot success"></span>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <strong>You</strong> completed task
+                                            <span class="badge bg-primary ms-1">#ECOM-3</span>
+                                            <strong class="ms-1">Create initial project documentation</strong>
+                                        </div>
+                                        <small class="text-muted">1 hour ago</small>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        January 30, 2025 at 3:15 PM
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <span class="activity-dot warning"></span>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <strong>You</strong> moved task
+                                            <span class="badge bg-primary ms-1">#ECOM-2</span>
+                                            to
+                                            <span class="badge bg-warning ms-1">In Progress</span>
+                                        </div>
+                                        <small class="text-muted">3 hours ago</small>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        January 30, 2025 at 1:00 PM
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <span class="activity-dot primary"></span>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <strong>You</strong> created task
+                                            <span class="badge bg-primary ms-1">#ECOM-2</span>
+                                            <strong class="ms-1">Design homepage wireframes and mockups</strong>
+                                        </div>
+                                        <small class="text-muted">4 hours ago</small>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        January 30, 2025 at 12:00 PM
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <span class="activity-dot primary"></span>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <strong>You</strong> created the project
+                                            <span class="badge bg-success ms-1">SCRUM</span>
+                                        </div>
+                                        <small class="text-muted">6 hours ago</small>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        January 30, 2025 at 10:00 AM
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Create Task Modal -->
+    <div class="modal fade" id="createTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-plus-circle text-primary me-2"></i>
+                        Create New Task
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="createTaskForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="taskColumn" name="column">
+                        
+                        <div class="mb-3">
+                            <label for="taskTitle" class="form-label">
+                                Title <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="taskTitle" name="title" required
+                                   placeholder="Enter task title">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="taskDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="taskDescription" name="description" rows="4"
+                                      placeholder="Enter task description"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="taskPriority" class="form-label">
+                                    Priority <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="taskPriority" name="priority" required>
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="taskDueDate" class="form-label">Due Date</label>
+                                <input type="date" class="form-control" id="taskDueDate" name="due_date">
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mb-0">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <small>Task will be created in the <strong id="columnName">Backlog</strong> column</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-1"></i>
+                            Create Task
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Task Detail Modal -->
+    <div class="modal fade" id="taskDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="task-detail-header w-100">
+                        <div class="task-detail-number" id="detailTaskNumber">#ECOM-1</div>
+                        <div class="task-detail-content">
+                            <h4 class="task-detail-title mb-0" id="detailTaskTitle">Task Title</h4>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="task-meta-grid">
+                        <div class="task-meta-item">
+                            <div class="task-meta-label">Column</div>
+                            <div class="task-meta-value" id="detailTaskColumn">Backlog</div>
+                        </div>
+                        <div class="task-meta-item">
+                            <div class="task-meta-label">Priority</div>
+                            <div class="task-meta-value">
+                                <span class="task-priority" id="detailTaskPriority">Medium</span>
+                            </div>
+                        </div>
+                        <div class="task-meta-item">
+                            <div class="task-meta-label">Due Date</div>
+                            <div class="task-meta-value" id="detailTaskDueDate">Feb 15, 2025</div>
+                        </div>
+                        <div class="task-meta-item">
+                            <div class="task-meta-label">Created</div>
+                            <div class="task-meta-value" id="detailTaskCreated">Jan 30, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-description">
+                        <h6 class="mb-2">Description</h6>
+                        <p class="mb-0" id="detailTaskDescription">No description provided</p>
+                    </div>
+                    
+                    <div class="task-actions">
+                        <button class="btn btn-outline-secondary" onclick="moveTaskPrevious()">
+                            <i class="bi bi-arrow-left"></i>
+                            Previous Column
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="moveTaskNext()">
+                            Next Column
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                        <div class="ms-auto d-flex gap-2">
+                            <button class="btn btn-outline-primary" onclick="editTask()">
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="deleteTask()">
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Task Modal -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil text-primary me-2"></i>
+                        Edit Task
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="editTaskForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="editTaskId" name="id">
+                        
+                        <div class="mb-3">
+                            <label for="editTaskTitle" class="form-label">
+                                Title <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="editTaskTitle" name="title" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editTaskDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editTaskDescription" name="description" rows="4"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editTaskPriority" class="form-label">
+                                    Priority <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="editTaskPriority" name="priority" required>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="editTaskDueDate" class="form-label">Due Date</label>
+                                <input type="date" class="form-control" id="editTaskDueDate" name="due_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        Confirm Deletion
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure you want to delete this task? This action cannot be undone.</p>
+                    <div class="alert alert-warning mt-3 mb-0">
+                        <strong>Task:</strong> <span id="deleteTaskTitle"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                        <i class="bi bi-trash me-1"></i>
+                        Delete Task
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mock data for demonstration
+        let tasks = [
+            {
+                id: 1,
+                number: 'ECOM-1',
+                title: 'Setup project architecture and database schema',
+                description: 'Define the overall architecture, choose technologies, and design the database schema for the e-commerce platform.',
+                priority: 'high',
+                due_date: '2025-02-15',
+                column: 'backlog',
+                created_at: '2025-01-30T10:00:00'
+            },
+            {
+                id: 2,
+                number: 'ECOM-2',
+                title: 'Design homepage wireframes and mockups',
+                description: 'Create wireframes and high-fidelity mockups for the homepage including hero section, featured products, and navigation.',
+                priority: 'medium',
+                due_date: '2025-02-20',
+                column: 'in-progress',
+                created_at: '2025-01-30T12:00:00'
+            },
+            {
+                id: 3,
+                number: 'ECOM-3',
+                title: 'Create initial project documentation',
+                description: 'Write comprehensive documentation covering project requirements, technical specifications, and development guidelines.',
+                priority: 'low',
+                due_date: '2025-01-30',
+                column: 'done',
+                created_at: '2025-01-30T09:00:00'
+            }
+        ];
+        
+        let nextTaskId = 4;
+        let currentTaskId = null;
+        
+        const columnNames = {
+            'backlog': 'Backlog',
+            'todo': 'To Do',
+            'in-progress': 'In Progress',
+            'review': 'Review',
+            'done': 'Done'
+        };
+        
+        const columnOrder = ['backlog', 'todo', 'in-progress', 'review', 'done'];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date for date inputs to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('taskDueDate').setAttribute('min', today);
+            document.getElementById('editTaskDueDate').setAttribute('min', today);
+            
+            // Form submissions
+            document.getElementById('createTaskForm').addEventListener('submit', handleCreateTask);
+            document.getElementById('editTaskForm').addEventListener('submit', handleEditTask);
+        });
+        
+        // Open create task modal
+        function openCreateTaskModal(column) {
+            document.getElementById('taskColumn').value = column;
+            document.getElementById('columnName').textContent = columnNames[column];
+            document.getElementById('createTaskForm').reset();
+            document.getElementById('taskColumn').value = column; // Reset clears this, so set again
+            
+            const modal = new bootstrap.Modal(document.getElementById('createTaskModal'));
+            modal.show();
+        }
+        
+        // Handle create task
+        function handleCreateTask(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const task = {
+                id: nextTaskId++,
+                number: `ECOM-${nextTaskId - 1}`,
+                title: formData.get('title'),
+                description: formData.get('description') || '',
+                priority: formData.get('priority'),
+                due_date: formData.get('due_date') || null,
+                column: formData.get('column'),
+                created_at: new Date().toISOString()
+            };
+            
+            tasks.push(task);
+            renderBoard();
+            updateStatistics();
+            
+            bootstrap.Modal.getInstance(document.getElementById('createTaskModal')).hide();
+            showToast('success', 'Task created successfully!');
+        }
+        
+        // Show task detail
+        function showTaskDetail(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            currentTaskId = taskId;
+            
+            document.getElementById('detailTaskNumber').textContent = `#${task.number}`;
+            document.getElementById('detailTaskTitle').textContent = task.title;
+            document.getElementById('detailTaskColumn').textContent = columnNames[task.column];
+            
+            const priorityBadge = document.getElementById('detailTaskPriority');
+            priorityBadge.textContent = task.priority.toUpperCase();
+            priorityBadge.className = `task-priority ${task.priority}`;
+            
+            document.getElementById('detailTaskDueDate').textContent = task.due_date 
+                ? new Date(task.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                : 'Not set';
+            
+            document.getElementById('detailTaskCreated').textContent = new Date(task.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('detailTaskDescription').textContent = task.description || 'No description provided';
+            
+            const modal = new bootstrap.Modal(document.getElementById('taskDetailModal'));
+            modal.show();
+        }
+        
+        // Edit task
+        function editTask() {
+            const task = tasks.find(t => t.id === currentTaskId);
+            if (!task) return;
+            
+            document.getElementById('editTaskId').value = task.id;
+            document.getElementById('editTaskTitle').value = task.title;
+            document.getElementById('editTaskDescription').value = task.description;
+            document.getElementById('editTaskPriority').value = task.priority;
+            document.getElementById('editTaskDueDate').value = task.due_date || '';
+            
+            bootstrap.Modal.getInstance(document.getElementById('taskDetailModal')).hide();
+            
+            const modal = new bootstrap.Modal(document.getElementById('editTaskModal'));
+            modal.show();
+        }
+        
+        // Handle edit task
+        function handleEditTask(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const taskId = parseInt(formData.get('id'));
+            const task = tasks.find(t => t.id === taskId);
+            
+            if (task) {
+                task.title = formData.get('title');
+                task.description = formData.get('description') || '';
+                task.priority = formData.get('priority');
+                task.due_date = formData.get('due_date') || null;
+                
+                renderBoard();
+                bootstrap.Modal.getInstance(document.getElementById('editTaskModal')).hide();
+                showToast('success', 'Task updated successfully!');
+            }
+        }
+        
+        // Delete task
+        function deleteTask() {
+            const task = tasks.find(t => t.id === currentTaskId);
+            if (!task) return;
+            
+            document.getElementById('deleteTaskTitle').textContent = task.title;
+            
+            bootstrap.Modal.getInstance(document.getElementById('taskDetailModal')).hide();
+            
+            const modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+            modal.show();
+        }
+        
+        // Confirm delete
+        function confirmDelete() {
+            tasks = tasks.filter(t => t.id !== currentTaskId);
+            renderBoard();
+            updateStatistics();
+            
+            bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
+            showToast('success', 'Task deleted successfully!');
+            currentTaskId = null;
+        }
+        
+        // Move task to previous column
+        function moveTaskPrevious() {
+            const task = tasks.find(t => t.id === currentTaskId);
+            if (!task) return;
+            
+            const currentIndex = columnOrder.indexOf(task.column);
+            if (currentIndex > 0) {
+                task.column = columnOrder[currentIndex - 1];
+                renderBoard();
+                updateStatistics();
+                showTaskDetail(currentTaskId);
+                showToast('info', `Task moved to ${columnNames[task.column]}`);
+            }
+        }
+        
+        // Move task to next column
+        function moveTaskNext() {
+            const task = tasks.find(t => t.id === currentTaskId);
+            if (!task) return;
+            
+            const currentIndex = columnOrder.indexOf(task.column);
+            if (currentIndex < columnOrder.length - 1) {
+                task.column = columnOrder[currentIndex + 1];
+                renderBoard();
+                updateStatistics();
+                showTaskDetail(currentTaskId);
+                showToast('info', `Task moved to ${columnNames[task.column]}`);
+            }
+        }
+        
+        // Render board
+        function renderBoard() {
+            columnOrder.forEach(column => {
+                const columnTasks = tasks.filter(t => t.column === column);
+                const columnBody = document.querySelector(`[data-tasks="${column}"]`);
+                const columnCount = document.querySelector(`[data-count="${column}"]`);
+                
+                columnCount.textContent = columnTasks.length;
+                
+                if (columnTasks.length === 0) {
+                    columnBody.innerHTML = `
+                        <div class="kanban-empty">
+                            <i class="bi bi-inbox"></i>
+                            <p class="small mb-0">No tasks</p>
+                        </div>
+                    `;
+                } else {
+                    columnBody.innerHTML = columnTasks.map(task => {
+                        const dueDate = task.due_date 
+                            ? new Date(task.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                            : 'No due date';
+                        
+                        const isOverdue = task.due_date && new Date(task.due_date) < new Date() && task.column !== 'done';
+                        
+                        return `
+                            <div class="task-card priority-${task.priority}" data-task-id="${task.id}" onclick="showTaskDetail(${task.id})">
+                                <div class="task-number">#${task.number}</div>
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-footer">
+                                    <span class="task-priority ${task.priority}">${task.priority.toUpperCase()}</span>
+                                    <span class="task-due-date ${isOverdue ? 'overdue' : ''}">
+                                        <i class="bi bi-calendar3"></i>
+                                        ${dueDate}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            });
+        }
+        
+        // Update statistics
+        function updateStatistics() {
+            const total = tasks.length;
+            const inProgress = tasks.filter(t => t.column === 'in-progress').length;
+            const completed = tasks.filter(t => t.column === 'done').length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-progress').textContent = inProgress;
+            document.getElementById('stat-completed').textContent = completed;
+            document.getElementById('stat-percentage').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+        
+        // Show toast notification
+        function showToast(type, message) {
+            const toastContainer = document.querySelector('.toast-container');
+            const toastId = `toast-${Date.now()}`;
+            
+            const bgClass = type === 'success' ? 'bg-success' : type === 'danger' ? 'bg-danger' : 'bg-info';
+            
+            const toastHtml = `
+                <div id="${toastId}" class="toast align-items-center text-white ${bgClass} border-0" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="bi bi-check-circle me-2"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+            
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
+            toast.show();
+            
+            toastElement.addEventListener('hidden.bs.toast', () => {
+                toastElement.remove();
+            });
+        }
+        
+        // Toggle sidebar on mobile
+        document.querySelector('.navbar-toggler')?.addEventListener('click', function() {
+            document.querySelector('.sidebar')?.classList.toggle('show');
+        });
+        
+        // Initial render
+        renderBoard();
+        updateStatistics();
+    </script>
+</body>
+</html>

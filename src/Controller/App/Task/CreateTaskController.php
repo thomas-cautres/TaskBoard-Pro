@@ -13,8 +13,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 
-#[Route('/app/project/{uuid}/task/create', name: 'app_task_create', methods: ['GET', 'POST'])]
+#[Route('/app/project/{uuid}/task/create', name: 'app_task_create', requirements: ['uuid' => Requirement::UID_RFC4122], methods: ['GET', 'POST'])]
 class CreateTaskController extends AbstractController
 {
     public function __invoke(Request $request, ProjectColumnDto $projectColumn, EventDispatcherInterface $dispatcher): Response
@@ -22,6 +23,7 @@ class CreateTaskController extends AbstractController
         $task = new TaskDto();
         $form = $this->createForm(CreateTaskType::class, $task, [
             'action' => $this->generateUrl('app_task_create', ['uuid' => $projectColumn->getUuid()]),
+            'attr' => ['data-controller' => 'task', 'data-action' => 'task#submitFormModalCreate']
         ]);
 
         $form->handleRequest($request);
@@ -31,7 +33,10 @@ class CreateTaskController extends AbstractController
 
             $this->addFlash('success', 'task.create.flash.message.success');
 
-            return $this->redirectToRoute('app_project_show', ['uuid' => $projectColumn->getProjectUuid()]);
+            return $this->json([
+                'success' => true,
+                'redirect' => $this->redirectToRoute('app_project_show', ['uuid' => $projectColumn->getProjectUuid()])
+            ]);
         }
 
         return $this->render('app/task/_modal_create_task.html.twig', [

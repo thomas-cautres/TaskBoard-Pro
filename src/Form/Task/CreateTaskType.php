@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreateTaskType extends AbstractType
 {
@@ -24,6 +26,10 @@ class CreateTaskType extends AbstractType
                     'placeholder' => 'task.create.title_placeholder',
                 ],
                 'help' => 'task.create.title_help',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(min: 2, max: 255)
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
@@ -34,6 +40,9 @@ class CreateTaskType extends AbstractType
             ])
             ->add('priority', EnumType::class, [
                 'class' => TaskPriority::class,
+                'constraints' => [
+                    new NotBlank(),
+                ]
             ])
             ->add('endDate', DateType::class, [
                 'required' => false,

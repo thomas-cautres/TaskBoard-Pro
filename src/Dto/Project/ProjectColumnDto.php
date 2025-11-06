@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Dto\Project;
 
 use App\Entity\ProjectColumn;
+use App\ObjectMapper\CollectionTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
@@ -16,6 +17,8 @@ class ProjectColumnDto
     private string $name;
     private int $position;
     public string $projectUuid;
+    #[Map(target: 'tasks', source: 'tasks', transform: CollectionTransformer::class)]
+    public array $tasks = [];
 
     public function getId(): int
     {
