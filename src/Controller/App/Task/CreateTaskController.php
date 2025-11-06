@@ -35,7 +35,7 @@ class CreateTaskController extends AbstractController
 
             return $this->json([
                 'success' => true,
-                'redirect' => $this->redirectToRoute('app_project_show', ['uuid' => $projectColumn->getProjectUuid()])
+                'redirect' => $this->generateUrl('app_project_show', ['uuid' => $projectColumn->getProjectUuid()])
             ]);
         }
 

@@ -28,7 +28,7 @@ class CreateTaskType extends AbstractType
                 'help' => 'task.create.title_help',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(min: 2, max: 255)
+                    new Length(max: 255)
                 ]
             ])
             ->add('description', TextareaType::class, [
