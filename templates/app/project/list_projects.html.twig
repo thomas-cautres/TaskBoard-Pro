@@ -127,12 +127,14 @@
                                 <hr class="dropdown-divider">
                             </li>
                             {% if is_granted('archive', project) %}
-                                <li><a class="dropdown-item text-warning" href="#" data-controller="project" data-action="project#openModalArchive" data-project-url-param="{{ path('app_project_archive', {uuid:project.uuid}) }}">
+                                <li><a class="dropdown-item text-warning" href="#"  data-controller="modal"
+                                       data-action="click->modal#open" data-modal-url-value="{{ path('app_project_archive', {uuid:project.uuid}) }}">
                                         <i class="bi bi-archive me-2"></i>
                                         {{ 'project.menu.archive'|trans }}</a>
                                 </li>
                             {% elseif is_granted('restore', project) %}
-                                <li><a class="dropdown-item text-success" href="#" data-controller="project" data-action="project#openModalRestore" data-project-url-param="{{ path('app_project_restore', {uuid:project.uuid}) }}">
+                                <li><a class="dropdown-item text-success" href="#"  data-controller="modal"
+                                       data-action="click->modal#open" data-modal-url-value="{{ path('app_project_restore', {uuid:project.uuid}) }}">
                                         <i class="bi bi-arrow-counterclockwise me-2"></i>
                                         {{ 'project.menu.restore'|trans }}</a>
                                 </li>

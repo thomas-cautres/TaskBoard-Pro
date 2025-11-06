@@ -23,7 +23,7 @@ class CreateTaskController extends AbstractController
         $task = new TaskDto();
         $form = $this->createForm(CreateTaskType::class, $task, [
             'action' => $this->generateUrl('app_task_create', ['uuid' => $projectColumn->getUuid()]),
-            'attr' => ['data-controller' => 'task', 'data-action' => 'task#submitFormModalCreate'],
+            'attr' => ['data-controller' => 'modal', 'data-action' => 'modal#submit'],
         ]);
 
         $form->handleRequest($request);
