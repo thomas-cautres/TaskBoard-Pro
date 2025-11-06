@@ -9,7 +9,7 @@ use App\Entity\Project;
 use App\ObjectMapper\UserTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 
-#[Map(source: Project::class)]
+#[Map(target: Project::class, source: Project::class)]
 abstract class AbstractProjectDto
 {
     #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]

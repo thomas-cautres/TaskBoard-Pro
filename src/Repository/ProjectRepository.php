@@ -13,25 +13,19 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
 /**
  * @extends ServiceEntityRepository<Project>
  */
 class ProjectRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, private readonly ObjectMapperInterface $objectMapper)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Project::class);
     }
 
-    public function save(ProjectDto|Project $project, bool $flush = true): void
+    public function save(Project $project, bool $flush = true): void
     {
-        if ($project instanceof ProjectDto) {
-            $entity = $this->findOneBy(['uuid' => $project->getUuid()]);
-            $project = $this->objectMapper->map($project, ($entity instanceof Project) ? $entity : Project::class);
-        }
-
         $this->getEntityManager()->persist($project);
 
         if (true === $flush) {
@@ -99,5 +93,17 @@ class ProjectRepository extends ServiceEntityRepository
         } elseif (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
             $qb->andWhere('p.status = :status')->setParameter('status', ProjectStatus::Archived->value);
         }
+    }
+
+    public function findOneWithColumnsAndTasks(string $uuid): ?Project
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.columns', 'c')->addSelect('c')
+            ->leftJoin('c.tasks', 't')->addSelect('t')
+            ->where('p.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->orderBy('c.position', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -6,16 +6,21 @@ namespace App\Entity;
 
 use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
+use App\Dto\Project\ProjectDto;
+use App\ObjectMapper\CollectionTransformer;
+use App\ObjectMapper\UserTransformer;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\Index(name: 'name_idx', columns: ['name'])]
+#[Map(target: ProjectDto::class)]
 class Project
 {
     #[ORM\Id]
@@ -46,12 +51,14 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $createdBy;
+    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
+    private ?User $createdBy = null;
 
     /**
      * @var Collection<int, ProjectColumn>
      */
     #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Map(target: 'columns', source: 'columns', transform: CollectionTransformer::class)]
     private Collection $columns;
 
     #[ORM\Column(type: Types::STRING, enumType: ProjectStatus::class, options: ['default' => ProjectStatus::Active->value])]

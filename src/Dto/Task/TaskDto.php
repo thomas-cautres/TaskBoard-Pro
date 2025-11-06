@@ -10,10 +10,9 @@ use App\ObjectMapper\UserTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[Map(source: Task::class)]
+#[Map(target: Task::class, source: Task::class)]
 class TaskDto
 {
-    private int $id;
     private Uuid $uuid;
     private ?string $code = null;
     private ?string $title = null;
@@ -25,7 +24,6 @@ class TaskDto
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
     private ?int $position = null;
-    private string $projectColumnUuid;
 
     public function __construct()
     {
@@ -162,18 +160,6 @@ class TaskDto
     public function setPosition(?int $position): TaskDto
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    public function getProjectColumnUuid(): string
-    {
-        return $this->projectColumnUuid;
-    }
-
-    public function setProjectColumnUuid(string $projectColumnUuid): TaskDto
-    {
-        $this->projectColumnUuid = $projectColumnUuid;
 
         return $this;
     }

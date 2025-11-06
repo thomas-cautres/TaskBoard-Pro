@@ -29,7 +29,11 @@ final class CollectionTransformer implements TransformCallableInterface
 
         foreach ($value as $k => $v) {
             /* @phpstan-ignore-next-line */
-            $values[$k] = $this->objectMapper->map($v);
+            try {
+                $values[$k] = $this->objectMapper->map($v);
+            } catch (\Exception) {
+                dump($v);
+            }
         }
 
         return $values;

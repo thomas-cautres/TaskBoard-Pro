@@ -28,8 +28,8 @@ class CreateTaskType extends AbstractType
                 'help' => 'task.create.title_help',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(max: 255)
-                ]
+                    new Length(max: 255),
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,
@@ -42,7 +42,7 @@ class CreateTaskType extends AbstractType
                 'class' => TaskPriority::class,
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('endDate', DateType::class, [
                 'required' => false,

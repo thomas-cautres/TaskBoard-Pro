@@ -32,7 +32,7 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
 
         $uuid = $request->attributes->get('uuid');
 
-        $project = $this->projectRepository->findOneBy(['uuid' => $uuid]);
+        $project = $this->projectRepository->findOneWithColumnsAndTasks($uuid);
 
         if (!$project instanceof Project) {
             throw new NotFoundHttpException('Project not found');
