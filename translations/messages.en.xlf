@@ -848,6 +848,10 @@
                 <source>Cancel</source>
                 <target>Cancel</target>
             </trans-unit>
+            <trans-unit id="task.create.flash.message.success" resname="task.create.flash.message.success">
+                <source>Task created successfully</source>
+                <target>Task created successfully</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

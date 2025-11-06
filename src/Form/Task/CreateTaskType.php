@@ -30,7 +30,7 @@ class CreateTaskType extends AbstractType
                 'attr' => [
                     'placeholder' => 'task.create.description_placeholder',
                 ],
-                'help' => 'ask.create.description_help',
+                'help' => 'task.create.description_help',
             ])
             ->add('priority', EnumType::class, [
                 'class' => TaskPriority::class,
