@@ -10,7 +10,7 @@ use App\Entity\Task;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[Map(target: Task::class, source: Task::class)]
+#[Map(target: TaskDto::class, source: Task::class)]
 class TaskDto
 {
     private int $id;

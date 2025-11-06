@@ -9,7 +9,7 @@ use App\Dto\UserDto;
 use App\Entity\Project;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 
-#[Map(target: Project::class, source: Project::class)]
+#[Map(target: ProjectDto::class, source: Project::class)]
 abstract class AbstractProjectDto
 {
     #[Map(if: false)]

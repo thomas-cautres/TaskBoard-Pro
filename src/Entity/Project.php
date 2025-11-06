@@ -19,7 +19,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\Index(name: 'name_idx', columns: ['name'])]
-#[Map(target: ProjectDto::class, source: ProjectDto::class)]
+#[Map(target: ProjectDto::class, source: Project::class)]
 class Project
 {
     #[ORM\Id]
