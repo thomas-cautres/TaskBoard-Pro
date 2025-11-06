@@ -12,6 +12,8 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\UnitOfWork;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,6 +35,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private TranslatorInterface $translator,
         private WorkflowInterface $projectStateMachine,
         private ObjectMapperInterface $objectMapper,
+        private EntityManagerInterface $entityManager
     ) {
     }
 
@@ -81,7 +84,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $projectDto = $event->getProject();
 
-        $project = $this->objectMapper->map($projectDto, $this->projectRepository->find($projectDto->getId()));
+        $project = $this->objectMapper->map($projectDto, $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]));
 
         $user->addNotification(
             new Notification()
@@ -90,6 +93,7 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         );
 
         $this->userRepository->save($user, flush: false);
+
         $this->projectRepository->save($project);
         $this->log($project, 'Project edited', 'project.edited');
     }
@@ -97,16 +101,16 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     public function onProjectArchived(ProjectArchivedEvent $event): void
     {
         $this->projectStateMachine->apply($event->getProject(), 'archive');
+        $project = $this->objectMapper->map($event->getProject(), $this->projectRepository->findOneBy(['uuid' => $event->getProject()->getUuid()]));
 
-        $project = $this->objectMapper->map($event->getProject(), Project::class);
-
-        $this->projectRepository->save($project, false);
+        $this->projectRepository->save($project);
     }
 
     public function onProjectRestored(ProjectRestoredEvent $event): void
     {
         $this->projectStateMachine->apply($event->getProject(), 'restore');
-        $project = $this->objectMapper->map($event->getProject(), Project::class);
+        $project = $this->objectMapper->map($event->getProject(), $this->projectRepository->findOneBy(['uuid' => $event->getProject()->getUuid()]));
+
         $this->projectRepository->save($project);
     }
 

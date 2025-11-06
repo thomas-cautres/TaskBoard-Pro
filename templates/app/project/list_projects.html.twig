@@ -112,7 +112,7 @@
                         </div>
                         <div>
                             <h3 class="project-title">{{ project.name }}</h3>
-                            <span class="project-role">{% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
+                            <span class="project-role">{% if app.user.email == project.createdBy.email %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
                         </div>
                     </div>
                     <div class="dropdown" onclick="event.stopPropagation()">

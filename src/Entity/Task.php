@@ -15,7 +15,7 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
-#[Map(target: TaskDto::class)]
+#[Map(target: TaskDto::class, source: TaskDto::class)]
 class Task
 {
     #[ORM\Id]
@@ -58,6 +58,12 @@ class Task
 
     #[ORM\Column]
     private ?int $position = null;
+
+    public function setId(?int $id): Task
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getId(): ?int
     {

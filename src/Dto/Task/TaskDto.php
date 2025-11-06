@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace App\Dto\Task;
 
 use App\AppEnum\TaskPriority;
+use App\Dto\UserDto;
 use App\Entity\Task;
-use App\ObjectMapper\UserTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[Map(target: Task::class, source: Task::class)]
 class TaskDto
 {
+    private int $id;
     private Uuid $uuid;
     private ?string $code = null;
     private ?string $title = null;
     private ?string $description = null;
     private ?TaskPriority $priority = null;
     private ?\DateTime $endDate = null;
-    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
-    public ?string $createdByEmail = '';
+    #[Map(if: false)]
+    private ?UserDto $createdBy;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
     private ?int $position = null;
@@ -116,17 +117,18 @@ class TaskDto
         return $this;
     }
 
-    public function getCreatedByEmail(): ?string
+    public function getCreatedBy(): ?UserDto
     {
-        return $this->createdByEmail;
+        return $this->createdBy;
     }
 
-    public function setCreatedByEmail(?string $createdByEmail): TaskDto
+    public function setCreatedBy(?UserDto $createdBy): TaskDto
     {
-        $this->createdByEmail = $createdByEmail;
-
+        $this->createdBy = $createdBy;
         return $this;
     }
+
+
 
     public function getCreatedAt(): \DateTimeImmutable
     {

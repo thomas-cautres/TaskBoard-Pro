@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Dto\Project;
 
 use App\AppEnum\ProjectStatus;
+use App\Dto\UserDto;
 use App\Entity\Project;
-use App\ObjectMapper\UserTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 
 #[Map(target: Project::class, source: Project::class)]
 abstract class AbstractProjectDto
 {
-    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
-    public string $createdByEmail = '';
+    #[Map(if: false)]
+    protected UserDto $createdBy;
     protected ProjectStatus $status = ProjectStatus::Active;
 
     public function getStatus(): ProjectStatus
@@ -28,15 +28,14 @@ abstract class AbstractProjectDto
         return $this;
     }
 
-    public function getCreatedByEmail(): string
+    public function getCreatedBy(): UserDto
     {
-        return $this->createdByEmail;
+        return $this->createdBy;
     }
 
-    public function setCreatedByEmail(string $createdByEmail): static
+    public function setCreatedBy(UserDto $createdBy): AbstractProjectDto
     {
-        $this->createdByEmail = $createdByEmail;
-
+        $this->createdBy = $createdBy;
         return $this;
     }
 

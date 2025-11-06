@@ -43,7 +43,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->setParameter('name', strtolower($name));
 
         if ($validatedProject instanceof ProjectDto) {
-            $qb->andWhere('p.id != :validatedProject')->setParameter('validatedProject', $validatedProject->getId());
+            $qb->andWhere('p.uuid != :validatedProject')->setParameter('validatedProject', $validatedProject->getUuid());
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();

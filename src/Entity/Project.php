@@ -20,7 +20,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\Index(name: 'name_idx', columns: ['name'])]
-#[Map(target: ProjectDto::class)]
+#[Map(target: ProjectDto::class, source: ProjectDto::class)]
 class Project
 {
     #[ORM\Id]
@@ -51,7 +51,6 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Map(target: 'createdByEmail', source: 'createdBy', transform: UserTransformer::class)]
     private ?User $createdBy = null;
 
     /**

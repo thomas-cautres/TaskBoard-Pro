@@ -41,7 +41,7 @@ class ProjectColumn
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn', cascade: ['persist', 'remove'])]
     #[Map(target: 'tasks', source: 'tasks', transform: CollectionTransformer::class)]
     private Collection $tasks;
 
