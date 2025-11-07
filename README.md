@@ -5,16 +5,17 @@ A **Symfony 7** project management application showcasing modern PHP development
 
 ## 🎯 Features
 
-### Current (Sprint 1)
+### Current
 - ✅ User authentication (register, login, email confirmation)
 - ✅ Create projects (SCRUM/KANBAN/BASIC)
 - ✅ View project with Kanban board
 - ✅ List projects with search, filters, and pagination
 - ✅ Project statistics dashboard
 - ✅ Edit and archive projects
+- ✅ Create tasks
 
 ### Planned
-- 🔜 Create and manage tasks
+- 🔜 Manage tasks
 - 🔜 Drag & drop tasks between columns
 - 🔜 Sprints, comments, notifications
 - 🔜 Project statistics dashboard
@@ -30,7 +31,7 @@ A **Symfony 7** project management application showcasing modern PHP development
 - **Quality**: PHPStan, PHP CS Fixer
 
 
-## 🔧 Symfony Components Used and Why
+## 🔧 Symfony Components Used
 
 - [FrameworkBundle](https://symfony.com/doc/current/reference/configuration/framework.html) — Core kernel, DI, config, routing.
 - [Security](https://symfony.com/doc/current/security.html) — Auth, authorization, CSRF.
@@ -44,7 +45,6 @@ A **Symfony 7** project management application showcasing modern PHP development
 - [Mailer](https://symfony.com/doc/current/mailer.html) — Send emails.
 - [Uid](https://symfony.com/doc/current/components/uid.html) — UUID/ULID value objects.
 - [Workflow](https://symfony.com/doc/current/workflow.html) — Define state machines.
-- [Object Mapper](https://symfony.com/doc/current/object_mapper.html) — Map doctrine entity / dto
 - [EventDispatcher](https://symfony.com/doc/current/components/event_dispatcher.html) — Events and subscribers.
 - [Console](https://symfony.com/doc/current/components/console.html) — CLI commands framework.
 - [Dotenv](https://symfony.com/doc/current/components/dotenv.html) — Load env vars in dev.
