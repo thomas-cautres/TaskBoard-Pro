@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\ValueResolver;
 
 use App\Dto\Project\ProjectColumnDto;
-use App\Dto\Project\ProjectDto;
 use App\Entity\ProjectColumn;
 use App\Repository\ProjectColumnRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,7 @@ final readonly class ProjectColumnDtoValueResolver implements ValueResolverInter
     }
 
     /**
-     * @return iterable<ProjectDto>
+     * @return iterable<ProjectColumnDto>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
@@ -29,7 +28,7 @@ final readonly class ProjectColumnDtoValueResolver implements ValueResolverInter
             return [];
         }
 
-        $uuid = $request->attributes->get('uuid');
+        $uuid = $request->attributes->getString('uuid');
 
         $projectColumn = $this->projectColumnRepository->findOneBy(['uuid' => $uuid]);
 

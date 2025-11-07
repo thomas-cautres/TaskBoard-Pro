@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<CreateTaskDto>
+ */
 class CreateTaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\ValueResolver;
 
 use App\Dto\Project\EditProjectDto;
-use App\Dto\Project\ProjectDto;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,7 @@ final readonly class EditProjectDtoValueResolver implements ValueResolverInterfa
     }
 
     /**
-     * @return iterable<ProjectDto>
+     * @return iterable<EditProjectDto>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
@@ -29,7 +28,7 @@ final readonly class EditProjectDtoValueResolver implements ValueResolverInterfa
             return [];
         }
 
-        $uuid = $request->attributes->get('uuid');
+        $uuid = $request->attributes->getString('uuid');
 
         $project = $this->projectRepository->findOneWithColumnsAndTasks($uuid);
 

@@ -98,7 +98,8 @@ class ProjectRepository extends ServiceEntityRepository
 
     public function findOneWithColumnsAndTasks(string $uuid): ?Project
     {
-        return $this->createQueryBuilder('p')
+        /** @var ?Project $project */
+        $project = $this->createQueryBuilder('p')
             ->leftJoin('p.columns', 'c')->addSelect('c')
             ->leftJoin('c.tasks', 't')->addSelect('t')
             ->where('p.uuid = :uuid')
@@ -106,5 +107,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->orderBy('c.position', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
+
+        return $project;
     }
 }

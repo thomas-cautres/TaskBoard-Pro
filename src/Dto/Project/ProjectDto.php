@@ -154,6 +154,6 @@ final class ProjectDto extends AbstractProjectDto
             return 0;
         }
 
-        return (int)((100 * $this->getDoneTasks()) / $this->getTotalTasks());
+        return (int) ((100 * $this->getDoneTasks()) / $this->getTotalTasks());
     }
 }

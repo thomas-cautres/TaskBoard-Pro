@@ -28,7 +28,7 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
             return [];
         }
 
-        $uuid = $request->attributes->get('uuid');
+        $uuid = $request->attributes->getString('uuid');
 
         $project = $this->projectRepository->findOneWithColumnsAndTasks($uuid);
 

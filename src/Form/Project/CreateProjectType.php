@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @extends AbstractType<ProjectDto>
+ * @extends AbstractType<CreateProjectDto>
  */
 class CreateProjectType extends AbstractType
 {

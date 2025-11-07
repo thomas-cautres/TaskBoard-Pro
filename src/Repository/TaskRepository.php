@@ -31,7 +31,8 @@ class TaskRepository extends ServiceEntityRepository
 
     public function findLastForProject(Project $project): ?Task
     {
-        return $this->createQueryBuilder('t')
+        /** @var ?Task $task */
+        $task = $this->createQueryBuilder('t')
             ->join('t.projectColumn', 'pc')
             ->where('pc.project = :project')
             ->orderBy('t.id', 'DESC')
@@ -39,16 +40,21 @@ class TaskRepository extends ServiceEntityRepository
             ->setParameter('project', $project)
             ->getQuery()
             ->getOneOrNullResult();
+
+        return $task;
     }
 
     public function findLastForProjectColumn(ProjectColumn $projectColumn): ?Task
     {
-        return $this->createQueryBuilder('t')
+        /** @var ?Task $task */
+        $task = $this->createQueryBuilder('t')
             ->where('t.projectColumn = :projectColumn')
             ->orderBy('t.position', 'DESC')
             ->setMaxResults(1)
             ->setParameter('projectColumn', $projectColumn)
             ->getQuery()
             ->getOneOrNullResult();
+
+        return $task;
     }
 }

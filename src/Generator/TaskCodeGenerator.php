@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Generator;
 
 use App\Entity\Project;
+use App\Entity\ProjectColumn;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 
@@ -20,7 +21,9 @@ final readonly class TaskCodeGenerator implements TaskGeneratorInterface
 
     public function generate(Task $task): string
     {
-        $project = $task->getProjectColumn()->getProject();
+        /** @var ProjectColumn $projectColumn */
+        $projectColumn = $task->getProjectColumn();
+        $project = $projectColumn->getProject();
 
         return $this->getPrefix($project).self::SEPARATOR.$this->getNextCounter($project);
     }
@@ -43,7 +46,7 @@ final readonly class TaskCodeGenerator implements TaskGeneratorInterface
         $counter = 0;
 
         if ($lastProjectTask instanceof Task) {
-            $codeExploded = explode(self::SEPARATOR, $lastProjectTask->getCode());
+            $codeExploded = explode(self::SEPARATOR, (string) $lastProjectTask->getCode());
             $counter = (int) $codeExploded[1];
         }
 
