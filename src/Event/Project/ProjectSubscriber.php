@@ -54,7 +54,14 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $projectDto = $event->getProject();
 
-        $project = $this->objectMapper->map($projectDto, Project::class);
+        $project = new Project();
+        $project
+            ->setName($projectDto->getName())
+            ->setDescription($projectDto->getDescription())
+            ->setType($projectDto->getType())
+            ->setStartDate($projectDto->getStartDate())
+            ->setEndDate($projectDto->getEndDate())
+            ->setUuid($projectDto->getUuid());
 
         $this->updateUserRoles($user);
         $project->setCreatedBy($user);
@@ -83,7 +90,19 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $projectDto = $event->getProject();
 
-        $project = $this->objectMapper->map($projectDto, $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]));
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project) {
+            throw new \InvalidArgumentException('Project not found');
+        }
+
+        $project
+            ->setName($projectDto->getName())
+            ->setDescription($projectDto->getDescription())
+            ->setType($projectDto->getType())
+            ->setStartDate($projectDto->getStartDate())
+            ->setEndDate($projectDto->getEndDate())
+            ->setUuid($projectDto->getUuid());
 
         $user->addNotification(
             new Notification()
@@ -92,7 +111,6 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         );
 
         $this->userRepository->save($user, flush: false);
-
         $this->projectRepository->save($project);
         $this->log($project, 'Project edited', 'project.edited');
     }

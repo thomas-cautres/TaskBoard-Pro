@@ -5,27 +5,37 @@ declare(strict_types=1);
 namespace App\Dto\Project;
 
 use App\AppEnum\ProjectType;
-use App\ObjectMapper\CollectionTransformer;
-use Symfony\Component\ObjectMapper\Attribute\Map;
-use Symfony\Component\Uid\Uuid;
+use App\Entity\Project;
+use App\Entity\ProjectColumn;
 
-class ProjectDto extends AbstractProjectDto
+final class ProjectDto extends AbstractProjectDto
 {
-    private int $id;
-    private ?Uuid $uuid;
-    private string $name;
-    private ?string $description;
-    private ProjectType $type;
-    private ?\DateTimeImmutable $startDate;
-    private ?\DateTimeImmutable $endDate;
-    private \DateTimeImmutable $createdAt;
-    #[Map(target: 'columns', source: 'columnsSortedByPosition', transform: CollectionTransformer::class)]
-    public array $columns = [];
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private ?string $description = null,
+        private ProjectType $type,
+        private ?\DateTimeImmutable $startDate = null,
+        private ?\DateTimeImmutable $endDate = null,
+        private \DateTimeImmutable $createdAt,
+        private array $columns = [],
+        protected string $createdByEmail,
+    ) {
+    }
 
-    public function __construct()
+    public static function fromEntity(Project $project): self
     {
-        $this->uuid = Uuid::v7();
-        $this->createdAt = new \DateTimeImmutable('now');
+        return new self(
+            uuid: $project->getUuid()->toRfc4122(),
+            name: $project->getName(),
+            description: $project->getDescription(),
+            type: $project->getType(),
+            startDate: $project->getStartDate(),
+            endDate: $project->getEndDate(),
+            createdAt: $project->getCreatedAt(),
+            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
+            createdByEmail: $project->getCreatedBy()->getEmail()
+        );
     }
 
     public function getFormattedCreatedAt(string $format = 'Y-m-d'): string
@@ -53,28 +63,9 @@ class ProjectDto extends AbstractProjectDto
         return null !== $this->description && '' !== $this->description;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getUuid(): ?Uuid
+    public function getUuid(): string
     {
         return $this->uuid;
-    }
-
-    public function setUuid(?Uuid $uuid): static
-    {
-        $this->uuid = $uuid;
-
-        return $this;
     }
 
     public function getName(): string
@@ -82,23 +73,9 @@ class ProjectDto extends AbstractProjectDto
         return $this->name;
     }
 
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getType(): ProjectType
@@ -106,23 +83,9 @@ class ProjectDto extends AbstractProjectDto
         return $this->type;
     }
 
-    public function setType(ProjectType $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getStartDate(): ?\DateTimeImmutable
     {
         return $this->startDate;
-    }
-
-    public function setStartDate(?\DateTimeImmutable $startDate): static
-    {
-        $this->startDate = $startDate;
-
-        return $this;
     }
 
     public function getEndDate(): ?\DateTimeImmutable
@@ -130,23 +93,9 @@ class ProjectDto extends AbstractProjectDto
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeImmutable $endDate): static
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getColumns(): array
@@ -154,10 +103,8 @@ class ProjectDto extends AbstractProjectDto
         return $this->columns;
     }
 
-    public function setColumns(array $columns): static
+    public function getCreatedByEmail(): string
     {
-        $this->columns = $columns;
-
-        return $this;
+        return $this->createdByEmail;
     }
 }

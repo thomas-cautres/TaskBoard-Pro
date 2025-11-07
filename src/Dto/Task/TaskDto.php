@@ -7,6 +7,7 @@ namespace App\Dto\Task;
 use App\AppEnum\TaskPriority;
 use App\Dto\UserDto;
 use App\Entity\Task;
+use App\ObjectMapper\UserDtoTransformer;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
@@ -20,8 +21,8 @@ class TaskDto
     private ?string $description = null;
     private ?TaskPriority $priority = null;
     private ?\DateTime $endDate = null;
-    #[Map(if: false)]
-    private UserDto $createdBy;
+    #[Map(target: 'createdBy', source: 'createdBy', transform: UserDtoTransformer::class)]
+    private ?UserDto $createdBy = null;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
     private ?int $position = null;

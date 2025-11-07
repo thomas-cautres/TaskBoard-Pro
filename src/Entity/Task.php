@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\AppEnum\TaskPriority;
-use App\Dto\Task\TaskDto;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
-#[Map(target: TaskDto::class, source: TaskDto::class)]
 class Task
 {
     #[ORM\Id]

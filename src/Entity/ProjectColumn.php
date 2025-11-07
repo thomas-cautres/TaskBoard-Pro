@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Dto\Project\ProjectColumnDto;
-use App\ObjectMapper\CollectionTransformer;
-use App\ObjectMapper\ProjectTransformer;
 use App\Repository\ProjectColumnRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjectColumnRepository::class)]
-#[Map(target: ProjectColumnDto::class)]
 class ProjectColumn
 {
     #[ORM\Id]
@@ -35,14 +30,12 @@ class ProjectColumn
 
     #[ORM\ManyToOne(inversedBy: 'columns')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Map(target: 'projectUuid', source: 'project', transform: ProjectTransformer::class)]
     private Project $project;
 
     /**
      * @var Collection<int, Task>
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn', cascade: ['persist', 'remove'])]
-    #[Map(target: 'tasks', source: 'tasks', transform: CollectionTransformer::class)]
     private Collection $tasks;
 
     public function __construct()

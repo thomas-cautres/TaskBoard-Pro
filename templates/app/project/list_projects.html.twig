@@ -107,12 +107,12 @@
                  onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
                 <div class="project-card-header">
                     <div class="d-flex align-items-center gap-3 flex-grow-1">
-                        <div class="project-icon {{ project.type.value|lower }}">
-                            <i class="bi {% if project.type.value == 'Scrum' %}bi-calendar-week{% elseif project.type.value == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
+                        <div class="project-icon {{ project.type|lower }}">
+                            <i class="bi {% if project.type == 'Scrum' %}bi-calendar-week{% elseif project.type == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
                         </div>
                         <div>
                             <h3 class="project-title">{{ project.name }}</h3>
-                            <span class="project-role">{% if app.user.email == project.createdBy.email %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
+                            <span class="project-role">{% if app.user.email == project.createdByEmail %}{{ 'project.role.project_manager'|trans }}{% endif %}</span>
                         </div>
                     </div>
                     <div class="dropdown" onclick="event.stopPropagation()">

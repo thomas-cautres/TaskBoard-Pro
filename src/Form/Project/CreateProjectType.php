@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Project;
 
+use App\Dto\Project\CreateProjectDto;
 use App\Dto\Project\ProjectDto;
 use App\Entity\Project;
 use App\Form\Type\ProjectTypeType;
@@ -88,7 +89,7 @@ class CreateProjectType extends AbstractType
                         }
                         /** @var FormInterface<Project> $projectRoot */
                         $projectRoot = $context->getRoot();
-                        /** @var ProjectDto $project */
+                        /** @var CreateProjectDto $project */
                         $project = $projectRoot->getData();
 
                         if ($value < $project->getStartDate()) {
@@ -102,7 +103,7 @@ class CreateProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProjectDto::class,
+            'data_class' => CreateProjectDto::class,
             'is_edit' => false,
         ]);
     }

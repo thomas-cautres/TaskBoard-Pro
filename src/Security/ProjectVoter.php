@@ -6,7 +6,6 @@ namespace App\Security;
 
 use App\Dto\Project\AbstractProjectDto;
 use App\Dto\Project\ProjectDto;
-use App\Dto\UserDto;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -60,26 +59,26 @@ class ProjectVoter extends Voter
 
     private function canView(AbstractProjectDto $project, User $user): bool
     {
-        return $this->loggedUserIsProjectCreator($user, $project->getCreatedBy());
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
     private function canEdit(AbstractProjectDto $project, User $user): bool
     {
-        return $this->loggedUserIsProjectCreator($user, $project->getCreatedBy());
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
     private function canArchive(AbstractProjectDto $project, User $user): bool
     {
-        return $this->loggedUserIsProjectCreator($user, $project->getCreatedBy()) && true === $this->projectStateMachine->can($project, 'archive');
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'archive');
     }
 
     private function canRestore(AbstractProjectDto $project, User $user): bool
     {
-        return $this->loggedUserIsProjectCreator($user, $project->getCreatedBy()) && true === $this->projectStateMachine->can($project, 'restore');
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'restore');
     }
 
-    private function loggedUserIsProjectCreator(User $user, UserDto $projectCreator): bool
+    private function loggedUserIsProjectCreator(User $user, string $createdByEmail): bool
     {
-        return $user->getEmail() === $projectCreator->getEmail();
+        return $user->getEmail() === $createdByEmail;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\AppEnum\ProjectStatus;
+use App\Dto\Project\AbstractProjectDto;
 use App\Dto\Project\ProjectDto;
 use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
@@ -33,7 +34,7 @@ class ProjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function countByUserAndName(User $user, string $name, ?ProjectDto $validatedProject): int
+    public function countByUserAndName(User $user, string $name, ?AbstractProjectDto $validatedProject): int
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p.id)')
