@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
+use App\AppEnum\ProjectStatus;
 use App\Entity\Project;
 
 final class ProjectListItemDto extends AbstractProjectDto
@@ -11,9 +12,10 @@ final class ProjectListItemDto extends AbstractProjectDto
     public function __construct(
         private string $uuid,
         private string $name,
-        private string $description,
+        private ?string $description = null,
         private string $type,
         protected string $createdByEmail,
+        protected ProjectStatus $status,
     ) {
     }
 
@@ -25,6 +27,7 @@ final class ProjectListItemDto extends AbstractProjectDto
             description: $project->getDescription(),
             type: $project->getType()->value,
             createdByEmail: $project->getCreatedBy()->getEmail(),
+            status: $project->getStatus()
         );
     }
 
@@ -38,7 +41,7 @@ final class ProjectListItemDto extends AbstractProjectDto
         return $this->name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

@@ -12,12 +12,10 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -33,8 +31,6 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $translator,
         private WorkflowInterface $projectStateMachine,
-        private ObjectMapperInterface $objectMapper,
-        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -117,17 +113,21 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
     public function onProjectArchived(ProjectArchivedEvent $event): void
     {
-        $this->projectStateMachine->apply($event->getProject(), 'archive');
-        $project = $this->objectMapper->map($event->getProject(), $this->projectRepository->findOneBy(['uuid' => $event->getProject()->getUuid()]));
+        $projectDto = $event->getProject();
+        $this->projectStateMachine->apply($projectDto, 'archive');
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
 
+        $project->setStatus($projectDto->getStatus());
         $this->projectRepository->save($project);
     }
 
     public function onProjectRestored(ProjectRestoredEvent $event): void
     {
-        $this->projectStateMachine->apply($event->getProject(), 'restore');
-        $project = $this->objectMapper->map($event->getProject(), $this->projectRepository->findOneBy(['uuid' => $event->getProject()->getUuid()]));
+        $projectDto = $event->getProject();
+        $this->projectStateMachine->apply($projectDto, 'restore');
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
 
+        $project->setStatus($projectDto->getStatus());
         $this->projectRepository->save($project);
     }
 

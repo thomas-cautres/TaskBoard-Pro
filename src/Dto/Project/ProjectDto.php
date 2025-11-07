@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
+use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
@@ -20,6 +21,7 @@ final class ProjectDto extends AbstractProjectDto
         private \DateTimeImmutable $createdAt,
         private array $columns = [],
         protected string $createdByEmail,
+        protected ProjectStatus $status,
     ) {
     }
 
@@ -34,7 +36,8 @@ final class ProjectDto extends AbstractProjectDto
             endDate: $project->getEndDate(),
             createdAt: $project->getCreatedAt(),
             columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
-            createdByEmail: $project->getCreatedBy()->getEmail()
+            createdByEmail: $project->getCreatedBy()->getEmail(),
+            status: $project->getStatus()
         );
     }
 
