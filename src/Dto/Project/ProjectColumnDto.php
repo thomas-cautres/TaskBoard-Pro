@@ -13,6 +13,7 @@ final class ProjectColumnDto
         private string $name,
         private int $position,
         private array $tasks = [],
+        private string $projectUuid,
     ) {
     }
 
@@ -22,7 +23,8 @@ final class ProjectColumnDto
             uuid: $projectColumn->getUuid()->toRfc4122(),
             name: $projectColumn->getName(),
             position: $projectColumn->getPosition(),
-            tasks: $projectColumn->getTasks()->toArray()
+            tasks: $projectColumn->getTasks()->toArray(),
+            projectUuid: $projectColumn->getProject()->getUuid()->toRfc4122()
         );
     }
 
@@ -44,5 +46,10 @@ final class ProjectColumnDto
     public function getTasks(): array
     {
         return $this->tasks;
+    }
+
+    public function getProjectUuid(): string
+    {
+        return $this->projectUuid;
     }
 }

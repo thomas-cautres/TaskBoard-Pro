@@ -36,11 +36,15 @@ final readonly class TaskSubscriber implements EventSubscriberInterface
         /** @var User $user */
         $user = $this->security->getUser();
         $taskDto = $event->getTask();
-        $task = $this->objectMapper->map($taskDto, Task::class);
 
         $projectColumn = $this->projectColumnRepository->findOneBy(['uuid' => $event->getProjectColumnUuid()]);
-
+        $task = new Task();
         $task
+            ->setUuid($taskDto->getUuid())
+            ->setTitle($taskDto->getTitle())
+            ->setDescription($taskDto->getDescription())
+            ->setPriority($taskDto->getPriority())
+            ->setEndDate($taskDto->getEndDate())
             ->setCreatedBy($user)
             ->setProjectColumn($projectColumn)
             ->setCode($this->taskCodeGenerator->generate($task))

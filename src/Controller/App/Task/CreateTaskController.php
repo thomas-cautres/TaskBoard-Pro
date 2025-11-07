@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\App\Task;
 
 use App\Dto\Project\ProjectColumnDto;
-use App\Dto\Task\TaskDto;
+use App\Dto\Task\CreateTaskDto;
 use App\Event\Task\TaskCreatedEvent;
 use App\Form\Task\CreateTaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +20,7 @@ class CreateTaskController extends AbstractController
 {
     public function __invoke(Request $request, ProjectColumnDto $projectColumn, EventDispatcherInterface $dispatcher): Response
     {
-        $task = new TaskDto();
+        $task = new CreateTaskDto();
         $form = $this->createForm(CreateTaskType::class, $task, [
             'action' => $this->generateUrl('app_task_create', ['uuid' => $projectColumn->getUuid()]),
             'attr' => ['data-controller' => 'modal', 'data-action' => 'modal#submit'],
@@ -29,7 +29,7 @@ class CreateTaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dispatcher->dispatch(new TaskCreatedEvent($task, $projectColumn->getUuid()->toRfc4122()));
+            $dispatcher->dispatch(new TaskCreatedEvent($task, $projectColumn->getUuid()));
 
             $this->addFlash('success', 'task.create.flash.message.success');
 

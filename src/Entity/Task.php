@@ -54,11 +54,10 @@ class Task
     #[ORM\Column]
     private ?int $position = null;
 
-    public function setId(?int $id): Task
+    public function __construct()
     {
-        $this->id = $id;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
