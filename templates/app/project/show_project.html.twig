@@ -222,7 +222,7 @@
                 <div class="tab-pane fade show active" id="board" role="tabpanel">
                     <div class="d-flex gap-3 overflow-auto pb-3">
                         {% for column in project.columns %}
-                            <div class="d-flex flex-column flex-shrink-0" style="width: 280px;">
+                            <div id="column-{{ loop.index0 }}" class="d-flex flex-column flex-shrink-0" style="width: 280px;">
                                 <div class="bg-light rounded-3 p-3 mb-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-semibold text-dark">{{ column.name }}</span>

@@ -23,3 +23,7 @@ Feature: Create Task
         And I press "Create Task"
         Then I should be on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I should see "Task created successfully"
+        And I should see "Title task" in the "#column-0" element
+        And I should see "ECO-1" in the "#column-0" element
+        And I should see "LOW" in the "#column-0" element
+        And I should see "Jan 01, 2026" in the "#column-0" element
