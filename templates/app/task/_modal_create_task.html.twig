@@ -1,0 +1,36 @@
+<div class="modal fade" id="modal-create-task" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            {{ form_start(form) }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createTaskModalLabel">
+                        <i class="bi bi-plus-circle"></i> {{ 'task.create.title'|trans }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-light d-flex align-items-center mb-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <span>
+                            {{ 'task.create.column_info'|trans }} :
+                            <strong id="selectedColumnName">{{ column_name }}</strong>
+                        </span>
+                    </div>
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.priority) }}
+                    {{ form_row(form.endDate) }}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> {{ 'common.cancel'|trans }}
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> {{ 'task.create.submit'|trans }}
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

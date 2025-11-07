@@ -59,21 +59,26 @@ class ProjectVoter extends Voter
 
     private function canView(AbstractProjectDto $project, User $user): bool
     {
-        return $user->getEmail() === $project->getCreatedByEmail();
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
     private function canEdit(AbstractProjectDto $project, User $user): bool
     {
-        return $user->getEmail() === $project->getCreatedByEmail();
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
     private function canArchive(AbstractProjectDto $project, User $user): bool
     {
-        return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'archive');
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'archive');
     }
 
     private function canRestore(AbstractProjectDto $project, User $user): bool
     {
-        return $user->getEmail() === $project->getCreatedByEmail() && true === $this->projectStateMachine->can($project, 'restore');
+        return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'restore');
+    }
+
+    private function loggedUserIsProjectCreator(User $user, string $createdByEmail): bool
+    {
+        return $user->getEmail() === $createdByEmail;
     }
 }

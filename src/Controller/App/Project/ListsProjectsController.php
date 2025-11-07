@@ -6,7 +6,7 @@ namespace App\Controller\App\Project;
 
 use App\Dto\Pagination;
 use App\Dto\Project\ProjectFiltersDto;
-use App\Dto\Project\ProjectListDto;
+use App\Dto\Project\ProjectListItemDto;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Project\FiltersType;
@@ -17,18 +17,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/app/projects/{page<\d+>}', name: 'app_projects_list', methods: ['GET'])]
 class ListsProjectsController extends AbstractController
 {
     public const int RESULTS_PER_PAGE = 12;
-
-    public function __construct(
-        private readonly ObjectMapperInterface $objectMapper,
-    ) {
-    }
 
     public function __invoke(Request $request, ProjectRepository $projectRepository, int $page = 1): Response
     {
@@ -102,13 +96,13 @@ class ListsProjectsController extends AbstractController
     /**
      * @param Paginator<Project>|Project[] $projectsPaginated
      *
-     * @return ProjectListDto[]
+     * @return ProjectListItemDto[]
      */
     private function getProjectsDtos(Paginator|array $projectsPaginated): array
     {
         $projects = [];
         foreach ($projectsPaginated as $project) {
-            $projects[] = $this->objectMapper->map($project, ProjectListDto::class);
+            $projects[] = ProjectListItemDto::fromEntity($project);
         }
 
         return $projects;

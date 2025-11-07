@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Project;
 
-use App\Dto\Project\ProjectDto;
+use App\Dto\Project\CreateProjectDto;
 use App\Entity\Project;
 use App\Form\Type\ProjectTypeType;
 use App\Form\Validator\UserProjectNameValidator;
@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @extends AbstractType<ProjectDto>
+ * @extends AbstractType<CreateProjectDto>
  */
 class CreateProjectType extends AbstractType
 {
@@ -88,7 +88,7 @@ class CreateProjectType extends AbstractType
                         }
                         /** @var FormInterface<Project> $projectRoot */
                         $projectRoot = $context->getRoot();
-                        /** @var ProjectDto $project */
+                        /** @var CreateProjectDto $project */
                         $project = $projectRoot->getData();
 
                         if ($value < $project->getStartDate()) {
@@ -102,7 +102,7 @@ class CreateProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProjectDto::class,
+            'data_class' => CreateProjectDto::class,
             'is_edit' => false,
         ]);
     }

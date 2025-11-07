@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Dto\Project\ProjectColumnDto;
+use App\Repository\ProjectColumnRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
-#[Map(target: ProjectColumnDto::class)]
+#[ORM\Entity(repositoryClass: ProjectColumnRepository::class)]
 class ProjectColumn
 {
     #[ORM\Id]
@@ -32,9 +32,16 @@ class ProjectColumn
     #[ORM\JoinColumn(nullable: false)]
     private Project $project;
 
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn', cascade: ['persist', 'remove'])]
+    private Collection $tasks;
+
     public function __construct()
     {
         $this->uuid = Uuid::v7();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): int
@@ -93,6 +100,31 @@ class ProjectColumn
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setProjectColumn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        $this->tasks->removeElement($task);
 
         return $this;
     }

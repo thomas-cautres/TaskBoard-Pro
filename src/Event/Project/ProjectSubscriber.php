@@ -12,11 +12,11 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,7 +32,6 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         private UrlGeneratorInterface $urlGenerator,
         private TranslatorInterface $translator,
         private WorkflowInterface $projectStateMachine,
-        private ObjectMapperInterface $objectMapper,
     ) {
     }
 
@@ -52,7 +51,14 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $projectDto = $event->getProject();
 
-        $project = $this->objectMapper->map($projectDto, Project::class);
+        $project = new Project();
+        $project
+            ->setName($projectDto->getName())
+            ->setDescription($projectDto->getDescription())
+            ->setType($projectDto->getType())
+            ->setStartDate($projectDto->getStartDate())
+            ->setEndDate($projectDto->getEndDate())
+            ->setUuid($projectDto->getUuid());
 
         $this->updateUserRoles($user);
         $project->setCreatedBy($user);
@@ -81,7 +87,19 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $projectDto = $event->getProject();
 
-        $project = $this->objectMapper->map($projectDto, $this->projectRepository->find($projectDto->getId()));
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
+        }
+
+        $project
+            ->setName($projectDto->getName())
+            ->setDescription($projectDto->getDescription())
+            ->setType($projectDto->getType())
+            ->setStartDate($projectDto->getStartDate())
+            ->setEndDate($projectDto->getEndDate())
+            ->setUuid($projectDto->getUuid());
 
         $user->addNotification(
             new Notification()
@@ -96,14 +114,31 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
     public function onProjectArchived(ProjectArchivedEvent $event): void
     {
-        $this->projectStateMachine->apply($event->getProject(), 'archive');
-        $this->projectRepository->save($event->getProject());
+        $projectDto = $event->getProject();
+        $this->projectStateMachine->apply($projectDto, 'archive');
+
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
+        }
+
+        $project->setStatus($projectDto->getStatus());
+        $this->projectRepository->save($project);
     }
 
     public function onProjectRestored(ProjectRestoredEvent $event): void
     {
-        $this->projectStateMachine->apply($event->getProject(), 'restore');
-        $this->projectRepository->save($event->getProject());
+        $projectDto = $event->getProject();
+        $this->projectStateMachine->apply($projectDto, 'restore');
+        $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
+        }
+
+        $project->setStatus($projectDto->getStatus());
+        $this->projectRepository->save($project);
     }
 
     private function updateUserRoles(User $user): void

@@ -5,25 +5,35 @@ declare(strict_types=1);
 namespace App\Dto\Project;
 
 use App\Entity\ProjectColumn;
-use Symfony\Component\ObjectMapper\Attribute\Map;
 
-#[Map(target: ProjectColumn::class, source: ProjectColumn::class)]
-class ProjectColumnDto
+final class ProjectColumnDto
 {
-    private int $id;
-    private string $name;
-    private int $position;
-
-    public function getId(): int
-    {
-        return $this->id;
+    /**
+     * @param array<mixed> $tasks
+     */
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private int $position,
+        private string $projectUuid,
+        private array $tasks = [],
+    ) {
     }
 
-    public function setId(int $id): ProjectColumnDto
+    public static function fromEntity(ProjectColumn $projectColumn): self
     {
-        $this->id = $id;
+        return new self(
+            uuid: $projectColumn->getUuid()->toRfc4122(),
+            name: $projectColumn->getName(),
+            position: $projectColumn->getPosition(),
+            projectUuid: $projectColumn->getProject()->getUuid()->toRfc4122(),
+            tasks: $projectColumn->getTasks()->toArray()
+        );
+    }
 
-        return $this;
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     public function getName(): string
@@ -31,22 +41,21 @@ class ProjectColumnDto
         return $this->name;
     }
 
-    public function setName(string $name): ProjectColumnDto
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPosition(): int
     {
         return $this->position;
     }
 
-    public function setPosition(int $position): ProjectColumnDto
+    /**
+     * @return mixed[]
+     */
+    public function getTasks(): array
     {
-        $this->position = $position;
+        return $this->tasks;
+    }
 
-        return $this;
+    public function getProjectUuid(): string
+    {
+        return $this->projectUuid;
     }
 }

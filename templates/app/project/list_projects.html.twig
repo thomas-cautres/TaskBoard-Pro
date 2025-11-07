@@ -107,8 +107,8 @@
                  onclick="window.location.href='{{ path('app_project_show', {uuid:project.uuid}) }}'">
                 <div class="project-card-header">
                     <div class="d-flex align-items-center gap-3 flex-grow-1">
-                        <div class="project-icon {{ project.type.value|lower }}">
-                            <i class="bi {% if project.type.value == 'Scrum' %}bi-calendar-week{% elseif project.type.value == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
+                        <div class="project-icon {{ project.type|lower }}">
+                            <i class="bi {% if project.type == 'Scrum' %}bi-calendar-week{% elseif project.type == 'Kanban' %}bi-kanban{% else %}bi-list-check{% endif %}"></i>
                         </div>
                         <div>
                             <h3 class="project-title">{{ project.name }}</h3>
@@ -127,12 +127,14 @@
                                 <hr class="dropdown-divider">
                             </li>
                             {% if is_granted('archive', project) %}
-                                <li><a class="dropdown-item text-warning" href="#" data-controller="project" data-action="project#openModalArchive" data-project-url-param="{{ path('app_project_archive', {uuid:project.uuid}) }}">
+                                <li><a class="dropdown-item text-warning" href="#"  data-controller="modal"
+                                       data-action="click->modal#open" data-modal-url-value="{{ path('app_project_archive', {uuid:project.uuid}) }}">
                                         <i class="bi bi-archive me-2"></i>
                                         {{ 'project.menu.archive'|trans }}</a>
                                 </li>
                             {% elseif is_granted('restore', project) %}
-                                <li><a class="dropdown-item text-success" href="#" data-controller="project" data-action="project#openModalRestore" data-project-url-param="{{ path('app_project_restore', {uuid:project.uuid}) }}">
+                                <li><a class="dropdown-item text-success" href="#"  data-controller="modal"
+                                       data-action="click->modal#open" data-modal-url-value="{{ path('app_project_restore', {uuid:project.uuid}) }}">
                                         <i class="bi bi-arrow-counterclockwise me-2"></i>
                                         {{ 'project.menu.restore'|trans }}</a>
                                 </li>
@@ -144,25 +146,24 @@
                 <p class="project-description">
                     {{ project.description }}
                 </p>
-
                 <div class="project-progress">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="small text-muted">{{ 'project.card.progress'|trans }}</span>
-                        <span class="small fw-semibold text-success">0%</span>
+                        <span class="small fw-semibold text-success">{{ project.tasksCompletedPercent }}%</span>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar bg-success" style="width: 0%"></div>
+                        <div class="progress-bar bg-success" style="width: {{ project.tasksCompletedPercent }}%"></div>
                     </div>
                 </div>
 
                 <div class="project-stats">
                     <div>
                         <i class="bi bi-list-check me-1"></i>
-                        <span>{{ 'project.card.tasks'|trans({'%count%': 0}) }}</span>
+                        <span>{{ 'project.card.tasks'|trans({'%count%': project.totalTasks }) }}</span>
                     </div>
                     <div>
                         <i class="bi bi-hourglass-split me-1"></i>
-                        <span>0 {{ 'project.stats.in_progress'|trans|lower }}</span>
+                        <span>{{ project.inProgressTasks }} {{ 'project.stats.in_progress'|trans|lower }}</span>
                     </div>
                 </div>
 

@@ -4,29 +4,66 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
+use App\AppEnum\ProjectColumnName;
+use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
-use App\ObjectMapper\CollectionTransformer;
-use Symfony\Component\ObjectMapper\Attribute\Map;
-use Symfony\Component\Uid\Uuid;
+use App\Entity\Project;
+use App\Entity\ProjectColumn;
 
-class ProjectDto extends AbstractProjectDto
+final class ProjectDto extends AbstractProjectDto
 {
-    private int $id;
-    private ?Uuid $uuid;
-    private string $name;
-    private ?string $description;
-    private ProjectType $type;
-    private ?\DateTimeImmutable $startDate;
-    private ?\DateTimeImmutable $endDate;
-    private \DateTimeImmutable $createdAt;
-    /** @var ProjectColumnDto[] */
-    #[Map(target: 'columns', source: 'columnsSortedByPosition', transform: CollectionTransformer::class)]
-    public array $columns = [];
+    /**
+     * @param array<int, ProjectColumnDto> $columns
+     */
+    public function __construct(
+        private string $uuid,
+        private string $name,
+        private ProjectType $type,
+        private \DateTimeImmutable $createdAt,
+        private int $totalTasks,
+        private int $inProgressTasks,
+        private int $doneTasks,
+        protected string $createdByEmail,
+        protected ProjectStatus $status,
+        private array $columns = [],
+        private ?\DateTimeImmutable $startDate = null,
+        private ?\DateTimeImmutable $endDate = null,
+        private ?string $description = null,
+    ) {
+    }
 
-    public function __construct()
+    public static function fromEntity(Project $project): self
     {
-        $this->uuid = Uuid::v7();
-        $this->createdAt = new \DateTimeImmutable('now');
+        $totalTasks = 0;
+        $inProgressTasks = 0;
+        $doneTasks = 0;
+        foreach ($project->getColumns() as $column) {
+            foreach ($column->getTasks() as $task) {
+                ++$totalTasks;
+
+                match ($task->getProjectColumn()?->getName()) {
+                    ProjectColumnName::InProgress->value => $inProgressTasks++,
+                    ProjectColumnName::Done->value, ProjectColumnName::Closed->value => $doneTasks++,
+                    default => null,
+                };
+            }
+        }
+
+        return new self(
+            uuid: $project->getUuid()->toRfc4122(),
+            name: $project->getName(),
+            type: $project->getType(),
+            createdAt: $project->getCreatedAt(),
+            totalTasks: $totalTasks,
+            inProgressTasks: $inProgressTasks,
+            doneTasks: $doneTasks,
+            createdByEmail: $project->getCreatedBy()->getEmail(),
+            status: $project->getStatus(),
+            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
+            startDate: $project->getStartDate(),
+            endDate: $project->getEndDate(),
+            description: $project->getDescription()
+        );
     }
 
     public function getFormattedCreatedAt(string $format = 'Y-m-d'): string
@@ -54,28 +91,9 @@ class ProjectDto extends AbstractProjectDto
         return null !== $this->description && '' !== $this->description;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getUuid(): ?Uuid
+    public function getUuid(): string
     {
         return $this->uuid;
-    }
-
-    public function setUuid(?Uuid $uuid): static
-    {
-        $this->uuid = $uuid;
-
-        return $this;
     }
 
     public function getName(): string
@@ -83,23 +101,9 @@ class ProjectDto extends AbstractProjectDto
         return $this->name;
     }
 
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getType(): ProjectType
@@ -107,23 +111,9 @@ class ProjectDto extends AbstractProjectDto
         return $this->type;
     }
 
-    public function setType(ProjectType $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getStartDate(): ?\DateTimeImmutable
     {
         return $this->startDate;
-    }
-
-    public function setStartDate(?\DateTimeImmutable $startDate): static
-    {
-        $this->startDate = $startDate;
-
-        return $this;
     }
 
     public function getEndDate(): ?\DateTimeImmutable
@@ -131,40 +121,45 @@ class ProjectDto extends AbstractProjectDto
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeImmutable $endDate): static
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     /**
-     * @return ProjectColumnDto[]
+     * @return array<int, ProjectColumnDto>
      */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
-    /**
-     * @param ProjectColumnDto[] $columns
-     */
-    public function setColumns(array $columns): static
+    public function getCreatedByEmail(): string
     {
-        $this->columns = $columns;
+        return $this->createdByEmail;
+    }
 
-        return $this;
+    public function getTotalTasks(): int
+    {
+        return $this->totalTasks;
+    }
+
+    public function getDoneTasks(): int
+    {
+        return $this->doneTasks;
+    }
+
+    public function getInProgressTasks(): int
+    {
+        return $this->inProgressTasks;
+    }
+
+    public function getTasksCompletedPercent(): int
+    {
+        if (0 === $this->getTotalTasks()) {
+            return 0;
+        }
+
+        return (int) ((100 * $this->getDoneTasks()) / $this->getTotalTasks());
     }
 }

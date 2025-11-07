@@ -62,15 +62,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $notifications;
 
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'createdBy')]
+    private Collection $tasks;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): User
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -236,5 +250,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getInitials(): string
     {
         return mb_strtoupper(mb_substr($this->firstName, 0, 1).mb_substr($this->lastName, 0, 1));
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        $this->tasks->removeElement($task);
+
+        return $this;
     }
 }

@@ -60,6 +60,7 @@ class Project
     public function __construct()
     {
         $this->columns = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): int
