@@ -272,12 +272,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTask(Task $task): static
     {
-        if ($this->tasks->removeElement($task)) {
-            // set the owning side to null (unless already changed)
-            if ($task->getCreatedBy() === $this) {
-                $task->setCreatedBy(null);
-            }
-        }
+        $this->tasks->removeElement($task);
 
         return $this;
     }

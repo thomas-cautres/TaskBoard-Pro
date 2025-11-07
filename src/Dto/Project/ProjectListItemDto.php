@@ -13,13 +13,13 @@ final class ProjectListItemDto extends AbstractProjectDto
     public function __construct(
         private string $uuid,
         private string $name,
-        private ?string $description = null,
         private string $type,
         protected string $createdByEmail,
         protected ProjectStatus $status,
         private int $totalTasks,
         private int $inProgressTasks,
         private int $doneTasks,
+        private ?string $description = null,
     ) {
     }
 
@@ -43,13 +43,13 @@ final class ProjectListItemDto extends AbstractProjectDto
         return new self(
             uuid: $project->getUuid()->toRfc4122(),
             name: $project->getName(),
-            description: $project->getDescription(),
             type: $project->getType()->value,
             createdByEmail: $project->getCreatedBy()->getEmail(),
             status: $project->getStatus(),
             totalTasks: $totalTasks,
             inProgressTasks: $inProgressTasks,
             doneTasks: $doneTasks,
+            description: $project->getDescription(),
         );
     }
 

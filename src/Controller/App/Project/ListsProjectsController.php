@@ -6,7 +6,6 @@ namespace App\Controller\App\Project;
 
 use App\Dto\Pagination;
 use App\Dto\Project\ProjectFiltersDto;
-use App\Dto\Project\ProjectListDto;
 use App\Dto\Project\ProjectListItemDto;
 use App\Entity\Project;
 use App\Entity\User;
@@ -97,7 +96,7 @@ class ListsProjectsController extends AbstractController
     /**
      * @param Paginator<Project>|Project[] $projectsPaginated
      *
-     * @return ProjectListDto[]
+     * @return ProjectListItemDto[]
      */
     private function getProjectsDtos(Paginator|array $projectsPaginated): array
     {

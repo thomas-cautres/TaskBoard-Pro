@@ -8,12 +8,15 @@ use App\Entity\ProjectColumn;
 
 final class ProjectColumnDto
 {
+    /**
+     * @param array<mixed> $tasks
+     */
     public function __construct(
         private string $uuid,
         private string $name,
         private int $position,
-        private array $tasks = [],
         private string $projectUuid,
+        private array $tasks = [],
     ) {
     }
 
@@ -23,8 +26,8 @@ final class ProjectColumnDto
             uuid: $projectColumn->getUuid()->toRfc4122(),
             name: $projectColumn->getName(),
             position: $projectColumn->getPosition(),
-            tasks: $projectColumn->getTasks()->toArray(),
-            projectUuid: $projectColumn->getProject()->getUuid()->toRfc4122()
+            projectUuid: $projectColumn->getProject()->getUuid()->toRfc4122(),
+            tasks: $projectColumn->getTasks()->toArray()
         );
     }
 
@@ -43,6 +46,9 @@ final class ProjectColumnDto
         return $this->position;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getTasks(): array
     {
         return $this->tasks;

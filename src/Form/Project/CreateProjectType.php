@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Project;
 
 use App\Dto\Project\CreateProjectDto;
-use App\Dto\Project\ProjectDto;
 use App\Entity\Project;
 use App\Form\Type\ProjectTypeType;
 use App\Form\Validator\UserProjectNameValidator;

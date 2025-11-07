@@ -11,37 +11,73 @@ use Symfony\Component\Uid\Uuid;
 final class EditProjectDto extends AbstractProjectDto
 {
     public function __construct(
-        private ?string $name = null,
+        protected string $createdByEmail,
+        private string $name,
+        private Uuid $uuid,
+        private ProjectType $type,
         private ?string $description = null,
-        private ?ProjectType $type,
         private ?\DateTimeImmutable $startDate = null,
         private ?\DateTimeImmutable $endDate = null,
-        private ?Uuid $uuid,
-        protected string $createdByEmail,
     ) {
     }
 
     public static function fromEntity(Project $project): self
     {
         return new self(
+            createdByEmail: $project->getCreatedBy()->getEmail(),
             name: $project->getName(),
-            description: $project->getDescription(),
-            type: $project->getType(),
-            startDate: $project->getStartDate(),
-            endDate: $project->getEndDate(),
             uuid: $project->getUuid(),
-            createdByEmail: $project->getCreatedBy()->getEmail()
+            type: $project->getType(),
+            description: $project->getDescription(),
+            startDate: $project->getStartDate(),
+            endDate: $project->getEndDate()
         );
     }
 
-    public function getName(): ?string
+    public function getCreatedByEmail(): string
+    {
+        return $this->createdByEmail;
+    }
+
+    public function setCreatedByEmail(string $createdByEmail): EditProjectDto
+    {
+        $this->createdByEmail = $createdByEmail;
+
+        return $this;
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(?string $name): EditProjectDto
+    public function setName(string $name): EditProjectDto
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): EditProjectDto
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getType(): ProjectType
+    {
+        return $this->type;
+    }
+
+    public function setType(ProjectType $type): EditProjectDto
+    {
+        $this->type = $type;
 
         return $this;
     }
@@ -54,18 +90,6 @@ final class EditProjectDto extends AbstractProjectDto
     public function setDescription(?string $description): EditProjectDto
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getType(): ?ProjectType
-    {
-        return $this->type;
-    }
-
-    public function setType(?ProjectType $type): EditProjectDto
-    {
-        $this->type = $type;
 
         return $this;
     }
@@ -90,18 +114,6 @@ final class EditProjectDto extends AbstractProjectDto
     public function setEndDate(?\DateTimeImmutable $endDate): EditProjectDto
     {
         $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    public function getUuid(): ?Uuid
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(?Uuid $uuid): EditProjectDto
-    {
-        $this->uuid = $uuid;
 
         return $this;
     }

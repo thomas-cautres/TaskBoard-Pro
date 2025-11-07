@@ -124,12 +124,7 @@ class ProjectColumn
 
     public function removeTask(Task $task): static
     {
-        if ($this->tasks->removeElement($task)) {
-            // set the owning side to null (unless already changed)
-            if ($task->getProjectColumn() === $this) {
-                $task->setProjectColumn(null);
-            }
-        }
+        $this->tasks->removeElement($task);
 
         return $this;
     }

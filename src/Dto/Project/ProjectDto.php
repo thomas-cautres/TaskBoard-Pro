@@ -12,20 +12,23 @@ use App\Entity\ProjectColumn;
 
 final class ProjectDto extends AbstractProjectDto
 {
+    /**
+     * @param array<int, ProjectColumnDto> $columns
+     */
     public function __construct(
         private string $uuid,
         private string $name,
-        private ?string $description = null,
         private ProjectType $type,
-        private ?\DateTimeImmutable $startDate = null,
-        private ?\DateTimeImmutable $endDate = null,
         private \DateTimeImmutable $createdAt,
         private int $totalTasks,
         private int $inProgressTasks,
         private int $doneTasks,
-        private array $columns = [],
         protected string $createdByEmail,
         protected ProjectStatus $status,
+        private array $columns = [],
+        private ?\DateTimeImmutable $startDate = null,
+        private ?\DateTimeImmutable $endDate = null,
+        private ?string $description = null,
     ) {
     }
 
@@ -49,17 +52,17 @@ final class ProjectDto extends AbstractProjectDto
         return new self(
             uuid: $project->getUuid()->toRfc4122(),
             name: $project->getName(),
-            description: $project->getDescription(),
             type: $project->getType(),
-            startDate: $project->getStartDate(),
-            endDate: $project->getEndDate(),
             createdAt: $project->getCreatedAt(),
             totalTasks: $totalTasks,
             inProgressTasks: $inProgressTasks,
             doneTasks: $doneTasks,
-            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
             createdByEmail: $project->getCreatedBy()->getEmail(),
-            status: $project->getStatus()
+            status: $project->getStatus(),
+            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
+            startDate: $project->getStartDate(),
+            endDate: $project->getEndDate(),
+            description: $project->getDescription()
         );
     }
 
@@ -123,6 +126,9 @@ final class ProjectDto extends AbstractProjectDto
         return $this->createdAt;
     }
 
+    /**
+     * @return array<int, ProjectColumnDto>
+     */
     public function getColumns(): array
     {
         return $this->columns;

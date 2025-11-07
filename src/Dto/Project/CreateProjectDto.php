@@ -9,24 +9,24 @@ use Symfony\Component\Uid\Uuid;
 
 final class CreateProjectDto
 {
-    private ?string $name = null;
+    private string $name;
     private ?string $description = null;
-    private ?ProjectType $type;
+    private ProjectType $type;
     private ?\DateTimeImmutable $startDate = null;
     private ?\DateTimeImmutable $endDate = null;
-    private ?Uuid $uuid;
+    private Uuid $uuid;
 
     public function __construct()
     {
         $this->uuid = Uuid::v7();
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(?string $name): CreateProjectDto
+    public function setName(string $name): CreateProjectDto
     {
         $this->name = $name;
 
@@ -45,12 +45,12 @@ final class CreateProjectDto
         return $this;
     }
 
-    public function getType(): ?ProjectType
+    public function getType(): ProjectType
     {
         return $this->type;
     }
 
-    public function setType(?ProjectType $type): CreateProjectDto
+    public function setType(ProjectType $type): CreateProjectDto
     {
         $this->type = $type;
 
@@ -81,15 +81,8 @@ final class CreateProjectDto
         return $this;
     }
 
-    public function getUuid(): ?Uuid
+    public function getUuid(): Uuid
     {
         return $this->uuid;
-    }
-
-    public function setUuid(?Uuid $uuid): CreateProjectDto
-    {
-        $this->uuid = $uuid;
-
-        return $this;
     }
 }

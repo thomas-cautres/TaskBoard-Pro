@@ -12,6 +12,7 @@ use App\Entity\ProjectColumn;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -88,8 +89,8 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
 
         $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
 
-        if (!$project) {
-            throw new \InvalidArgumentException('Project not found');
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
         }
 
         $project
@@ -115,7 +116,12 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
     {
         $projectDto = $event->getProject();
         $this->projectStateMachine->apply($projectDto, 'archive');
+
         $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
+        }
 
         $project->setStatus($projectDto->getStatus());
         $this->projectRepository->save($project);
@@ -126,6 +132,10 @@ readonly class ProjectSubscriber implements EventSubscriberInterface
         $projectDto = $event->getProject();
         $this->projectStateMachine->apply($projectDto, 'restore');
         $project = $this->projectRepository->findOneBy(['uuid' => $projectDto->getUuid()]);
+
+        if (!$project instanceof Project) {
+            throw new EntityNotFoundException(sprintf('Project with uuid %s not found', $projectDto->getUuid()));
+        }
 
         $project->setStatus($projectDto->getStatus());
         $this->projectRepository->save($project);

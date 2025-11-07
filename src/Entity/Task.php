@@ -17,16 +17,16 @@ class Task
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: UuidType::NAME)]
-    private ?Uuid $uuid = null;
+    private Uuid $uuid;
 
     #[ORM\Column(length: 255)]
-    private ?string $code = null;
+    private string $code;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -39,20 +39,20 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $createdBy = null;
+    private User $createdBy;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private \DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ProjectColumn $projectColumn = null;
+    private ProjectColumn $projectColumn;
 
     #[ORM\Column]
-    private ?int $position = null;
+    private int $position;
 
     public function __construct()
     {
@@ -60,17 +60,41 @@ class Task
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getUuid(): Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): Task
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): Task
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(string $title): Task
     {
         $this->title = $title;
 
@@ -82,7 +106,7 @@ class Task
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(?string $description): Task
     {
         $this->description = $description;
 
@@ -94,7 +118,7 @@ class Task
         return $this->priority;
     }
 
-    public function setPriority(?TaskPriority $priority): static
+    public function setPriority(?TaskPriority $priority): Task
     {
         $this->priority = $priority;
 
@@ -106,91 +130,67 @@ class Task
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTime $endDate): static
+    public function setEndDate(?\DateTime $endDate): Task
     {
         $this->endDate = $endDate;
 
         return $this;
     }
 
-    public function getUuid(): ?Uuid
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(Uuid $uuid): static
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): static
+    public function setCreatedBy(User $createdBy): Task
     {
         $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): Task
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function setCode(?string $code): static
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): Task
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getProjectColumn(): ?ProjectColumn
+    public function getProjectColumn(): ProjectColumn
     {
         return $this->projectColumn;
     }
 
-    public function setProjectColumn(?ProjectColumn $projectColumn): static
+    public function setProjectColumn(ProjectColumn $projectColumn): Task
     {
         $this->projectColumn = $projectColumn;
 
         return $this;
     }
 
-    public function getPosition(): ?int
+    public function getPosition(): int
     {
         return $this->position;
     }
 
-    public function setPosition(?int $position): static
+    public function setPosition(int $position): Task
     {
         $this->position = $position;
 
