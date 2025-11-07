@@ -32,7 +32,7 @@ final class ProjectListItemDto extends AbstractProjectDto
             foreach ($column->getTasks() as $task) {
                 ++$totalTasks;
 
-                match ($task->getProjectColumn()->getName()) {
+                match ($task->getProjectColumn()?->getName()) {
                     ProjectColumnName::InProgress->value => $inProgressTasks++,
                     ProjectColumnName::Done->value, ProjectColumnName::Closed->value => $doneTasks++,
                     default => null,

@@ -49,7 +49,8 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ProjectColumn $projectColumn;
+    /** @phpstan-ignore-next-line */
+    private ?ProjectColumn $projectColumn = null;
 
     #[ORM\Column]
     private int $position;
@@ -173,12 +174,12 @@ class Task
         return $this;
     }
 
-    public function getProjectColumn(): ProjectColumn
+    public function getProjectColumn(): ?ProjectColumn
     {
         return $this->projectColumn;
     }
 
-    public function setProjectColumn(ProjectColumn $projectColumn): Task
+    public function setProjectColumn(?ProjectColumn $projectColumn): Task
     {
         $this->projectColumn = $projectColumn;
 

@@ -44,6 +44,7 @@ final readonly class TaskSubscriber implements EventSubscriberInterface
         }
 
         $task = new Task();
+        $task->setProjectColumn($projectColumn);
         /** @var string $taskCode */
         $taskCode = $this->taskCodeGenerator->generate($task);
         $task
@@ -53,7 +54,6 @@ final readonly class TaskSubscriber implements EventSubscriberInterface
             ->setPriority($taskDto->getPriority())
             ->setEndDate($taskDto->getEndDate())
             ->setCreatedBy($user)
-            ->setProjectColumn($projectColumn)
             ->setCode($taskCode)
             ->setPosition((int) $this->taskRepository->findLastForProjectColumn($projectColumn)?->getPosition() + 1);
 
