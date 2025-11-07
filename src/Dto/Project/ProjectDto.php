@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
+use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
 use App\Entity\Project;
@@ -19,6 +20,9 @@ final class ProjectDto extends AbstractProjectDto
         private ?\DateTimeImmutable $startDate = null,
         private ?\DateTimeImmutable $endDate = null,
         private \DateTimeImmutable $createdAt,
+        private int $totalTasks,
+        private int $inProgressTasks,
+        private int $doneTasks,
         private array $columns = [],
         protected string $createdByEmail,
         protected ProjectStatus $status,
@@ -27,6 +31,21 @@ final class ProjectDto extends AbstractProjectDto
 
     public static function fromEntity(Project $project): self
     {
+        $totalTasks = 0;
+        $inProgressTasks = 0;
+        $doneTasks = 0;
+        foreach ($project->getColumns() as $column) {
+            foreach ($column->getTasks() as $task) {
+                ++$totalTasks;
+
+                match ($task->getProjectColumn()->getName()) {
+                    ProjectColumnName::InProgress->value => $inProgressTasks++,
+                    ProjectColumnName::Done->value, ProjectColumnName::Closed->value => $doneTasks++,
+                    default => null,
+                };
+            }
+        }
+
         return new self(
             uuid: $project->getUuid()->toRfc4122(),
             name: $project->getName(),
@@ -35,6 +54,9 @@ final class ProjectDto extends AbstractProjectDto
             startDate: $project->getStartDate(),
             endDate: $project->getEndDate(),
             createdAt: $project->getCreatedAt(),
+            totalTasks: $totalTasks,
+            inProgressTasks: $inProgressTasks,
+            doneTasks: $doneTasks,
             columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
             createdByEmail: $project->getCreatedBy()->getEmail(),
             status: $project->getStatus()
@@ -109,5 +131,29 @@ final class ProjectDto extends AbstractProjectDto
     public function getCreatedByEmail(): string
     {
         return $this->createdByEmail;
+    }
+
+    public function getTotalTasks(): int
+    {
+        return $this->totalTasks;
+    }
+
+    public function getDoneTasks(): int
+    {
+        return $this->doneTasks;
+    }
+
+    public function getInProgressTasks(): int
+    {
+        return $this->inProgressTasks;
+    }
+
+    public function getTasksCompletedPercent(): int
+    {
+        if (0 === $this->getTotalTasks()) {
+            return 0;
+        }
+
+        return (int)((100 * $this->getDoneTasks()) / $this->getTotalTasks());
     }
 }

@@ -146,25 +146,24 @@
                 <p class="project-description">
                     {{ project.description }}
                 </p>
-
                 <div class="project-progress">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="small text-muted">{{ 'project.card.progress'|trans }}</span>
-                        <span class="small fw-semibold text-success">0%</span>
+                        <span class="small fw-semibold text-success">{{ project.tasksCompletedPercent }}%</span>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar bg-success" style="width: 0%"></div>
+                        <div class="progress-bar bg-success" style="width: {{ project.tasksCompletedPercent }}%"></div>
                     </div>
                 </div>
 
                 <div class="project-stats">
                     <div>
                         <i class="bi bi-list-check me-1"></i>
-                        <span>{{ 'project.card.tasks'|trans({'%count%': 0}) }}</span>
+                        <span>{{ 'project.card.tasks'|trans({'%count%': project.totalTasks }) }}</span>
                     </div>
                     <div>
                         <i class="bi bi-hourglass-split me-1"></i>
-                        <span>0 {{ 'project.stats.in_progress'|trans|lower }}</span>
+                        <span>{{ project.inProgressTasks }} {{ 'project.stats.in_progress'|trans|lower }}</span>
                     </div>
                 </div>
 
