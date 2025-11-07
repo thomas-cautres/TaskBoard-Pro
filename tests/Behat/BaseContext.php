@@ -7,6 +7,7 @@ namespace App\Tests\Behat;
 use App\Repository\UserRepository;
 use Behat\Behat\Context\Context;
 use Behat\Mink\Driver\PantherDriver;
+use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 use CoopTilleuls\UrlSignerBundle\UrlSigner\UrlSignerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -155,6 +156,18 @@ class BaseContext extends MinkContext implements Context
         $this->getSession()->wait(
             $time,
         );
+    }
+
+    public function fillField(mixed $field, mixed $value): void
+    {
+        $this->retryStep(function () use ($field, $value) {
+            parent::fillField($field, $value);
+            $element = $this->getSession()->getPage()->find('css', '#'.$field)?->getValue();
+
+            if ('' === $element) {
+                throw new ExpectationException('element empty', $this->getSession()->getDriver());
+            }
+        });
     }
 
     private function retryStep(
