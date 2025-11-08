@@ -70,19 +70,18 @@
 ## 🔜 Sprint 3 - Les Tâches
 
 ### Créer une tâche
-- [ ] Bouton dans chaque colonne du board
-- [ ] Modal avec formulaire
-- [ ] Champs: titre, description, priorité, date échéance
-- [ ] Numérotation automatique (EX-1, EX-2...)
-- [ ] Tâche créée dans la bonne colonne
-- [ ] Notification
+- [x] Bouton dans chaque colonne du board
+- [x] Modal avec formulaire
+- [x] Champs: titre, description, priorité, date échéance
+- [x] Numérotation automatique (EX-1, EX-2...)
+- [x] Tâche créée dans la bonne colonne
 
 ### Afficher les tâches
-- [ ] Cards dans les colonnes
-- [ ] Numéro + titre
-- [ ] Badge priorité (couleur)
-- [ ] Date échéance (rouge si dépassée)
-- [ ] Compteur dans header colonne
+- [x] Cards dans les colonnes
+- [x] Numéro + titre
+- [x] Badge priorité (couleur)
+- [x] Date échéance (rouge si dépassée)
+- [x] Compteur dans header colonne
 
 ### Voir une tâche
 - [ ] Modal au clic sur la card
@@ -245,37 +244,3 @@
 21. Je vois mes tâches du jour sur le dashboard
 22. Je reçois un email récapitulatif
 23. J'active le dark mode
-
----
-
-## 📊 Progression
-
-- **Sprint 1**: ✅ Fondations (Auth + Projets + Notifications)
-- **Sprint 2**: 🔜 CRUD Projets complet (2 semaines)
-- **Sprint 3**: 🔜 Gestion des Tâches (3 semaines)
-- **Sprint 4**: 🔜 Commentaires + Activité (2 semaines)
-- **Sprint 5**: 🔜 UX + Stats (2 semaines)
-- **Sprint 6**: 🔜 Polish (2 semaines)
-
-**Total: ~3 mois pour un MVP utilisable** 🚀
-
----
-
-## 🏆 Vision
-
-**TaskBoard Pro = Jira simplifié pour solo/petites équipes**
-
-### Ce qui rend le produit unique
-- ✨ **Ultra simple**: créer un projet en 30 secondes
-- 🎨 **3 méthodologies**: s'adapte à ton workflow
-- 🚀 **Rapide**: pas de complexité inutile
-- 📱 **Moderne**: UI clean, drag & drop intuitif
-- 🔔 **Notifications intelligentes**: reste au courant automatiquement
-
-### Évolution naturelle
-1. **Phase 1** (maintenant): Solo - Je gère mes projets seul
-2. **Phase 2** (post-MVP): Équipe - J'invite des collaborateurs
-3. **Phase 3**: Intégrations - Je connecte mes outils
-4. **Phase 4**: Avancé - SCRUM complet, automation
-
-**Le focus: rendre la gestion de projet simple et agréable** ✨
