@@ -25,9 +25,8 @@ final class ProjectListItemDto extends AbstractProjectDto
 
     public static function fromEntity(Project $project): self
     {
-        $totalTasks = 0;
-        $inProgressTasks = 0;
-        $doneTasks = 0;
+        $totalTasks = $inProgressTasks = $doneTasks = 0;
+
         foreach ($project->getColumns() as $column) {
             foreach ($column->getTasks() as $task) {
                 ++$totalTasks;

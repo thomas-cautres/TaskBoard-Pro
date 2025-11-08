@@ -35,7 +35,7 @@ class ProjectColumn
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectColumn', cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $tasks;
 
     public function __construct()

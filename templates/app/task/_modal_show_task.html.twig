@@ -1,0 +1,124 @@
+<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <div class="d-flex flex-column w-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <span class="badge bg-secondary me-2">{{ task.code }}</span>
+                            <span class="badge bg-light text-dark border">Backlog</span>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <h5 class="modal-title mb-0" id="taskModalLabel">{{ task.title }}</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">
+                        <i class="bi bi-file-text"></i> Description
+                    </h6>
+                    {% if task.description is not null %}
+                        <p class="mb-0">
+                            {{ task.description }}
+                        </p>
+                    {% else %}
+                        <p class="text-muted fst-italic mb-0">
+                            <i class="bi bi-info-circle"></i> No description provided
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- Metadata -->
+                <div class="row g-3">
+
+                    <!-- Priority -->
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-flag"></i> Priority
+                        </h6>
+                        <span class="badge bg-warning text-dark">
+                                <i class="bi bi-exclamation-circle"></i> MEDIUM
+                            </span>
+                    </div>
+
+                    <!-- Due Date -->
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-calendar-event"></i> Due Date
+                        </h6>
+                        <div>
+                            <span class="text-dark">January 25, 2025</span>
+                            <!-- If overdue: uncomment below
+                            <span class="badge bg-danger ms-2">
+                                <i class="bi bi-exclamation-triangle"></i> Overdue
+                            </span>
+                            -->
+                        </div>
+                        <!-- No due date case: uncomment below
+                        <p class="text-muted fst-italic mb-0">No due date</p>
+                        -->
+                    </div>
+
+                    <!-- Column -->
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-columns"></i> Column
+                        </h6>
+                        <span class="badge bg-light text-dark border">Backlog</span>
+                    </div>
+
+                    <!-- Created Date -->
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-clock-history"></i> Created
+                        </h6>
+                        <small class="text-muted">January 15, 2025 at 2:30 PM</small>
+                    </div>
+
+                    <!-- Last Modified -->
+                    <div class="col-12">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-pencil"></i> Last Modified
+                        </h6>
+                        <small class="text-muted">January 18, 2025 at 9:15 AM</small>
+                    </div>
+
+                </div>
+
+                <!-- Move between columns -->
+                <div class="mt-4 pt-3 border-top">
+                    <h6 class="text-muted mb-3">
+                        <i class="bi bi-arrows-move"></i> Move Task
+                    </h6>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="button" class="btn btn-outline-secondary" disabled>
+                            <i class="bi bi-arrow-left"></i> Previous Column
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary">
+                            Next Column <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                    <small class="d-block text-center text-muted mt-2">
+                        Task is in the first column
+                    </small>
+                </div>
+
+            </div>
+
+            <!-- Footer with actions -->
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Edit
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
