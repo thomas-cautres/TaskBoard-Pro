@@ -19,6 +19,7 @@ final readonly class TaskDto
         private \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
         private int $position,
+        private string $columnName
     ) {
     }
 
@@ -33,7 +34,8 @@ final readonly class TaskDto
             endDate: $task->getEndDate(),
             createdAt: $task->getCreatedAt(),
             updatedAt: $task->getUpdatedAt(),
-            position: $task->getPosition()
+            position: $task->getPosition(),
+            columnName: $task->getProjectColumn()?->getName()
         );
     }
 
@@ -80,5 +82,15 @@ final readonly class TaskDto
     public function getPosition(): int
     {
         return $this->position;
+    }
+
+    public function getColumnName(): string
+    {
+        return $this->columnName;
+    }
+
+    public function isOverdue(): bool
+    {
+        return new \DateTimeImmutable() > $this->getEndDate();
     }
 }

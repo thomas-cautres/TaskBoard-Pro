@@ -54,11 +54,13 @@
                 <source>Repeat Password</source>
                 <target>Repeat Password</target>
             </trans-unit>
-            <trans-unit id="confirmation.email.account.validation.title" resname="confirmation.email.account.validation.title">
+            <trans-unit id="confirmation.email.account.validation.title"
+                        resname="confirmation.email.account.validation.title">
                 <source>Account validation</source>
                 <target>Account validation</target>
             </trans-unit>
-            <trans-unit id="confirmation.email.last.step.to.activate.account" resname="confirmation.email.last.step.to.activate.account">
+            <trans-unit id="confirmation.email.last.step.to.activate.account"
+                        resname="confirmation.email.last.step.to.activate.account">
                 <source>Last step to activate your account</source>
                 <target>Last step to activate your account</target>
             </trans-unit>
@@ -66,13 +68,17 @@
                 <source>Hello!</source>
                 <target>Hello!</target>
             </trans-unit>
-            <trans-unit id="confirmation.email.thanks.for.registering" resname="confirmation.email.thanks.for.registering">
-                <source>Thank you for signing up. To complete your account creation, please use the validation code below:
+            <trans-unit id="confirmation.email.thanks.for.registering"
+                        resname="confirmation.email.thanks.for.registering">
+                <source>Thank you for signing up. To complete your account creation, please use the validation code
+                    below:
                 </source>
-                <target>Thank you for signing up. To complete your account creation, please use the validation code below:
+                <target>Thank you for signing up. To complete your account creation, please use the validation code
+                    below:
                 </target>
             </trans-unit>
-            <trans-unit id="confirmation.email.important.code.validity" resname="confirmation.email.important.code.validity">
+            <trans-unit id="confirmation.email.important.code.validity"
+                        resname="confirmation.email.important.code.validity">
                 <source>Important: This code is valid for %minutes% minutes.</source>
                 <target>Important: This code is valid for %minutes% minutes.</target>
             </trans-unit>
@@ -113,9 +119,11 @@
                 <target>Manage your projects efficiently</target>
             </trans-unit>
             <trans-unit id="home.hero.description" resname="home.hero.description">
-                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                <source>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and
+                    succeed together.
                 </source>
-                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and succeed together.
+                <target>TaskBoard Pro helps you organize your projects and tasks with ease. Collaborate, plan and
+                    succeed together.
                 </target>
             </trans-unit>
             <trans-unit id="home.hero.start_free" resname="home.hero.start_free">
@@ -219,8 +227,12 @@
                 <target>Enter verification code</target>
             </trans-unit>
             <trans-unit id="otp.description" resname="otp.description">
-                <source>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</source>
-                <target>We've sent a 6-digit verification code to your email address. Please enter it below to verify your account.</target>
+                <source>We've sent a 6-digit verification code to your email address. Please enter it below to verify
+                    your account.
+                </source>
+                <target>We've sent a 6-digit verification code to your email address. Please enter it below to verify
+                    your account.
+                </target>
             </trans-unit>
             <trans-unit id="otp.code_label" resname="otp.code_label">
                 <source>Verification code</source>
@@ -275,8 +287,12 @@
                 <target>Good to know:</target>
             </trans-unit>
             <trans-unit id="project.create.type_info_text" resname="project.create.type_info_text">
-                <source>Columns will be automatically created according to the chosen type. You can customize them after creation.</source>
-                <target>Columns will be automatically created according to the chosen type. You can customize them after creation.</target>
+                <source>Columns will be automatically created according to the chosen type. You can customize them after
+                    creation.
+                </source>
+                <target>Columns will be automatically created according to the chosen type. You can customize them after
+                    creation.
+                </target>
             </trans-unit>
             <trans-unit id="project.create.optional" resname="project.create.optional">
                 <source>Optional</source>
@@ -306,7 +322,8 @@
                 <source>You will be able to invite members and create tasks immediately</source>
                 <target>You will be able to invite members and create tasks immediately</target>
             </trans-unit>
-            <trans-unit id="project.create.after_creation.type_locked" resname="project.create.after_creation.type_locked">
+            <trans-unit id="project.create.after_creation.type_locked"
+                        resname="project.create.after_creation.type_locked">
                 <source>The project type cannot be modified afterwards</source>
                 <target>The project type cannot be modified afterwards</target>
             </trans-unit>
@@ -535,8 +552,12 @@
                 <target>Next step</target>
             </trans-unit>
             <trans-unit id="project.board.next_step_description" resname="project.board.next_step_description">
-                <source>Start creating tasks to organize your work. Tasks can be moved between columns by drag and drop.</source>
-                <target>Start creating tasks to organize your work. Tasks can be moved between columns by drag and drop.</target>
+                <source>Start creating tasks to organize your work. Tasks can be moved between columns by drag and
+                    drop.
+                </source>
+                <target>Start creating tasks to organize your work. Tasks can be moved between columns by drag and
+                    drop.
+                </target>
             </trans-unit>
             <trans-unit id="project.created.message" resname="project.created.message">
                 <source>New project created</source>
@@ -723,7 +744,8 @@
                 <source>You will be able to create new tasks again</source>
                 <target>You will be able to create new tasks again</target>
             </trans-unit>
-            <trans-unit id="project.restore.modal.info_active_status" resname="project.restore.modal.info_active_status">
+            <trans-unit id="project.restore.modal.info_active_status"
+                        resname="project.restore.modal.info_active_status">
                 <source>The project status will change to Active</source>
                 <target>The project status will change to Active</target>
             </trans-unit>
@@ -851,6 +873,54 @@
             <trans-unit id="task.create.flash.message.success" resname="task.create.flash.message.success">
                 <source>Task created successfully</source>
                 <target>Task created successfully</target>
+            </trans-unit>
+            <trans-unit id="task.show.description" resname="task.show.description">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="task.show.no_description" resname="task.show.no_description">
+                <source>No description provided</source>
+                <target>No description provided</target>
+            </trans-unit>
+            <trans-unit id="task.show.priority" resname="task.show.priority">
+                <source>Priority</source>
+                <target>Priority</target>
+            </trans-unit>
+            <trans-unit id="task.show.due_date" resname="task.show.due_date">
+                <source>Due Date</source>
+                <target>Due Date</target>
+            </trans-unit>
+            <trans-unit id="task.show.no_due_date" resname="task.show.no_due_date">
+                <source>No due date</source>
+                <target>No due date</target>
+            </trans-unit>
+            <trans-unit id="task.show.overdue" resname="task.show.overdue">
+                <source>Overdue</source>
+                <target>Overdue</target>
+            </trans-unit>
+            <trans-unit id="task.show.column" resname="task.show.column">
+                <source>Column</source>
+                <target>Column</target>
+            </trans-unit>
+            <trans-unit id="task.show.created" resname="task.show.created">
+                <source>Created</source>
+                <target>Created</target>
+            </trans-unit>
+            <trans-unit id="task.show.last_modified" resname="task.show.last_modified">
+                <source>Last Modified</source>
+                <target>Last Modified</target>
+            </trans-unit>
+            <trans-unit id="task.show.close" resname="task.show.close">
+                <source>Close</source>
+                <target>Close</target>
+            </trans-unit>
+            <trans-unit id="task.show.edit" resname="task.show.edit">
+                <source>Edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="task.show.delete" resname="task.show.delete">
+                <source>Delete</source>
+                <target>Delete</target>
             </trans-unit>
         </body>
     </file>
