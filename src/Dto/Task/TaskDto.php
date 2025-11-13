@@ -19,7 +19,7 @@ final readonly class TaskDto
         private \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
         private int $position,
-        private string $columnName
+        private string $columnName,
     ) {
     }
 

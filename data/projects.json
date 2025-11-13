@@ -6,7 +6,28 @@
         "type": "scrum",
         "startDate": "2025-01-15",
         "endDate": "2025-06-30",
-        "createdByEmail": "user-confirmed@domain.com"
+        "createdByEmail": "user-confirmed@domain.com",
+        "tasks": [
+            {
+                "title": "Task 1",
+                "column": "Backlog",
+                "description": "Task 1 description",
+                "endDate": "2026-01-01",
+                "position": 1,
+                "code": "ECO-1",
+                "priority": 1
+
+            },
+            {
+                "title": "Task 2",
+                "column": "Backlog",
+                "description": "Task 2 description",
+                "endDate": "2026-01-01",
+                "position": 2,
+                "code": "ECO-2",
+                "priority": 2
+            }
+        ]
     },
     {
         "uuid": "019a2646-48d0-7260-afc3-9851e6487a1f",

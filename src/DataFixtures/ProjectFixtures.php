@@ -6,9 +6,12 @@ namespace App\DataFixtures;
 
 use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectType;
+use App\AppEnum\TaskPriority;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
+use App\Entity\Task;
 use App\Entity\User;
+use App\Generator\TaskGeneratorInterface;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,6 +22,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly UserRepository $userRepository,
+        private readonly TaskGeneratorInterface $taskGenerator,
     ) {
     }
 
@@ -50,10 +54,35 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 );
             }
 
-            $manager->persist($project);
-        }
+            foreach ($projectArray['tasks'] as $taskArray) {
+                $columnName = $taskArray['column'];
 
-        $manager->flush();
+                $column = $project->getColumns()->findFirst(fn (int $index, ProjectColumn $column) => $column->getName() === $columnName);
+
+                if (!$column instanceof ProjectColumn) {
+                    continue;
+                }
+
+                $task = new Task();
+                $task->setProjectColumn($column);
+                $task
+                    ->setUuid(Uuid::v7())
+                    ->setTitle($taskArray['title'])
+                    ->setDescription($taskArray['description'])
+                    ->setPriority(TaskPriority::tryFrom($taskArray['priority']))
+                    ->setEndDate(new \DateTime($taskArray['endDate']))
+                    ->setCreatedBy($createdBy)
+                    ->setCode($taskArray['code'])
+                    ->setPosition($taskArray['position']);
+
+                $column->addTask($task);
+                $manager->persist($column);
+            }
+
+            $manager->persist($project);
+
+            $manager->flush();
+        }
     }
 
     public function getDependencies(): array
@@ -102,6 +131,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                     : null,
                 'createdByEmail' => $projectData['createdByEmail'],
                 'columns' => $this->getColumnsForProjectType(ProjectType::from($projectData['type'])),
+                'tasks' => $projectData['tasks'] ?? [],
             ];
         }
     }
