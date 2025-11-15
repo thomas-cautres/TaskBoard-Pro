@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Dto\Task;
 
 use App\AppEnum\TaskPriority;
+use App\Entity\ProjectColumn;
 use App\Entity\Task;
 
 final readonly class TaskDto
@@ -13,29 +14,33 @@ final readonly class TaskDto
         private string $uuid,
         private string $code,
         private string $title,
-        private ?string $description = null,
-        private ?TaskPriority $priority = null,
-        private ?\DateTime $endDate = null,
         private \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $updatedAt,
         private int $position,
         private string $columnName,
+        private ?string $description = null,
+        private ?TaskPriority $priority = null,
+        private ?\DateTime $endDate = null,
     ) {
     }
 
     public static function fromEntity(Task $task): self
     {
+        if (!$task->getProjectColumn() instanceof ProjectColumn) {
+            throw new \LogicException(sprintf('Column missing for task of uuid %s', $task->getUuid()->toRfc4122()));
+        }
+
         return new self(
             uuid: $task->getUuid()->toRfc4122(),
             code: $task->getCode(),
             title: $task->getTitle(),
-            description: $task->getDescription(),
-            priority: $task->getPriority(),
-            endDate: $task->getEndDate(),
             createdAt: $task->getCreatedAt(),
             updatedAt: $task->getUpdatedAt(),
             position: $task->getPosition(),
-            columnName: $task->getProjectColumn()?->getName()
+            columnName: $task->getProjectColumn()->getName(),
+            description: $task->getDescription(),
+            priority: $task->getPriority(),
+            endDate: $task->getEndDate()
         );
     }
 

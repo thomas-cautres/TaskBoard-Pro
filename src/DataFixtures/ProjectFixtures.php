@@ -11,7 +11,6 @@ use App\Entity\Project;
 use App\Entity\ProjectColumn;
 use App\Entity\Task;
 use App\Entity\User;
-use App\Generator\TaskGeneratorInterface;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -22,7 +21,6 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly TaskGeneratorInterface $taskGenerator,
     ) {
     }
 
@@ -66,14 +64,16 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 $task = new Task();
                 $task->setProjectColumn($column);
                 $task
-                    ->setUuid(Uuid::v7())
+                    ->setUuid(Uuid::fromRfc4122($taskArray['uuid']))
                     ->setTitle($taskArray['title'])
                     ->setDescription($taskArray['description'])
                     ->setPriority(TaskPriority::tryFrom($taskArray['priority']))
                     ->setEndDate(new \DateTime($taskArray['endDate']))
                     ->setCreatedBy($createdBy)
                     ->setCode($taskArray['code'])
-                    ->setPosition($taskArray['position']);
+                    ->setPosition($taskArray['position'])
+                    ->setCreatedAt(new \DateTimeImmutable('2025-01-01'))
+                    ->setUpdatedAt(new \DateTimeImmutable('2025-01-01'));
 
                 $column->addTask($task);
                 $manager->persist($column);
@@ -101,7 +101,8 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
      *     startDate: \DateTimeImmutable|null,
      *     endDate: \DateTimeImmutable|null,
      *     createdByEmail: string,
-     *     columns: array<array{position: int, name: string}>
+     *     columns: array<array{position: int, name: string}>,
+     *     tasks: array<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}>
      * }>
      */
     private function getProjects(): \Iterator

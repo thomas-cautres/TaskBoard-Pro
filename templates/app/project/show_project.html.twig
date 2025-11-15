@@ -232,7 +232,7 @@
 
                                 <div class="d-flex flex-column gap-2 mb-3 flex-grow-1">
                                     {% for task in column.tasks %}
-                                        <div class="card border shadow-sm" style="cursor: pointer;"
+                                        <div class="card border shadow-sm" style="cursor: pointer;" id="task-{{ task.uuid }}"
                                              data-controller="modal"
                                              data-action="click->modal#open"
                                              data-modal-url-value="{{ path('app_task_show', {uuid:task.uuid}) }}"

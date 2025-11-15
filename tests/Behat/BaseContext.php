@@ -67,6 +67,13 @@ class BaseContext extends MinkContext implements Context
         });
     }
 
+    public function assertElementContainsText($element, $text): void
+    {
+        $this->retryStep(function () use ($element, $text) {
+            parent::assertElementContainsText($element, $text);
+        });
+    }
+
     /**
      * @Given there is a signed confirmation URL for :email
      */
@@ -167,6 +174,23 @@ class BaseContext extends MinkContext implements Context
             if ('' === $element) {
                 throw new ExpectationException('element empty', $this->getSession()->getDriver());
             }
+        });
+    }
+
+    /**
+     * @When /^I click the "([^"]*)" element$/
+     */
+    public function iClick(string $selector): void
+    {
+        $this->retryStep(function () use ($selector) {
+            $page = $this->getSession()->getPage();
+            $element = $page->find('css', $selector);
+
+            if (null === $element) {
+                throw new ExpectationException('element empty', $this->getSession()->getDriver());
+            }
+
+            $element->click();
         });
     }
 
