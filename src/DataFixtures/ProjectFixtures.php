@@ -6,8 +6,10 @@ namespace App\DataFixtures;
 
 use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectType;
+use App\AppEnum\TaskPriority;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
+use App\Entity\Task;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -50,10 +52,37 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 );
             }
 
-            $manager->persist($project);
-        }
+            foreach ($projectArray['tasks'] as $taskArray) {
+                $columnName = $taskArray['column'];
 
-        $manager->flush();
+                $column = $project->getColumns()->findFirst(fn (int $index, ProjectColumn $column) => $column->getName() === $columnName);
+
+                if (!$column instanceof ProjectColumn) {
+                    continue;
+                }
+
+                $task = new Task();
+                $task->setProjectColumn($column);
+                $task
+                    ->setUuid(Uuid::fromRfc4122($taskArray['uuid']))
+                    ->setTitle($taskArray['title'])
+                    ->setDescription($taskArray['description'])
+                    ->setPriority(TaskPriority::tryFrom($taskArray['priority']))
+                    ->setEndDate(new \DateTime($taskArray['endDate']))
+                    ->setCreatedBy($createdBy)
+                    ->setCode($taskArray['code'])
+                    ->setPosition($taskArray['position'])
+                    ->setCreatedAt(new \DateTimeImmutable('2025-01-01'))
+                    ->setUpdatedAt(new \DateTimeImmutable('2025-01-01'));
+
+                $column->addTask($task);
+                $manager->persist($column);
+            }
+
+            $manager->persist($project);
+
+            $manager->flush();
+        }
     }
 
     public function getDependencies(): array
@@ -72,7 +101,8 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
      *     startDate: \DateTimeImmutable|null,
      *     endDate: \DateTimeImmutable|null,
      *     createdByEmail: string,
-     *     columns: array<array{position: int, name: string}>
+     *     columns: array<array{position: int, name: string}>,
+     *     tasks: list<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}>
      * }>
      */
     private function getProjects(): \Iterator
@@ -89,6 +119,9 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $projectsData = json_decode($jsonContent, true, flags: JSON_THROW_ON_ERROR);
 
         foreach ($projectsData as $projectData) {
+            /** @var list<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}> $tasksData */
+            $tasksData = $projectData['tasks'] ?? [];
+
             yield [
                 'uuid' => Uuid::fromString($projectData['uuid']),
                 'name' => $projectData['name'],
@@ -102,6 +135,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                     : null,
                 'createdByEmail' => $projectData['createdByEmail'],
                 'columns' => $this->getColumnsForProjectType(ProjectType::from($projectData['type'])),
+                'tasks' => $tasksData,
             ];
         }
     }

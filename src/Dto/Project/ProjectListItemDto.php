@@ -7,6 +7,7 @@ namespace App\Dto\Project;
 use App\AppEnum\ProjectColumnName;
 use App\AppEnum\ProjectStatus;
 use App\Entity\Project;
+use App\Entity\Task;
 
 final class ProjectListItemDto extends AbstractProjectDto
 {
@@ -25,19 +26,12 @@ final class ProjectListItemDto extends AbstractProjectDto
 
     public static function fromEntity(Project $project): self
     {
-        $totalTasks = 0;
-        $inProgressTasks = 0;
-        $doneTasks = 0;
-        foreach ($project->getColumns() as $column) {
-            foreach ($column->getTasks() as $task) {
-                ++$totalTasks;
+        $totalTasks = $inProgressTasks = $doneTasks = 0;
 
-                match ($task->getProjectColumn()?->getName()) {
-                    ProjectColumnName::InProgress->value => $inProgressTasks++,
-                    ProjectColumnName::Done->value, ProjectColumnName::Closed->value => $doneTasks++,
-                    default => null,
-                };
-            }
+        foreach ($project->getColumns() as $column) {
+            $tasks = $column->getTasks();
+            $inProgressTasks = $tasks->filter(fn (Task $task) => ProjectColumnName::InProgress->value === $task->getProjectColumn()?->getName())->count();
+            $doneTasks = $tasks->filter(fn (Task $task) => ProjectColumnName::Done->value === $task->getProjectColumn()?->getName())->count();
         }
 
         return new self(

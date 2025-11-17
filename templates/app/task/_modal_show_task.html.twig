@@ -1,0 +1,91 @@
+<div class="modal fade" id="modal-show-task" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <div class="d-flex flex-column w-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <span class="badge bg-secondary me-2">{{ task.code }}</span>
+                            <span class="badge bg-light text-dark border">{{ task.columnName }}</span>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'task.show.close'|trans }}"></button>
+                    </div>
+                    <h5 class="modal-title mb-0" id="taskModalLabel">{{ task.title }}</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">
+                        <i class="bi bi-file-text"></i> {{ 'task.show.description'|trans }}
+                    </h6>
+                    {% if task.description is not null %}
+                        <p class="mb-0">
+                            {{ task.description }}
+                        </p>
+                    {% else %}
+                        <p class="text-muted fst-italic mb-0">
+                            <i class="bi bi-info-circle"></i> {{ 'task.show.no_description'|trans }}
+                        </p>
+                    {% endif %}
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-flag"></i> {{ 'task.show.priority'|trans }}
+                        </h6>
+                        {% set priorityClass = task.priority.name|lower == 'high' ? 'danger' : (task.priority.name|lower == 'medium' ? 'warning' : 'secondary') %}
+                        <span class="badge bg-{{ priorityClass }}">
+                            <i class="bi bi-exclamation-circle"></i> {{ ('task.priority.' ~ task.priority.name|lower)|trans }}
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-calendar-event"></i> {{ 'task.show.due_date'|trans }}
+                        </h6>
+                        {% if task.endDate is not null %}
+                            <div>
+                                <span class="text-dark">{{ task.endDate|format_date(pattern: 'MMM dd, y') }}</span>
+                                {% if task.overdue %}
+                                    <span class="badge bg-danger ms-2">
+                                        <i class="bi bi-exclamation-triangle"></i> {{ 'task.show.overdue'|trans }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted fst-italic mb-0">{{ 'task.show.no_due_date'|trans }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-columns"></i> {{ 'task.show.column'|trans }}
+                        </h6>
+                        <span class="badge bg-light text-dark border">{{ task.columnName }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-clock-history"></i> {{ 'task.show.created'|trans }}
+                        </h6>
+                        <small class="text-muted">{{ task.createdAt|format_date(pattern: "MMMM dd, y 'at' h:mm a") }}</small>
+                    </div>
+                    <div class="col-12">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-pencil"></i> {{ 'task.show.last_modified'|trans }}
+                        </h6>
+                        <small class="text-muted">{{ task.updatedAt|format_date(pattern: "MMMM dd, y 'at' h:mm a") }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> {{ 'task.show.close'|trans }}
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> {{ 'task.show.edit'|trans }}
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> {{ 'task.show.delete'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

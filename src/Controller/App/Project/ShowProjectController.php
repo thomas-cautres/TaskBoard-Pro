@@ -10,13 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Workflow\WorkflowInterface;
 
 #[Route('/app/project/{uuid}', name: 'app_project_show', requirements: ['uuid' => Requirement::UID_RFC4122], methods: ['GET'])]
 #[IsGranted('view', 'project')]
 class ShowProjectController extends AbstractController
 {
-    public function __invoke(ProjectDto $project, WorkflowInterface $projectStateMachine): Response
+    public function __invoke(ProjectDto $project): Response
     {
         return $this->render('app/project/show_project.html.twig', [
             'project' => $project,
