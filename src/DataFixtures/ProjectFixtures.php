@@ -102,7 +102,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
      *     endDate: \DateTimeImmutable|null,
      *     createdByEmail: string,
      *     columns: array<array{position: int, name: string}>,
-     *     tasks: array<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}>
+     *     tasks: list<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}>
      * }>
      */
     private function getProjects(): \Iterator
@@ -119,6 +119,9 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $projectsData = json_decode($jsonContent, true, flags: JSON_THROW_ON_ERROR);
 
         foreach ($projectsData as $projectData) {
+            /** @var list<array{uuid: string, title: string, column: string, description: string, endDate: string, position: int, code: string, priority: int}> $tasksData */
+            $tasksData = $projectData['tasks'] ?? [];
+
             yield [
                 'uuid' => Uuid::fromString($projectData['uuid']),
                 'name' => $projectData['name'],
@@ -132,7 +135,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                     : null,
                 'createdByEmail' => $projectData['createdByEmail'],
                 'columns' => $this->getColumnsForProjectType(ProjectType::from($projectData['type'])),
-                'tasks' => $projectData['tasks'] ?? [],
+                'tasks' => $tasksData,
             ];
         }
     }
