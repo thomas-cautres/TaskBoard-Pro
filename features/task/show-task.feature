@@ -6,7 +6,7 @@ Feature: Show Task
         Given I am logged in as "user-confirmed@domain.com"
 
     @javascript
-    Scenario: Open task creation modal
+    Scenario: Open task show modal
         When I am on "/app/project/019a2646-0166-70fc-80c2-0ddbc097a592"
         And I click the "#task-019a8131-642b-7452-a88a-90705e917678" element
         Then I should see "ECO-1" in the "#modal-show-task" element

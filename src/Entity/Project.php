@@ -51,7 +51,7 @@ class Project
     /**
      * @var Collection<int, ProjectColumn>
      */
-    #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', cascade: ['persist', 'remove'], fetch: 'EAGER', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectColumn::class, mappedBy: 'project', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $columns;
 
     #[ORM\Column(type: Types::STRING, enumType: ProjectStatus::class, options: ['default' => ProjectStatus::Active->value])]

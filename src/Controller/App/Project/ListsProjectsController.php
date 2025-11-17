@@ -24,7 +24,12 @@ class ListsProjectsController extends AbstractController
 {
     public const int RESULTS_PER_PAGE = 12;
 
-    public function __invoke(Request $request, ProjectRepository $projectRepository, int $page = 1): Response
+    public function __construct(
+        private readonly ProjectRepository $projectRepository,
+    ) {
+    }
+
+    public function __invoke(Request $request, int $page = 1): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -44,7 +49,7 @@ class ListsProjectsController extends AbstractController
         }
 
         $start = ($page - 1) * self::RESULTS_PER_PAGE;
-        $projects = $projectRepository->findByUserPaginated($user, $filters, $start, self::RESULTS_PER_PAGE);
+        $projects = $this->projectRepository->findByUserPaginated($user, $filters, $start, self::RESULTS_PER_PAGE);
         $totalProjects = $projects->count();
         $totalPages = (int) ceil($totalProjects / self::RESULTS_PER_PAGE);
 

@@ -56,7 +56,11 @@ class ProjectRepository extends ServiceEntityRepository
     public function findByUserPaginated(User $user, ProjectFiltersDto $filters, int $start, int $length): Paginator
     {
         $qb = $this->createQueryBuilder('p');
-        $qb->andWhere('p.createdBy = :user')
+        $qb
+            ->select('p, c, t')
+            ->leftJoin('p.columns', 'c')
+            ->leftJoin('c.tasks', 't')
+            ->andWhere('p.createdBy = :user')
             ->setParameter('user', $user)
             ->setFirstResult($start)
             ->setMaxResults($length);
@@ -65,7 +69,7 @@ class ProjectRepository extends ServiceEntityRepository
         $this->applySorting($qb, $filters->getSort());
 
         /** @var Paginator<Project> $paginator */
-        $paginator = new Paginator($qb, false);
+        $paginator = new Paginator($qb);
 
         return $paginator;
     }

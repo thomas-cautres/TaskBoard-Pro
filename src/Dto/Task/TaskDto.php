@@ -96,6 +96,10 @@ final readonly class TaskDto
 
     public function isOverdue(): bool
     {
+        if (null === $this->getEndDate()) {
+            return false;
+        }
+
         return new \DateTimeImmutable() > $this->getEndDate();
     }
 }
