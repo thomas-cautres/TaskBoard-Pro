@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Dto\Project;
 
+use App\AppEnum\ProjectType;
+use Symfony\Component\Validator\Constraints as Assert;
+
 class ProjectFiltersDto
 {
     public const int ACTIVE_FILTER_ARCHIVED = 1;
@@ -13,8 +16,14 @@ class ProjectFiltersDto
     public const int SORT_NAME_DESC = 2;
 
     private ?string $name = null;
+
+    #[Assert\Choice(callback: [ProjectType::class, 'values'])]
     private ?string $type = null;
+
+    #[Assert\Choice(choices: [self::ACTIVE_FILTER_ARCHIVED, self::ACTIVE_FILTER_ALL_STATUS])]
     private ?int $active = null;
+
+    #[Assert\Choice(choices: [self::SORT_NAME_ASC, self::SORT_NAME_DESC])]
     private ?int $sort = null;
 
     public function getName(): ?string

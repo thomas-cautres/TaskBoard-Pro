@@ -13,6 +13,7 @@ A **Symfony 7** project management application showcasing modern PHP development
 - ✅ Project statistics dashboard
 - ✅ Edit and archive projects
 - ✅ Create tasks
+- 🔜 API
 
 ### Planned
 - 🔜 Manage tasks
@@ -51,6 +52,7 @@ A **Symfony 7** project management application showcasing modern PHP development
 - [Runtime](https://symfony.com/doc/current/components/runtime.html) — Application bootstrapping.
 - [Monolog (MonologBundle)](https://symfony.com/doc/current/logging.html) — Structured logging.
 - [Yaml](https://symfony.com/doc/current/components/yaml.html) — YAML parsing.
+- [Serializer](https://symfony.com/doc/current/components/serializer.html) — Serialization
 
 Developer and testing tooling
 - [MakerBundle](https://symfony.com/bundles/SymfonyMakerBundle/current/index.html) — Code generators for scaffolding.

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Pagination;
 use App\Dto\Project\ProjectFiltersDto;
 use App\Dto\Project\ProjectListItemDto;
 use App\Entity\Project;
-use App\Entity\User;
 use App\Form\Project\FiltersType;
-use App\Repository\ProjectRepository;
+use App\Paginator\ProjectsPaginator;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -25,15 +23,12 @@ class ListsProjectsController extends AbstractController
     public const int RESULTS_PER_PAGE = 12;
 
     public function __construct(
-        private readonly ProjectRepository $projectRepository,
+        private readonly ProjectsPaginator $paginator,
     ) {
     }
 
     public function __invoke(Request $request, int $page = 1): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $filters = new ProjectFiltersDto();
         $filtersForm = $this->createForm(FiltersType::class, $filters, [
             'method' => 'GET',
@@ -48,18 +43,18 @@ class ListsProjectsController extends AbstractController
             ]);
         }
 
-        $start = ($page - 1) * self::RESULTS_PER_PAGE;
-        $projects = $this->projectRepository->findByUserPaginated($user, $filters, $start, self::RESULTS_PER_PAGE);
-        $totalProjects = $projects->count();
-        $totalPages = (int) ceil($totalProjects / self::RESULTS_PER_PAGE);
+        $pagination = $this->paginator->paginate($page, $filters);
 
-        if ($page > $totalPages && $totalPages > 0) {
+        if ($page > $pagination->getTotalPages() && $pagination->getTotalPages() > 0) {
             throw $this->createNotFoundException();
         }
 
+        /** @var Project[] $projects */
+        $projects = $pagination->getObjects();
+
         return $this->render('app/project/list_projects.html.twig', [
             'projects' => $this->getProjectsDtos($projects),
-            'pagination' => $this->createPagination($start, $totalProjects, $page, $totalPages),
+            'pagination' => $pagination,
             'filters_form' => $filtersForm,
             'filters' => $this->getCleanFiltersFromRequest($request),
         ]);
@@ -85,17 +80,6 @@ class ListsProjectsController extends AbstractController
         unset($filters['submit']);
 
         return $filters;
-    }
-
-    private function createPagination(int $start, int $totalProjects, int $page, int $totalPages): Pagination
-    {
-        return new Pagination(
-            $totalProjects > 0 ? $start + 1 : 0,
-            min(self::RESULTS_PER_PAGE, max(0, $totalProjects - $start)),
-            $totalProjects,
-            $page,
-            max(1, $totalPages)
-        );
     }
 
     /**

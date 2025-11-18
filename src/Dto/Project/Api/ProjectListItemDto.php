@@ -2,19 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Project\Api;
 
 use App\AppEnum\ProjectStatus;
+use App\Dto\Project\AbstractProjectDto;
+use App\Dto\Project\ProjectStatsDto;
 use App\Entity\Project;
 
 final class ProjectListItemDto extends AbstractProjectDto
 {
     public function __construct(
-        private string $uuid,
-        private string $name,
-        private string $type,
         protected string $createdByEmail,
         protected ProjectStatus $status,
+        private string $id,
+        private string $name,
+        private string $type,
+        private string $createdAt,
         private ProjectStatsDto $stats,
         private ?string $description = null,
     ) {
@@ -23,19 +26,25 @@ final class ProjectListItemDto extends AbstractProjectDto
     public static function fromEntity(Project $project): self
     {
         return new self(
-            uuid: $project->getUuid()->toRfc4122(),
-            name: $project->getName(),
-            type: $project->getType()->value,
             createdByEmail: $project->getCreatedBy()->getEmail(),
             status: $project->getStatus(),
+            id: $project->getUuid()->toRfc4122(),
+            name: $project->getName(),
+            type: $project->getType()->value,
+            createdAt: $project->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
             stats: ProjectStatsDto::fromEntity($project),
-            description: $project->getDescription(),
+            description: $project->getDescription()
         );
     }
 
-    public function getUuid(): string
+    public function getStatus(): ProjectStatus
     {
-        return $this->uuid;
+        return $this->status;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getName(): string
@@ -56,6 +65,11 @@ final class ProjectListItemDto extends AbstractProjectDto
     public function getCreatedByEmail(): string
     {
         return $this->createdByEmail;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
     }
 
     public function getStats(): ProjectStatsDto
