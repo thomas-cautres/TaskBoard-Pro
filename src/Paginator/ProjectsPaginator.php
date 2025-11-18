@@ -10,18 +10,22 @@ use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class ProjectsPaginator
+readonly class ProjectsPaginator implements PaginatorInterface
 {
     public const int RESULTS_PER_PAGE = 12;
 
     public function __construct(
-        private readonly ProjectRepository $projectRepository,
-        private readonly Security $security,
+        private ProjectRepository $projectRepository,
+        private Security $security,
     ) {
     }
 
-    public function paginate(int $page, ProjectFiltersDto $filters): Pagination
+    public function paginate(int $page, mixed $filters): Pagination
     {
+        if (!$filters instanceof ProjectFiltersDto) {
+            throw new \InvalidArgumentException(sprintf('Expected filters of type %s', ProjectFiltersDto::class));
+        }
+
         /** @var User $user */
         $user = $this->security->getUser();
 
