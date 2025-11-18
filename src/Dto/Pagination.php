@@ -4,14 +4,45 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-class Pagination
+final readonly class Pagination
 {
     public function __construct(
-        public int $start,
-        public int $resultsPerPage,
-        public int $totalResults,
-        public int $currentPage,
-        public int $totalPages,
+        private array $objects,
+        private int $start,
+        private int $resultsPerPage,
+        private int $totalResults,
+        private int $currentPage,
+        private int $totalPages,
     ) {
+    }
+
+    public function getObjects(): array
+    {
+        return $this->objects;
+    }
+
+    public function getStart(): int
+    {
+        return $this->start;
+    }
+
+    public function getResultsPerPage(): int
+    {
+        return $this->resultsPerPage;
+    }
+
+    public function getTotalResults(): int
+    {
+        return $this->totalResults;
+    }
+
+    public function getCurrentPage(): int
+    {
+        return $this->currentPage;
+    }
+
+    public function getTotalPages(): int
+    {
+        return $this->totalPages;
     }
 }
