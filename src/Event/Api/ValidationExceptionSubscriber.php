@@ -7,7 +7,7 @@ namespace App\Event\Api;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 class ValidationExceptionSubscriber implements EventSubscriberInterface
@@ -37,7 +37,7 @@ class ValidationExceptionSubscriber implements EventSubscriberInterface
                 'message' => 'Invalid query parameters',
                 'details' => array_reduce(
                     iterator_to_array($violations),
-                    fn (array $acc, ConstraintViolation $violation) => $acc + [$violation->getPropertyPath() => $violation->getMessage()],
+                    fn (array $acc, ConstraintViolationInterface $violation) => $acc + [$violation->getPropertyPath() => $violation->getMessage()],
                     []
                 ),
             ], 400));

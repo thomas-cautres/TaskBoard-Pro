@@ -6,8 +6,10 @@ namespace App\Controller\Api\Project;
 
 use App\Dto\Project\Api\ProjectListDto;
 use App\Dto\Project\ProjectFiltersDto;
+use App\Paginator\PaginatorInterface;
 use App\Paginator\ProjectsPaginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,7 +18,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class ListProjectsController extends AbstractController
 {
     public function __construct(
-        private readonly ProjectsPaginator $paginator,
+        #[Autowire(service: ProjectsPaginator::class)]
+        private readonly PaginatorInterface $paginator,
     ) {
     }
 
