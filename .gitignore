@@ -34,3 +34,7 @@ phpstan.neon
 /behat.yml
 ###< friends-of-behat/symfony-extension ###
 /.vscode/
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

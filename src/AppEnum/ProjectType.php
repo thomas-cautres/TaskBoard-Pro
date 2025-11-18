@@ -9,4 +9,9 @@ enum ProjectType: string
     case Scrum = 'scrum';
     case Kanban = 'kanban';
     case Basic = 'basic';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }
