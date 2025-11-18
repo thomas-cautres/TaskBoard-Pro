@@ -49,8 +49,11 @@ class ListsProjectsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        /** @var Project[] $projects */
+        $projects = $pagination->getObjects();
+
         return $this->render('app/project/list_projects.html.twig', [
-            'projects' => $this->getProjectsDtos($pagination->getObjects()),
+            'projects' => $this->getProjectsDtos($projects),
             'pagination' => $pagination,
             'filters_form' => $filtersForm,
             'filters' => $this->getCleanFiltersFromRequest($request),

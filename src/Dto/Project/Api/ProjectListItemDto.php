@@ -16,10 +16,10 @@ final class ProjectListItemDto extends AbstractProjectDto
         protected ProjectStatus $status,
         private string $id,
         private string $name,
-        private ?string $description = null,
         private string $type,
         private string $createdAt,
         private ProjectStatsDto $stats,
+        private ?string $description = null,
     ) {
     }
 
@@ -30,10 +30,10 @@ final class ProjectListItemDto extends AbstractProjectDto
             status: $project->getStatus(),
             id: $project->getUuid()->toRfc4122(),
             name: $project->getName(),
-            description: $project->getDescription(),
             type: $project->getType()->value,
             createdAt: $project->getCreatedAt()->format('UTC'),
-            stats: ProjectStatsDto::fromEntity($project)
+            stats: ProjectStatsDto::fromEntity($project),
+            description: $project->getDescription()
         );
     }
 

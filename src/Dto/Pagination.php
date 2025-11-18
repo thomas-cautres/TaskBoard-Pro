@@ -6,6 +6,9 @@ namespace App\Dto;
 
 final readonly class Pagination
 {
+    /**
+     * @param object[] $objects
+     */
     public function __construct(
         private array $objects,
         private int $start,
@@ -16,6 +19,9 @@ final readonly class Pagination
     ) {
     }
 
+    /**
+     * @return object[]
+     */
     public function getObjects(): array
     {
         return $this->objects;

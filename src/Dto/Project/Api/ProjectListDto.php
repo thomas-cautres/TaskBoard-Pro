@@ -8,7 +8,6 @@ use App\Dto\Api\ListMetaDto;
 use App\Dto\Pagination;
 use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 final readonly class ProjectListDto
 {
@@ -24,8 +23,11 @@ final readonly class ProjectListDto
 
     public static function fromPagination(Pagination $pagination, ProjectFiltersDto $filters): self
     {
+        /** @var Project[] $projects */
+        $projects = $pagination->getObjects();
+
         return new self(
-            self::getProjectsDtos($pagination->getObjects()),
+            array_map(fn (Project $project) => ProjectListItemDto::fromEntity($project), $projects),
             new ListMetaDto($pagination->getCurrentPage(), $pagination->getResultsPerPage(), $pagination->getTotalResults(), $pagination->getTotalPages()),
             $filters
         );
@@ -47,20 +49,5 @@ final readonly class ProjectListDto
     public function getFilters(): ProjectFiltersDto
     {
         return $this->filters;
-    }
-
-    /**
-     * @param Paginator<Project>|Project[] $projectsPaginated
-     *
-     * @return ProjectListItemDto[]
-     */
-    private static function getProjectsDtos(Paginator|array $projectsPaginated): array
-    {
-        $projects = [];
-        foreach ($projectsPaginated as $project) {
-            $projects[] = ProjectListItemDto::fromEntity($project);
-        }
-
-        return $projects;
     }
 }
