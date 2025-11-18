@@ -31,7 +31,7 @@ final class ProjectListItemDto extends AbstractProjectDto
             id: $project->getUuid()->toRfc4122(),
             name: $project->getName(),
             type: $project->getType()->value,
-            createdAt: $project->getCreatedAt()->format('UTC'),
+            createdAt: $project->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
             stats: ProjectStatsDto::fromEntity($project),
             description: $project->getDescription()
         );

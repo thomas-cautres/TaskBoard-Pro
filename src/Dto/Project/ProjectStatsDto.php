@@ -23,8 +23,9 @@ final readonly class ProjectStatsDto
 
         foreach ($project->getColumns() as $column) {
             $tasks = $column->getTasks();
-            $inProgressTasks = $tasks->filter(fn (Task $task) => ProjectColumnName::InProgress->value === $task->getProjectColumn()?->getName())->count();
-            $doneTasks = $tasks->filter(fn (Task $task) => ProjectColumnName::Done->value === $task->getProjectColumn()?->getName())->count();
+            $totalTasks += $tasks->count();
+            $inProgressTasks += $tasks->filter(fn (Task $task) => ProjectColumnName::InProgress->value === $task->getProjectColumn()?->getName())->count();
+            $doneTasks += $tasks->filter(fn (Task $task) => ProjectColumnName::Done->value === $task->getProjectColumn()?->getName())->count();
         }
 
         return new self(
@@ -47,5 +48,14 @@ final readonly class ProjectStatsDto
     public function getDoneTasks(): int
     {
         return $this->doneTasks;
+    }
+
+    public function getTasksCompletedPercent(): int
+    {
+        if (0 === $this->getTotalTasks()) {
+            return 0;
+        }
+
+        return (int) ((100 * $this->getDoneTasks()) / $this->getTotalTasks());
     }
 }
