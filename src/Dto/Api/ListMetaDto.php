@@ -11,8 +11,6 @@ final readonly class ListMetaDto
         private int $perPage,
         private int $total,
         private int $totalPages,
-        private bool $hasNext = false,
-        private bool $hasPrev = false,
     ) {
     }
 
@@ -34,15 +32,5 @@ final readonly class ListMetaDto
     public function getTotalPages(): int
     {
         return $this->totalPages;
-    }
-
-    public function isHasNext(): bool
-    {
-        return $this->hasNext;
-    }
-
-    public function isHasPrev(): bool
-    {
-        return $this->hasPrev;
     }
 }
