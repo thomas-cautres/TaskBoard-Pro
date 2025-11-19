@@ -17,14 +17,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/projects/{page<\d+>}', name: 'api_projects_list', methods: ['GET'])]
 class ListProjectsController extends AbstractController
 {
-    public function __construct(
-        #[Autowire(service: ProjectsPaginator::class)]
-        private readonly PaginatorInterface $paginator,
-    ) {
-    }
-
-    public function __invoke(#[MapQueryString] ProjectFiltersDto $filters, int $page = 1): JsonResponse
-    {
-        return $this->json(ProjectListDto::fromPagination($this->paginator->paginate($page, $filters), $filters));
+    public function __invoke(
+        #[MapQueryString] ProjectFiltersDto $filters,
+        #[Autowire(service: ProjectsPaginator::class)] PaginatorInterface $paginator,
+        int $page = 1,
+    ): JsonResponse {
+        return $this->json(ProjectListDto::fromPagination($paginator->paginate($page, $filters), $filters));
     }
 }

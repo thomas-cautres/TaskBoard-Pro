@@ -40,6 +40,6 @@ class ValidationExceptionSubscriber implements EventSubscriberInterface
                     fn (array $acc, ConstraintViolationInterface $violation) => $acc + [$violation->getPropertyPath() => $violation->getMessage()],
                     []
                 ),
-            ], 400));
+            ], 422));
     }
 }

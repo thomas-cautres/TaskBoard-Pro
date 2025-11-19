@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\AppEnum\ProjectStatus;
-use App\Dto\Project\AbstractProjectDto;
-use App\Dto\Project\ProjectDto;
+use App\Dto\Project\CreateProjectDto;
 use App\Dto\Project\ProjectFiltersDto;
 use App\Entity\Project;
 use App\Entity\User;
@@ -34,7 +33,7 @@ class ProjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function countByUserAndName(User $user, string $name, ?AbstractProjectDto $validatedProject): int
+    public function countByUserAndName(User $user, string $name, ?CreateProjectDto $validatedProject): int
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p.id)')
@@ -43,7 +42,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->setParameter('createdBy', $user->getId())
             ->setParameter('name', strtolower($name));
 
-        if ($validatedProject instanceof ProjectDto) {
+        if ($validatedProject instanceof CreateProjectDto) {
             $qb->andWhere('p.uuid != :validatedProject')->setParameter('validatedProject', $validatedProject->getUuid());
         }
 
