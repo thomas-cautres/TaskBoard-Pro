@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Paginator;
 
-use App\Dto\Pagination;
+use App\Dto\View\Pagination;
 
 interface PaginatorInterface
 {

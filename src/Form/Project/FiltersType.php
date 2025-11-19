@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Project;
 
 use App\AppEnum\ProjectType;
-use App\Dto\Project\ProjectFiltersDto;
+use App\Dto\Request\Project\ProjectFiltersRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @extends AbstractType<ProjectFiltersDto>
+ * @extends AbstractType<ProjectFiltersRequest>
  */
 class FiltersType extends AbstractType
 {
@@ -40,16 +40,16 @@ class FiltersType extends AbstractType
                 'required' => false,
                 'placeholder' => 'Active Only',
                 'choices' => [
-                    'Archived' => ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED,
-                    'All status' => ProjectFiltersDto::ACTIVE_FILTER_ALL_STATUS,
+                    'Archived' => ProjectFiltersRequest::ACTIVE_FILTER_ARCHIVED,
+                    'All status' => ProjectFiltersRequest::ACTIVE_FILTER_ALL_STATUS,
                 ],
             ])
             ->add('sort', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => 'Creation Date',
                 'choices' => [
-                    'Name (A-Z)' => ProjectFiltersDto::SORT_NAME_ASC,
-                    'Name (Z-A)' => ProjectFiltersDto::SORT_NAME_DESC,
+                    'Name (A-Z)' => ProjectFiltersRequest::SORT_NAME_ASC,
+                    'Name (Z-A)' => ProjectFiltersRequest::SORT_NAME_DESC,
                 ],
             ])
             ->add('submit', SubmitType::class, [
@@ -60,7 +60,7 @@ class FiltersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProjectFiltersDto::class,
+            'data_class' => ProjectFiltersRequest::class,
             'csrf_protection' => false,
         ]);
     }

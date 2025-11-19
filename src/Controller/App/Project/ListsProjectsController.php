@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Project\ProjectFiltersDto;
-use App\Dto\Project\ProjectListItemDto;
+use App\Dto\Request\Project\ProjectFiltersRequest;
+use App\Dto\View\Project\ProjectListItemModel;
 use App\Entity\Project;
 use App\Form\Project\FiltersType;
 use App\Paginator\ProjectsPaginator;
@@ -29,7 +29,7 @@ class ListsProjectsController extends AbstractController
 
     public function __invoke(Request $request, int $page = 1): Response
     {
-        $filters = new ProjectFiltersDto();
+        $filters = new ProjectFiltersRequest();
         $filtersForm = $this->createForm(FiltersType::class, $filters, [
             'method' => 'GET',
         ]);
@@ -61,7 +61,7 @@ class ListsProjectsController extends AbstractController
     }
 
     /**
-     * @param FormInterface<ProjectFiltersDto> $filtersForm
+     * @param FormInterface<ProjectFiltersRequest> $filtersForm
      */
     private function shouldRedirectToFirstPage(FormInterface $filtersForm, int $page): bool
     {
@@ -85,13 +85,13 @@ class ListsProjectsController extends AbstractController
     /**
      * @param Paginator<Project>|Project[] $projectsPaginated
      *
-     * @return ProjectListItemDto[]
+     * @return ProjectListItemModel[]
      */
     private function getProjectsDtos(Paginator|array $projectsPaginated): array
     {
         $projects = [];
         foreach ($projectsPaginated as $project) {
-            $projects[] = ProjectListItemDto::fromEntity($project);
+            $projects[] = ProjectListItemModel::fromEntity($project);
         }
 
         return $projects;

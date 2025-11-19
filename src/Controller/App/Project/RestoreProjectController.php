@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Project\ProjectDto;
+use App\Dto\View\Project\ProjectModel;
 use App\Event\Project\ProjectRestoredEvent;
 use App\Form\Project\RestoreProjectType;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('restore', 'project')]
 class RestoreProjectController extends AbstractController
 {
-    public function __invoke(Request $request, ProjectDto $project, EventDispatcherInterface $dispatcher): Response
+    public function __invoke(Request $request, ProjectModel $project, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(RestoreProjectType::class, options: [
             'action' => $this->generateUrl('app_project_restore', ['uuid' => $project->getUuid()]),

@@ -8,7 +8,7 @@ framework:
                 type: 'method'
                 property: 'statusAsString'
             supports:
-                - App\Dto\Project\ProjectDto
+                - App\Dto\View\Project\ProjectModel
             initial_marking: active
             places:
                 - active

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Task;
+namespace App\Dto\View\Task;
 
 use App\AppEnum\TaskPriority;
 use App\Entity\ProjectColumn;
 use App\Entity\Task;
 
-final readonly class TaskDto
+final readonly class TaskModel
 {
     public function __construct(
         private string $uuid,

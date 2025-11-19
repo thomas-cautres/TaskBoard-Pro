@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Response\Project;
 
 use App\AppEnum\ProjectColumnName;
 use App\Entity\Project;
 use App\Entity\Task;
 
-final readonly class ProjectStatsDto
+final readonly class ProjectStatsResponse
 {
     public function __construct(
         private int $totalTasks,

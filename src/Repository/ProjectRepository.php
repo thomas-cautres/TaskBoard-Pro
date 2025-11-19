@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\AppEnum\ProjectStatus;
-use App\Dto\Project\AbstractProjectDto;
-use App\Dto\Project\ProjectDto;
-use App\Dto\Project\ProjectFiltersDto;
+use App\Dto\Request\Project\CreateProjectInterface;
+use App\Dto\Request\Project\ProjectFiltersRequest;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -34,7 +33,7 @@ class ProjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function countByUserAndName(User $user, string $name, ?AbstractProjectDto $validatedProject): int
+    public function countByUserAndName(User $user, string $name, ?CreateProjectInterface $validatedProject): int
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p.id)')
@@ -43,7 +42,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->setParameter('createdBy', $user->getId())
             ->setParameter('name', strtolower($name));
 
-        if ($validatedProject instanceof ProjectDto) {
+        if ($validatedProject instanceof CreateProjectInterface) {
             $qb->andWhere('p.uuid != :validatedProject')->setParameter('validatedProject', $validatedProject->getUuid());
         }
 
@@ -53,7 +52,7 @@ class ProjectRepository extends ServiceEntityRepository
     /**
      * @return Paginator<Project>
      */
-    public function findByUserPaginated(User $user, ProjectFiltersDto $filters, int $start, int $length): Paginator
+    public function findByUserPaginated(User $user, ProjectFiltersRequest $filters, int $start, int $length): Paginator
     {
         $qb = $this->createQueryBuilder('p');
         $qb
@@ -77,13 +76,13 @@ class ProjectRepository extends ServiceEntityRepository
     private function applySorting(QueryBuilder $qb, ?int $sort = null): void
     {
         match ($sort) {
-            ProjectFiltersDto::SORT_NAME_ASC => $qb->addOrderBy('p.name', 'ASC'),
-            ProjectFiltersDto::SORT_NAME_DESC => $qb->addOrderBy('p.name', 'DESC'),
+            ProjectFiltersRequest::SORT_NAME_ASC => $qb->addOrderBy('p.name', 'ASC'),
+            ProjectFiltersRequest::SORT_NAME_DESC => $qb->addOrderBy('p.name', 'DESC'),
             default => null,
         };
     }
 
-    private function applyFilters(QueryBuilder $qb, ProjectFiltersDto $filters): void
+    private function applyFilters(QueryBuilder $qb, ProjectFiltersRequest $filters): void
     {
         if (null !== $filters->getName()) {
             $qb->andWhere('LOWER(p.name) LIKE LOWER(:name)')->setParameter('name', '%'.$filters->getName().'%');
@@ -95,7 +94,7 @@ class ProjectRepository extends ServiceEntityRepository
 
         if (null === $filters->getActive()) {
             $qb->andWhere('p.status = :status')->setParameter('status', ProjectStatus::Active->value);
-        } elseif (ProjectFiltersDto::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
+        } elseif (ProjectFiltersRequest::ACTIVE_FILTER_ARCHIVED === $filters->getActive()) {
             $qb->andWhere('p.status = :status')->setParameter('status', ProjectStatus::Archived->value);
         }
     }

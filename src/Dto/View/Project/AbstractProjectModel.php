@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\View\Project;
 
 use App\AppEnum\ProjectStatus;
 
-abstract class AbstractProjectDto
+abstract class AbstractProjectModel
 {
     protected string $createdByEmail;
     protected ProjectStatus $status = ProjectStatus::Active;

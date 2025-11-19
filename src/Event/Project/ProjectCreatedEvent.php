@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Event\Project;
 
-use App\Dto\Project\CreateProjectDto;
+use App\Dto\Request\Project\CreateProjectInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjectCreatedEvent extends Event
 {
     public function __construct(
-        private readonly CreateProjectDto $project,
+        private readonly CreateProjectInterface $project,
     ) {
     }
 
-    public function getProject(): CreateProjectDto
+    public function getProject(): CreateProjectInterface
     {
         return $this->project;
     }

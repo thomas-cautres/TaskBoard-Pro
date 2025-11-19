@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueResolver;
 
-use App\Dto\Task\TaskDto;
+use App\Dto\View\Task\TaskModel;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +20,11 @@ final readonly class TaskDtoValueResolver implements ValueResolverInterface
     }
 
     /**
-     * @return iterable<TaskDto>
+     * @return iterable<TaskModel>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (TaskDto::class !== $argument->getType()) {
+        if (TaskModel::class !== $argument->getType()) {
             return [];
         }
 
@@ -36,6 +36,6 @@ final readonly class TaskDtoValueResolver implements ValueResolverInterface
             throw new NotFoundHttpException('Task not found');
         }
 
-        yield TaskDto::fromEntity($task);
+        yield TaskModel::fromEntity($task);
     }
 }

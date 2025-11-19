@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\View\Project;
 
 use App\AppEnum\ProjectStatus;
+use App\Dto\Response\Project\ProjectStatsResponse;
 use App\Entity\Project;
 
-final class ProjectListItemDto extends AbstractProjectDto
+final class ProjectListItemModel extends AbstractProjectModel
 {
     public function __construct(
         private string $uuid,
@@ -15,7 +16,7 @@ final class ProjectListItemDto extends AbstractProjectDto
         private string $type,
         protected string $createdByEmail,
         protected ProjectStatus $status,
-        private ProjectStatsDto $stats,
+        private ProjectStatsResponse $stats,
         private ?string $description = null,
     ) {
     }
@@ -28,7 +29,7 @@ final class ProjectListItemDto extends AbstractProjectDto
             type: $project->getType()->value,
             createdByEmail: $project->getCreatedBy()->getEmail(),
             status: $project->getStatus(),
-            stats: ProjectStatsDto::fromEntity($project),
+            stats: ProjectStatsResponse::fromEntity($project),
             description: $project->getDescription(),
         );
     }
@@ -58,7 +59,7 @@ final class ProjectListItemDto extends AbstractProjectDto
         return $this->createdByEmail;
     }
 
-    public function getStats(): ProjectStatsDto
+    public function getStats(): ProjectStatsResponse
     {
         return $this->stats;
     }

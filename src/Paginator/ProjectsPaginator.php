@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Paginator;
 
-use App\Dto\Pagination;
-use App\Dto\Project\ProjectFiltersDto;
+use App\Dto\Request\Project\ProjectFiltersRequest;
+use App\Dto\View\Pagination;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -22,8 +22,8 @@ readonly class ProjectsPaginator implements PaginatorInterface
 
     public function paginate(int $page, mixed $filters): Pagination
     {
-        if (!$filters instanceof ProjectFiltersDto) {
-            throw new \InvalidArgumentException(sprintf('Expected filters of type %s', ProjectFiltersDto::class));
+        if (!$filters instanceof ProjectFiltersRequest) {
+            throw new \InvalidArgumentException(sprintf('Expected filters of type %s', ProjectFiltersRequest::class));
         }
 
         /** @var User $user */

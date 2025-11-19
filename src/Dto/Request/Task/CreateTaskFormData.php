@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Task;
+namespace App\Dto\Request\Task;
 
 use App\AppEnum\TaskPriority;
 use Symfony\Component\Uid\Uuid;
 
-class CreateTaskDto
+final class CreateTaskFormData
 {
     private Uuid $uuid;
     private string $title;

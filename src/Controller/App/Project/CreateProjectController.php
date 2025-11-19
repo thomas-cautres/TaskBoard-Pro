@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Project\CreateProjectDto;
+use App\Dto\Request\Project\CreateProjectFormData;
 use App\Event\Project\ProjectCreatedEvent;
 use App\Form\Project\CreateProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +18,11 @@ class CreateProjectController extends AbstractController
 {
     public function __invoke(Request $request, EventDispatcherInterface $dispatcher): Response
     {
-        $project = new CreateProjectDto();
+        $project = new CreateProjectFormData();
         $form = $this->createForm(CreateProjectType::class, $project);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $dispatcher->dispatch(new ProjectCreatedEvent($project));
 
             $this->addFlash('success', 'project.create.flash.message.success');

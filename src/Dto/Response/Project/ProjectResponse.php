@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project\Api;
+namespace App\Dto\Response\Project;
 
 use App\AppEnum\ProjectStatus;
-use App\Dto\Project\AbstractProjectDto;
-use App\Dto\Project\ProjectStatsDto;
+use App\Dto\View\Project\AbstractProjectModel;
 use App\Entity\Project;
 
-final class ProjectListItemDto extends AbstractProjectDto
+final class ProjectResponse extends AbstractProjectModel
 {
     public function __construct(
         protected string $createdByEmail,
@@ -18,7 +17,7 @@ final class ProjectListItemDto extends AbstractProjectDto
         private string $name,
         private string $type,
         private string $createdAt,
-        private ProjectStatsDto $stats,
+        private ProjectStatsResponse $stats,
         private ?string $description = null,
     ) {
     }
@@ -32,7 +31,7 @@ final class ProjectListItemDto extends AbstractProjectDto
             name: $project->getName(),
             type: $project->getType()->value,
             createdAt: $project->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
-            stats: ProjectStatsDto::fromEntity($project),
+            stats: ProjectStatsResponse::fromEntity($project),
             description: $project->getDescription()
         );
     }
@@ -72,7 +71,7 @@ final class ProjectListItemDto extends AbstractProjectDto
         return $this->createdAt;
     }
 
-    public function getStats(): ProjectStatsDto
+    public function getStats(): ProjectStatsResponse
     {
         return $this->stats;
     }

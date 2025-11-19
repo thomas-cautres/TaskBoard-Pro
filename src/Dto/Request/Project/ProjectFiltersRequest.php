@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Request\Project;
 
 use App\AppEnum\ProjectType;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ProjectFiltersDto
+class ProjectFiltersRequest
 {
     public const int ACTIVE_FILTER_ARCHIVED = 1;
     public const int ACTIVE_FILTER_ALL_STATUS = 2;

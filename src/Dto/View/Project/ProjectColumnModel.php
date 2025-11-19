@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\View\Project;
 
 use App\Entity\ProjectColumn;
 
-final class ProjectColumnDto
+final class ProjectColumnModel
 {
     /**
      * @param array<mixed> $tasks
