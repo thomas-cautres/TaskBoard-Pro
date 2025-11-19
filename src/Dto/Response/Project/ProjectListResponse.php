@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Dto\Response\Project;
 
-use App\Dto\View\Pagination;
 use App\Dto\Request\Project\ProjectFiltersRequest;
 use App\Dto\Response\ListMetaResponse;
+use App\Dto\View\Pagination;
 use App\Entity\Project;
 
 final readonly class ProjectListResponse

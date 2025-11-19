@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Paginator;
 
-use App\Dto\View\Pagination;
 use App\Dto\Request\Project\ProjectFiltersRequest;
+use App\Dto\View\Pagination;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\SecurityBundle\Security;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraint;
 
-use App\Dto\Request\Project\CreateProjectFormData;
 use App\Dto\Request\Project\CreateProjectInterface;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
@@ -41,9 +40,10 @@ class UniqueUserProjectNameValidator extends ConstraintValidator
 
         $root = $this->context->getRoot();
 
+        /** @var CreateProjectInterface|null $existingProject */
         $existingProject = match (true) {
-            $root instanceof CreateProjectInterface => $this->context->getRoot(),
-            $root instanceof FormInterface => $this->context->getRoot()->getData(),
+            $root instanceof CreateProjectInterface => $root,
+            $root instanceof FormInterface => $root->getData(),
             default => throw new \LogicException(sprintf('Root should be of type %s or %s', CreateProjectInterface::class, FormInterface::class)),
         };
 
