@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-final class CreateProjectDto
+final class CreateProjectFormDto implements CreateProjectInterface
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 100)]
@@ -18,9 +18,10 @@ final class CreateProjectDto
     private string $name;
     private ?string $description = null;
     #[Assert\NotBlank(message: 'validator.project.type.empty')]
+    #[Assert\Choice(callback: [ProjectType::class, 'values'])]
     private ProjectType $type;
     private ?\DateTimeImmutable $startDate = null;
-    #[Assert\Callback([CreateProjectDto::class, 'validateEndDate'])]
+    #[Assert\Callback([CreateProjectFormDto::class, 'validateEndDate'])]
     private ?\DateTimeImmutable $endDate = null;
     private Uuid $uuid;
 
@@ -34,7 +35,7 @@ final class CreateProjectDto
         return $this->name;
     }
 
-    public function setName(string $name): CreateProjectDto
+    public function setName(string $name): CreateProjectFormDto
     {
         $this->name = $name;
 
@@ -46,7 +47,7 @@ final class CreateProjectDto
         return $this->description;
     }
 
-    public function setDescription(?string $description): CreateProjectDto
+    public function setDescription(?string $description): CreateProjectFormDto
     {
         $this->description = $description;
 
@@ -58,7 +59,7 @@ final class CreateProjectDto
         return $this->type;
     }
 
-    public function setType(ProjectType $type): CreateProjectDto
+    public function setType(ProjectType $type): CreateProjectFormDto
     {
         $this->type = $type;
 
@@ -70,23 +71,9 @@ final class CreateProjectDto
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeImmutable|string|null $startDate): CreateProjectDto
-    {
-        $this->startDate = is_string($startDate) ? new \DateTimeImmutable($startDate) : $startDate;
-
-        return $this;
-    }
-
     public function getEndDate(): ?\DateTimeImmutable
     {
         return $this->endDate;
-    }
-
-    public function setEndDate(\DateTimeImmutable|string|null $endDate): CreateProjectDto
-    {
-        $this->endDate = is_string($endDate) ? new \DateTimeImmutable($endDate) : $endDate;
-
-        return $this;
     }
 
     public function getUuid(): Uuid
@@ -94,9 +81,23 @@ final class CreateProjectDto
         return $this->uuid;
     }
 
+    public function setStartDate(?\DateTimeImmutable $startDate): CreateProjectFormDto
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function setEndDate(?\DateTimeImmutable $endDate): CreateProjectFormDto
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
     public static function validateEndDate(?\DateTimeImmutable $value, ExecutionContextInterface $context): void
     {
-        /** @var CreateProjectDto $project */
+        /** @var CreateProjectFormDto $project */
         $project = $context->getObject();
         $startDate = $project->getStartDate();
 

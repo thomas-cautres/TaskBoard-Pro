@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Tests\Api\Project;
 
 use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ListProjectsTest extends WebTestCase
 {
+    private ?KernelBrowser $client = null;
+
+    public function setUp(): void
+    {
+        $this->client = static::createClient();
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->client->getContainer()->get(UserRepository::class);
+        $this->client->loginUser($userRepository->findOneBy(['email' => 'user-confirmed@domain.com']), firewallContext: 'api');
+    }
+
     public function testListProjects(): void
     {
-        $client = static::createClient();
-        /** @var UserRepository $userRepository */
-        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $this->client->request('GET', '/api/projects');
 
-        $client->loginUser($userRepository->findOneBy(['email' => 'user-confirmed@domain.com']), firewallContext: 'api');
-        $client->request('GET', '/api/projects');
-
-        $content = $client->getResponse()->getContent();
+        $content = $this->client->getResponse()->getContent();
 
         $response = json_decode($content, true);
         $this->assertResponseIsSuccessful();
@@ -33,14 +39,9 @@ class ListProjectsTest extends WebTestCase
 
     public function testListProjectsWithFilters(): void
     {
-        $client = static::createClient();
-        /** @var UserRepository $userRepository */
-        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $this->client->request('GET', '/api/projects?name=test');
 
-        $client->loginUser($userRepository->findOneBy(['email' => 'user-confirmed@domain.com']), firewallContext: 'api');
-        $client->request('GET', '/api/projects?name=test');
-
-        $content = $client->getResponse()->getContent();
+        $content = $this->client->getResponse()->getContent();
 
         $response = json_decode($content, true);
         $this->assertResponseIsSuccessful();
@@ -57,17 +58,12 @@ class ListProjectsTest extends WebTestCase
 
     public function testListProjectsWithTypeInvalid(): void
     {
-        $client = static::createClient();
-        /** @var UserRepository $userRepository */
-        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $this->client->request('GET', '/api/projects?type=INVALID');
 
-        $client->loginUser($userRepository->findOneBy(['email' => 'user-confirmed@domain.com']), firewallContext: 'api');
-        $client->request('GET', '/api/projects?type=INVALID');
-
-        $content = $client->getResponse()->getContent();
+        $content = $this->client->getResponse()->getContent();
 
         $response = json_decode($content, true);
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(422);
         $this->assertJson($content);
 
         $this->assertArrayHasKey('code', $response);

@@ -5,7 +5,6 @@ default:
                 - App\Tests\Behat\BaseContext
                 - App\Tests\Behat\ProjectContext
                 - App\Tests\Behat\DatabaseContext
-
     extensions:
         Robertfausk\Behat\PantherExtension: ~
 
