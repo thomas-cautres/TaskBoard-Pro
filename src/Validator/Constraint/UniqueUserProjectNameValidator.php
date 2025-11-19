@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Validator\Constraint;
 
 use App\Dto\Request\Project\CreateProjectFormData;
+use App\Dto\Request\Project\CreateProjectInterface;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -37,8 +39,13 @@ class UniqueUserProjectNameValidator extends ConstraintValidator
             return;
         }
 
-        /** @var CreateProjectFormData $existingProject */
-        $existingProject = $this->context->getRoot();
+        $root = $this->context->getRoot();
+
+        $existingProject = match (true) {
+            $root instanceof CreateProjectInterface => $this->context->getRoot(),
+            $root instanceof FormInterface => $this->context->getRoot()->getData(),
+            default => throw new \LogicException(sprintf('Root should be of type %s or %s', CreateProjectInterface::class, FormInterface::class)),
+        };
 
         if ($this->projectRepository->countByUserAndName($user, $value, $existingProject) > 0) {
             $this->context->buildViolation($constraint->message)->addViolation();

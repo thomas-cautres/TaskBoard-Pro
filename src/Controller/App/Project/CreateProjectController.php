@@ -20,10 +20,9 @@ class CreateProjectController extends AbstractController
     {
         $project = new CreateProjectFormData();
         $form = $this->createForm(CreateProjectType::class, $project);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $dispatcher->dispatch(new ProjectCreatedEvent($project));
 
             $this->addFlash('success', 'project.create.flash.message.success');
