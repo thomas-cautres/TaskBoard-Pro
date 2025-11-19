@@ -13,13 +13,12 @@ A **Symfony 7** project management application showcasing modern PHP development
 - ✅ Project statistics dashboard
 - ✅ Edit and archive projects
 - ✅ Create tasks
-- 🔜 API
 
 ### Planned
 - 🔜 Manage tasks
 - 🔜 Drag & drop tasks between columns
 - 🔜 Sprints, comments, notifications
-- 🔜 Project statistics dashboard
+- 🔜 API
 
 
 ## 🛠️ Stack
@@ -92,7 +91,8 @@ make db             # Reset DB + fixtures
 make migrate        # Run migrations
 
 # Testing
-make test           # Run PHPUnit
+make unit           # Run PHPUnit
+make behat          # Run Behat
 make phpstan        # Static analysis
 make phpcsfixer     # Code style check
 
@@ -104,7 +104,8 @@ make cc             # Clear cache
 
 ## 🧪 Testing
 ```bash
-make test           # All tests
+make unit           # Unit tests
+make behat          # Behavior tests
 make coverage       # Coverage report
 ```
 
@@ -130,7 +131,7 @@ Note: Some features may require a confirmed account.
 - `make db env=dev|test` — Recreate DB, run migrations, load fixtures (refuses prod)
 - `make migration` — Create Doctrine migration from entity changes
 - `make migrate` — Apply migrations
-- `make test c="<phpunit args>"` — Reset test DB and run PHPUnit
+- `make unit c="<phpunit args>"` — Reset test DB and run PHPUnit
 - `make phpstan` — Static analysis
 - `make phpcsfixer` — Code style fix
 - `make im-require c="<package>"` — Importmap: require a frontend package
