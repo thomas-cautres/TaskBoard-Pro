@@ -15,12 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/project', name: 'api_project_create', methods: 'POST')]
 class CreateProjectController extends AbstractController
 {
-    public function __invoke(#[MapRequestPayload] CreateProjectDto $project, EventDispatcherInterface $dispatcher): JsonResponse
+    public function __invoke(
+        #[MapRequestPayload] CreateProjectDto $project,
+        EventDispatcherInterface $dispatcher
+    ): JsonResponse
     {
         $dispatcher->dispatch(new ProjectCreatedEvent($project));
 
-        return $this->json([
-            $project,
-        ], 201);
+        return $this->json($project, 201);
     }
 }
