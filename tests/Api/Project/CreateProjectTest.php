@@ -62,13 +62,12 @@ class CreateProjectTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testEndDateIsLessThanStartDate(): void
+    public function testNameAlreadyExists(): void
     {
         $this->client->request('POST', '/api/project', [
-            'name' => 'test',
+            'name' => 'E-Commerce Platform Redesign',
             'type' => 'scrum',
             'start_date' => '2025-01-01',
-            'end_date' => '2024-01-01',
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
