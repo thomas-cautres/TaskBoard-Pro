@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Response\Project;
 
-use App\Dto\Pagination;
+use App\Dto\View\Pagination;
 use App\Dto\Request\Project\ProjectFiltersRequest;
 use App\Dto\Response\ListMetaResponse;
 use App\Entity\Project;
