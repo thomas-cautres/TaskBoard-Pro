@@ -84,9 +84,9 @@
 - [x] Compteur dans header colonne
 
 ### Voir une tâche
-- [ ] Modal au clic sur la card
-- [ ] Toutes les infos
-- [ ] Boutons: Éditer, Supprimer
+- [x] Modal au clic sur la card
+- [x] Toutes les infos
+- [x] Boutons: Éditer, Supprimer
 
 ### Modifier une tâche
 - [ ] Formulaire dans le modal
