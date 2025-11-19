@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Event\Project;
 
-use App\Dto\Project\ProjectDto;
+use App\Dto\View\Project\ProjectModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjectRestoredEvent extends Event
 {
-    public function __construct(private readonly ProjectDto $project)
+    public function __construct(private readonly ProjectModel $project)
     {
     }
 
-    public function getProject(): ProjectDto
+    public function getProject(): ProjectModel
     {
         return $this->project;
     }

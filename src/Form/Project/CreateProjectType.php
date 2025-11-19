@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Project;
 
-use App\Dto\Project\CreateProjectFormDto;
+use App\Dto\Request\Project\CreateProjectFormData;
 use App\Form\Type\ProjectTypeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @extends AbstractType<CreateProjectFormDto>
+ * @extends AbstractType<CreateProjectFormData>
  */
 class CreateProjectType extends AbstractType
 {
@@ -67,7 +67,7 @@ class CreateProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CreateProjectFormDto::class,
+            'data_class' => CreateProjectFormData::class,
             'is_edit' => false,
         ]);
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Event\Project;
 
-use App\Dto\Project\CreateProjectInterface;
+use App\Dto\Request\Project\CreateProjectInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjectCreatedEvent extends Event

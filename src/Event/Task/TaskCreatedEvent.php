@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Event\Task;
 
-use App\Dto\Task\CreateTaskDto;
+use App\Dto\Request\Task\CreateTaskFormData;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class TaskCreatedEvent extends Event
 {
-    public function __construct(private readonly CreateTaskDto $task, private readonly string $projectColumnUuid)
+    public function __construct(private readonly CreateTaskFormData $task, private readonly string $projectColumnUuid)
     {
     }
 
-    public function getTask(): CreateTaskDto
+    public function getTask(): CreateTaskFormData
     {
         return $this->task;
     }

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Request\Project;
 
 use App\AppEnum\ProjectType;
+use App\Dto\View\Project\AbstractProjectModel;
 use App\Entity\Project;
 use Symfony\Component\Uid\Uuid;
 
-final class EditProjectDto extends AbstractProjectDto
+final class EditProjectFormData extends AbstractProjectModel
 {
     public function __construct(
         protected string $createdByEmail,
@@ -39,7 +40,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->createdByEmail;
     }
 
-    public function setCreatedByEmail(string $createdByEmail): EditProjectDto
+    public function setCreatedByEmail(string $createdByEmail): EditProjectFormData
     {
         $this->createdByEmail = $createdByEmail;
 
@@ -51,7 +52,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->name;
     }
 
-    public function setName(string $name): EditProjectDto
+    public function setName(string $name): EditProjectFormData
     {
         $this->name = $name;
 
@@ -63,7 +64,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->uuid;
     }
 
-    public function setUuid(Uuid $uuid): EditProjectDto
+    public function setUuid(Uuid $uuid): EditProjectFormData
     {
         $this->uuid = $uuid;
 
@@ -75,7 +76,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->type;
     }
 
-    public function setType(ProjectType $type): EditProjectDto
+    public function setType(ProjectType $type): EditProjectFormData
     {
         $this->type = $type;
 
@@ -87,7 +88,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->description;
     }
 
-    public function setDescription(?string $description): EditProjectDto
+    public function setDescription(?string $description): EditProjectFormData
     {
         $this->description = $description;
 
@@ -99,7 +100,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->startDate;
     }
 
-    public function setStartDate(?\DateTimeImmutable $startDate): EditProjectDto
+    public function setStartDate(?\DateTimeImmutable $startDate): EditProjectFormData
     {
         $this->startDate = $startDate;
 
@@ -111,7 +112,7 @@ final class EditProjectDto extends AbstractProjectDto
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeImmutable $endDate): EditProjectDto
+    public function setEndDate(?\DateTimeImmutable $endDate): EditProjectFormData
     {
         $this->endDate = $endDate;
 

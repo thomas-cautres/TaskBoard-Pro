@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Request\Project;
 
 use App\AppEnum\ProjectType;
 use Symfony\Component\Uid\Uuid;

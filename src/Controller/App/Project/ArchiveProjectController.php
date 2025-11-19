@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Project;
 
-use App\Dto\Project\ProjectDto;
+use App\Dto\View\Project\ProjectModel;
 use App\Event\Project\ProjectArchivedEvent;
 use App\Form\Project\ArchiveProjectType;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('archive', 'project')]
 class ArchiveProjectController extends AbstractController
 {
-    public function __invoke(Request $request, ProjectDto $project, EventDispatcherInterface $dispatcher): Response
+    public function __invoke(Request $request, ProjectModel $project, EventDispatcherInterface $dispatcher): Response
     {
         $form = $this->createForm(ArchiveProjectType::class, options: [
             'action' => $this->generateUrl('app_project_archive', ['uuid' => $project->getUuid()]),

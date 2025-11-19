@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Task;
 
 use App\AppEnum\TaskPriority;
-use App\Dto\Task\CreateTaskDto;
+use App\Dto\Request\Task\CreateTaskFormData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @extends AbstractType<CreateTaskDto>
+ * @extends AbstractType<CreateTaskFormData>
  */
 class CreateTaskType extends AbstractType
 {
@@ -57,7 +57,7 @@ class CreateTaskType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CreateTaskDto::class,
+            'data_class' => CreateTaskFormData::class,
         ]);
     }
 }

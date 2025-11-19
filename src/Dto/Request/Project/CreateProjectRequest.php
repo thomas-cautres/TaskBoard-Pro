@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\Request\Project;
 
 use App\AppEnum\ProjectType;
 use App\Validator\Constraint\UniqueUserProjectName;
@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-final class CreateProjectFormDto implements CreateProjectInterface
+final class CreateProjectRequest implements CreateProjectInterface
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 100)]
@@ -19,10 +19,10 @@ final class CreateProjectFormDto implements CreateProjectInterface
     private ?string $description = null;
     #[Assert\NotBlank(message: 'validator.project.type.empty')]
     #[Assert\Choice(callback: [ProjectType::class, 'values'])]
-    private ProjectType $type;
-    private ?\DateTimeImmutable $startDate = null;
-    #[Assert\Callback([CreateProjectFormDto::class, 'validateEndDate'])]
-    private ?\DateTimeImmutable $endDate = null;
+    private string $type;
+    private ?string $startDate = null;
+    #[Assert\Callback([CreateProjectRequest::class, 'validateEndDate'])]
+    private ?string $endDate = null;
     private Uuid $uuid;
 
     public function __construct()
@@ -35,7 +35,7 @@ final class CreateProjectFormDto implements CreateProjectInterface
         return $this->name;
     }
 
-    public function setName(string $name): CreateProjectFormDto
+    public function setName(string $name): CreateProjectRequest
     {
         $this->name = $name;
 
@@ -47,7 +47,7 @@ final class CreateProjectFormDto implements CreateProjectInterface
         return $this->description;
     }
 
-    public function setDescription(?string $description): CreateProjectFormDto
+    public function setDescription(?string $description): CreateProjectRequest
     {
         $this->description = $description;
 
@@ -56,10 +56,10 @@ final class CreateProjectFormDto implements CreateProjectInterface
 
     public function getType(): ProjectType
     {
-        return $this->type;
+        return ProjectType::from($this->type);
     }
 
-    public function setType(ProjectType $type): CreateProjectFormDto
+    public function setType(string $type): CreateProjectRequest
     {
         $this->type = $type;
 
@@ -68,12 +68,34 @@ final class CreateProjectFormDto implements CreateProjectInterface
 
     public function getStartDate(): ?\DateTimeImmutable
     {
-        return $this->startDate;
+        if (null === $this->startDate) {
+            return null;
+        }
+
+        return new \DateTimeImmutable($this->startDate);
+    }
+
+    public function setStartDate(?string $startDate): CreateProjectRequest
+    {
+        $this->startDate = $startDate;
+
+        return $this;
     }
 
     public function getEndDate(): ?\DateTimeImmutable
     {
-        return $this->endDate;
+        if (null === $this->endDate) {
+            return null;
+        }
+
+        return new \DateTimeImmutable($this->endDate);
+    }
+
+    public function setEndDate(?string $endDate): CreateProjectRequest
+    {
+        $this->endDate = $endDate;
+
+        return $this;
     }
 
     public function getUuid(): Uuid
@@ -81,27 +103,18 @@ final class CreateProjectFormDto implements CreateProjectInterface
         return $this->uuid;
     }
 
-    public function setStartDate(?\DateTimeImmutable $startDate): CreateProjectFormDto
+    public static function validateEndDate(?string $value, ExecutionContextInterface $context): void
     {
-        $this->startDate = $startDate;
+        if (null === $value) {
+            return;
+        }
 
-        return $this;
-    }
-
-    public function setEndDate(?\DateTimeImmutable $endDate): CreateProjectFormDto
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    public static function validateEndDate(?\DateTimeImmutable $value, ExecutionContextInterface $context): void
-    {
-        /** @var CreateProjectFormDto $project */
+        /** @var CreateProjectRequest $project */
         $project = $context->getObject();
         $startDate = $project->getStartDate();
+        $endDate = new \DateTimeImmutable($value);
 
-        if (null === $value || $value >= $startDate) {
+        if ($endDate >= $startDate) {
             return;
         }
 

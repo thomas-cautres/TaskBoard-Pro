@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueResolver;
 
-use App\Dto\Project\ProjectColumnDto;
+use App\Dto\View\Project\ProjectColumnModel;
 use App\Entity\ProjectColumn;
 use App\Repository\ProjectColumnRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +20,11 @@ final readonly class ProjectColumnDtoValueResolver implements ValueResolverInter
     }
 
     /**
-     * @return iterable<ProjectColumnDto>
+     * @return iterable<ProjectColumnModel>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (ProjectColumnDto::class !== $argument->getType()) {
+        if (ProjectColumnModel::class !== $argument->getType()) {
             return [];
         }
 
@@ -36,6 +36,6 @@ final readonly class ProjectColumnDtoValueResolver implements ValueResolverInter
             throw new NotFoundHttpException(sprintf('Project column with uuid %s not found', $uuid));
         }
 
-        yield ProjectColumnDto::fromEntity($projectColumn);
+        yield ProjectColumnModel::fromEntity($projectColumn);
     }
 }

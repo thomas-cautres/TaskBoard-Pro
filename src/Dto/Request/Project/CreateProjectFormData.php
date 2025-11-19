@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project\Api;
+namespace App\Dto\Request\Project;
 
 use App\AppEnum\ProjectType;
-use App\Dto\Project\CreateProjectInterface;
 use App\Validator\Constraint\UniqueUserProjectName;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-final class CreateProjectApiDto implements CreateProjectInterface
+final class CreateProjectFormData implements CreateProjectInterface
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 100)]
@@ -20,10 +19,10 @@ final class CreateProjectApiDto implements CreateProjectInterface
     private ?string $description = null;
     #[Assert\NotBlank(message: 'validator.project.type.empty')]
     #[Assert\Choice(callback: [ProjectType::class, 'values'])]
-    private string $type;
-    private ?string $startDate = null;
-    #[Assert\Callback([CreateProjectApiDto::class, 'validateEndDate'])]
-    private ?string $endDate = null;
+    private ProjectType $type;
+    private ?\DateTimeImmutable $startDate = null;
+    #[Assert\Callback([CreateProjectFormData::class, 'validateEndDate'])]
+    private ?\DateTimeImmutable $endDate = null;
     private Uuid $uuid;
 
     public function __construct()
@@ -36,7 +35,7 @@ final class CreateProjectApiDto implements CreateProjectInterface
         return $this->name;
     }
 
-    public function setName(string $name): CreateProjectApiDto
+    public function setName(string $name): CreateProjectFormData
     {
         $this->name = $name;
 
@@ -48,7 +47,7 @@ final class CreateProjectApiDto implements CreateProjectInterface
         return $this->description;
     }
 
-    public function setDescription(?string $description): CreateProjectApiDto
+    public function setDescription(?string $description): CreateProjectFormData
     {
         $this->description = $description;
 
@@ -57,10 +56,10 @@ final class CreateProjectApiDto implements CreateProjectInterface
 
     public function getType(): ProjectType
     {
-        return ProjectType::from($this->type);
+        return $this->type;
     }
 
-    public function setType(string $type): CreateProjectApiDto
+    public function setType(ProjectType $type): CreateProjectFormData
     {
         $this->type = $type;
 
@@ -69,34 +68,12 @@ final class CreateProjectApiDto implements CreateProjectInterface
 
     public function getStartDate(): ?\DateTimeImmutable
     {
-        if (null === $this->startDate) {
-            return null;
-        }
-
-        return new \DateTimeImmutable($this->startDate);
-    }
-
-    public function setStartDate(?string $startDate): CreateProjectApiDto
-    {
-        $this->startDate = $startDate;
-
-        return $this;
+        return $this->startDate;
     }
 
     public function getEndDate(): ?\DateTimeImmutable
     {
-        if (null === $this->endDate) {
-            return null;
-        }
-
-        return new \DateTimeImmutable($this->endDate);
-    }
-
-    public function setEndDate(?string $endDate): CreateProjectApiDto
-    {
-        $this->endDate = $endDate;
-
-        return $this;
+        return $this->endDate;
     }
 
     public function getUuid(): Uuid
@@ -104,9 +81,23 @@ final class CreateProjectApiDto implements CreateProjectInterface
         return $this->uuid;
     }
 
+    public function setStartDate(?\DateTimeImmutable $startDate): CreateProjectFormData
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function setEndDate(?\DateTimeImmutable $endDate): CreateProjectFormData
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
     public static function validateEndDate(?\DateTimeImmutable $value, ExecutionContextInterface $context): void
     {
-        /** @var CreateProjectApiDto $project */
+        /** @var CreateProjectFormData $project */
         $project = $context->getObject();
         $startDate = $project->getStartDate();
 

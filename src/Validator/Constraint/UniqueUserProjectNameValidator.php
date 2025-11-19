@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraint;
 
-use App\Dto\Project\CreateProjectFormDto;
+use App\Dto\Request\Project\CreateProjectFormData;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -37,7 +37,7 @@ class UniqueUserProjectNameValidator extends ConstraintValidator
             return;
         }
 
-        /** @var CreateProjectFormDto $existingProject */
+        /** @var CreateProjectFormData $existingProject */
         $existingProject = $this->context->getRoot();
 
         if ($this->projectRepository->countByUserAndName($user, $value, $existingProject) > 0) {

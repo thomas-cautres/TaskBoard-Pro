@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Api;
+namespace App\Dto\Response;
 
-final readonly class ListMetaDto
+final readonly class ListMetaResponse
 {
     public function __construct(
         private int $currentPage,

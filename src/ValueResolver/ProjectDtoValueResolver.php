@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueResolver;
 
-use App\Dto\Project\ProjectDto;
+use App\Dto\View\Project\ProjectModel;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +20,11 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
     }
 
     /**
-     * @return iterable<ProjectDto>
+     * @return iterable<ProjectModel>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (ProjectDto::class !== $argument->getType()) {
+        if (ProjectModel::class !== $argument->getType()) {
             return [];
         }
 
@@ -36,6 +36,6 @@ final readonly class ProjectDtoValueResolver implements ValueResolverInterface
             throw new NotFoundHttpException('Project not found');
         }
 
-        yield ProjectDto::fromEntity($project);
+        yield ProjectModel::fromEntity($project);
     }
 }

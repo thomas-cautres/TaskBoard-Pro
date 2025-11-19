@@ -39,4 +39,38 @@ class CreateProjectTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    public function testNameIsEmpty(): void
+    {
+        $this->client->request('POST', '/api/project', [
+            'name' => '',
+            'type' => 'scrum',
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testEndDateIsLessThanStartDate(): void
+    {
+        $this->client->request('POST', '/api/project', [
+            'name' => 'test',
+            'type' => 'scrum',
+            'start_date' => '2025-01-01',
+            'end_date' => '2024-01-01',
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testEndDateIsLessThanStartDate(): void
+    {
+        $this->client->request('POST', '/api/project', [
+            'name' => 'test',
+            'type' => 'scrum',
+            'start_date' => '2025-01-01',
+            'end_date' => '2024-01-01',
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
 }

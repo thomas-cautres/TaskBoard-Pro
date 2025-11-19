@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\App\Task;
 
-use App\Dto\Project\ProjectColumnDto;
-use App\Dto\Task\CreateTaskDto;
+use App\Dto\Request\Task\CreateTaskFormData;
+use App\Dto\View\Project\ProjectColumnModel;
 use App\Event\Task\TaskCreatedEvent;
 use App\Form\Task\CreateTaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +18,9 @@ use Symfony\Component\Routing\Requirement\Requirement;
 #[Route('/app/project/{uuid}/task/create', name: 'app_task_create', requirements: ['uuid' => Requirement::UID_RFC4122], methods: ['GET', 'POST'])]
 class CreateTaskController extends AbstractController
 {
-    public function __invoke(Request $request, ProjectColumnDto $projectColumn, EventDispatcherInterface $dispatcher): Response
+    public function __invoke(Request $request, ProjectColumnModel $projectColumn, EventDispatcherInterface $dispatcher): Response
     {
-        $task = new CreateTaskDto();
+        $task = new CreateTaskFormData();
         $form = $this->createForm(CreateTaskType::class, $task, [
             'action' => $this->generateUrl('app_task_create', ['uuid' => $projectColumn->getUuid()]),
             'attr' => ['data-controller' => 'modal', 'data-action' => 'modal#submit'],

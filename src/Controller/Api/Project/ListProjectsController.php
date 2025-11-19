@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Api\Project;
 
-use App\Dto\Project\Api\ProjectListDto;
-use App\Dto\Project\ProjectFiltersDto;
+use App\Dto\Request\Project\ProjectFiltersRequest;
+use App\Dto\Response\Project\ProjectListResponse;
 use App\Paginator\PaginatorInterface;
 use App\Paginator\ProjectsPaginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +18,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class ListProjectsController extends AbstractController
 {
     public function __invoke(
-        #[MapQueryString] ProjectFiltersDto $filters,
+        #[MapQueryString] ProjectFiltersRequest $filters,
         #[Autowire(service: ProjectsPaginator::class)] PaginatorInterface $paginator,
         int $page = 1,
     ): JsonResponse {
-        return $this->json(ProjectListDto::fromPagination($paginator->paginate($page, $filters), $filters));
+        return $this->json(ProjectListResponse::fromPagination($paginator->paginate($page, $filters), $filters));
     }
 }

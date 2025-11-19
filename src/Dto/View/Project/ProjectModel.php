@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Project;
+namespace App\Dto\View\Project;
 
 use App\AppEnum\ProjectStatus;
 use App\AppEnum\ProjectType;
+use App\Dto\Response\Project\ProjectStatsResponse;
 use App\Entity\Project;
 use App\Entity\ProjectColumn;
 
-final class ProjectDto extends AbstractProjectDto
+final class ProjectModel extends AbstractProjectModel
 {
     /**
-     * @param array<int, ProjectColumnDto> $columns
+     * @param array<int, ProjectColumnModel> $columns
      */
     public function __construct(
         private string $uuid,
@@ -21,7 +22,7 @@ final class ProjectDto extends AbstractProjectDto
         private \DateTimeImmutable $createdAt,
         protected string $createdByEmail,
         protected ProjectStatus $status,
-        private ProjectStatsDto $stats,
+        private ProjectStatsResponse $stats,
         private array $columns = [],
         private ?\DateTimeImmutable $startDate = null,
         private ?\DateTimeImmutable $endDate = null,
@@ -38,8 +39,8 @@ final class ProjectDto extends AbstractProjectDto
             createdAt: $project->getCreatedAt(),
             createdByEmail: $project->getCreatedBy()->getEmail(),
             status: $project->getStatus(),
-            stats: ProjectStatsDto::fromEntity($project),
-            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnDto::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
+            stats: ProjectStatsResponse::fromEntity($project),
+            columns: array_map(fn (ProjectColumn $projectColumn) => ProjectColumnModel::fromEntity($projectColumn), $project->getColumnsSortedByPosition()->toArray()),
             startDate: $project->getStartDate(),
             endDate: $project->getEndDate(),
             description: $project->getDescription()
@@ -107,7 +108,7 @@ final class ProjectDto extends AbstractProjectDto
     }
 
     /**
-     * @return array<int, ProjectColumnDto>
+     * @return array<int, ProjectColumnModel>
      */
     public function getColumns(): array
     {
@@ -119,7 +120,7 @@ final class ProjectDto extends AbstractProjectDto
         return $this->createdByEmail;
     }
 
-    public function getStats(): ProjectStatsDto
+    public function getStats(): ProjectStatsResponse
     {
         return $this->stats;
     }

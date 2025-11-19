@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Dto\Task\TaskDto;
+use App\Dto\View\Task\TaskModel;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-/** @extends Voter<string, TaskDto> */
+/** @extends Voter<string, TaskModel> */
 class TaskVoter extends Voter
 {
     public const string CREATE = 'create';
@@ -22,7 +22,7 @@ class TaskVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof TaskDto) {
+        if (!$subject instanceof TaskModel) {
             return false;
         }
 
@@ -37,7 +37,7 @@ class TaskVoter extends Voter
             return false;
         }
 
-        /** @var TaskDto $task */
+        /** @var TaskModel $task */
         $task = $subject;
 
         return match ($attribute) {
@@ -48,17 +48,17 @@ class TaskVoter extends Voter
         };
     }
 
-    private function canCreate(TaskDto $task, User $user): bool
+    private function canCreate(TaskModel $task, User $user): bool
     {
         return true;
     }
 
-    private function canEdit(TaskDto $task, User $user): bool
+    private function canEdit(TaskModel $task, User $user): bool
     {
         return true;
     }
 
-    private function canView(TaskDto $task, User $user): bool
+    private function canView(TaskModel $task, User $user): bool
     {
         return true;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueResolver;
 
-use App\Dto\Project\EditProjectDto;
+use App\Dto\Request\Project\EditProjectFormData;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +20,11 @@ final readonly class EditProjectDtoValueResolver implements ValueResolverInterfa
     }
 
     /**
-     * @return iterable<EditProjectDto>
+     * @return iterable<EditProjectFormData>
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (EditProjectDto::class !== $argument->getType()) {
+        if (EditProjectFormData::class !== $argument->getType()) {
             return [];
         }
 
@@ -36,6 +36,6 @@ final readonly class EditProjectDtoValueResolver implements ValueResolverInterfa
             throw new NotFoundHttpException('Project not found');
         }
 
-        yield EditProjectDto::fromEntity($project);
+        yield EditProjectFormData::fromEntity($project);
     }
 }

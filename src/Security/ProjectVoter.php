@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Dto\Project\AbstractProjectDto;
-use App\Dto\Project\ProjectDto;
+use App\Dto\View\Project\AbstractProjectModel;
+use App\Dto\View\Project\ProjectModel;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Workflow\WorkflowInterface;
 
-/** @extends Voter<string, ProjectDto> */
+/** @extends Voter<string, ProjectModel> */
 class ProjectVoter extends Voter
 {
     public const string VIEW = 'view';
@@ -30,7 +30,7 @@ class ProjectVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof AbstractProjectDto) {
+        if (!$subject instanceof AbstractProjectModel) {
             return false;
         }
 
@@ -45,7 +45,7 @@ class ProjectVoter extends Voter
             return false;
         }
 
-        /** @var AbstractProjectDto $project */
+        /** @var AbstractProjectModel $project */
         $project = $subject;
 
         return match ($attribute) {
@@ -57,22 +57,22 @@ class ProjectVoter extends Voter
         };
     }
 
-    private function canView(AbstractProjectDto $project, User $user): bool
+    private function canView(AbstractProjectModel $project, User $user): bool
     {
         return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
-    private function canEdit(AbstractProjectDto $project, User $user): bool
+    private function canEdit(AbstractProjectModel $project, User $user): bool
     {
         return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail());
     }
 
-    private function canArchive(AbstractProjectDto $project, User $user): bool
+    private function canArchive(AbstractProjectModel $project, User $user): bool
     {
         return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'archive');
     }
 
-    private function canRestore(AbstractProjectDto $project, User $user): bool
+    private function canRestore(AbstractProjectModel $project, User $user): bool
     {
         return $this->loggedUserIsProjectCreator($user, $project->getCreatedByEmail()) && true === $this->projectStateMachine->can($project, 'restore');
     }
